@@ -1,12 +1,11 @@
-package com.nrigas.mastercard.service;
+package com.nrigas.mastercard.service.Consent;
 
-import com.google.gson.GsonBuilder;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.model.ConsentAccount;
 import com.nrigas.mastercard.model.ConsentPermission;
+import com.nrigas.mastercard.model.Merchant;
 import com.nrigas.mastercard.model.Psu;
-import com.nrigas.mastercard.request.GetConsentRequest;
-import com.nrigas.mastercard.response.GetConsentResponse;
+import com.nrigas.mastercard.service.MastercardAisService;
 import org.json.JSONObject;
 
 import javax.json.Json;
@@ -25,9 +24,33 @@ public class Consent extends MastercardAisService {
         super(client);
     }
 
-    public GetConsentResponse get(GetConsentRequest request) throws Exception {
+    public AuthorizeConsentResponse authorize(AuthConsentRequest request) throws Exception {
 
-        GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
+        JsonObjectBuilder requestInfoBuilder = Json.createObjectBuilder()
+                .add("xRequestId", UUID.randomUUID().toString())
+                .add("aspspId", request.aspspId);
+
+        this.addPsu(request.psu, requestInfoBuilder);
+        this.addMerchant(request.merchant, requestInfoBuilder);
+
+        JsonObjectBuilder payload = Json.createObjectBuilder()
+                .add("requestInfo", requestInfoBuilder)
+                .add("authorization", request.authCode);
+
+        HttpResponse<String> response = this.client.postJson(
+                "/openbanking/connect/api/accounts/consents/authorizations",
+                payload.build().toString()
+        );
+        JSONObject responsePayload = new JSONObject(response.body());
+
+        return new AuthorizeConsentResponse(
+                responsePayload.getString("consentId"),
+                responsePayload.getString("consentRequestId"),
+                responsePayload.getJSONObject("originalRequestInfo").getString("xRequestId")
+        );
+    }
+
+    public GetConsentResponse get(GetConsentRequest request) throws Exception {
 
         JsonObjectBuilder requestInfoBuilder = Json.createObjectBuilder()
                 .add("xRequestId", UUID.randomUUID().toString())
@@ -37,7 +60,7 @@ public class Consent extends MastercardAisService {
         JsonObjectBuilder payload = Json.createObjectBuilder();
 
         this.addPsu(request.psu, requestInfoBuilder);
-        this.addMerchant(request, requestInfoBuilder);
+        this.addMerchant(request.merchant, requestInfoBuilder);
         this.addAccounts(request.consentAccountsList, payload);
         this.addPermissions(request.permissions, payload);
 
@@ -112,17 +135,17 @@ public class Consent extends MastercardAisService {
         }
     }
 
-    private void addMerchant(GetConsentRequest request, JsonObjectBuilder requestInfoBuilder) {
+    private void addMerchant(Merchant merchant, JsonObjectBuilder requestInfoBuilder) {
 
-        if (request.merchant == null) {
+        if (merchant == null) {
             return;
         }
 
-        JsonObject merchant = Json.createObjectBuilder()
-                .add("id", request.merchant.getId())
-                .add("name", request.merchant.getName())
+        JsonObject merchantObj = Json.createObjectBuilder()
+                .add("id", merchant.getId())
+                .add("name", merchant.getName())
                 .build();
 
-        requestInfoBuilder.add("merchant", merchant);
+        requestInfoBuilder.add("merchant", merchantObj);
     }
 }
