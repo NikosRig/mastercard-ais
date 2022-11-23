@@ -1,12 +1,12 @@
 package com.nrigas.mastercard.model;
 
-public class AisConsentAccount {
+public class ConsentAccount {
 
 	private final String iban;
 	private final String currency;
 
-	public AisConsentAccount(String identification, String currency) {
-		this.iban = identification;
+	public ConsentAccount(String iban, String currency) {
+		this.iban = iban;
 		this.currency = currency;
 	}
 

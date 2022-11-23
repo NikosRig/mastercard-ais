@@ -1,9 +1,9 @@
-package com.nrigas.gateway.input;
+package com.nrigas.mastercard.model;
 
 public enum ConsentPermission {
     allPSD2,
     accounts,
     balances,
     transactions,
-    standingorders
+    standingOrders
 }
