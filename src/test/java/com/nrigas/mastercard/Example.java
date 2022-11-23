@@ -1,17 +1,17 @@
 package com.nrigas.mastercard;
 
+import com.nrigas.mastercard.model.Consent;
 import com.nrigas.mastercard.model.ConsentPermission;
 import com.nrigas.mastercard.requestBuilders.AuthConsentRequestBuilder;
+import com.nrigas.mastercard.requestBuilders.ConsentRequestBuilder;
 import com.nrigas.mastercard.requestBuilders.DeleteConsentRequestBuilder;
 import com.nrigas.mastercard.requestBuilders.GetAccountRequestBuilder;
-import com.nrigas.mastercard.requestBuilders.GetConsentRequestBuilder;
 import com.nrigas.mastercard.service.Account.request.GetAccountRequest;
 import com.nrigas.mastercard.service.Account.response.GetAccountResponse;
 import com.nrigas.mastercard.service.Consent.request.AuthConsentRequest;
+import com.nrigas.mastercard.service.Consent.request.ConsentRequest;
 import com.nrigas.mastercard.service.Consent.request.DeleteConsentRequest;
-import com.nrigas.mastercard.service.Consent.request.GetConsentRequest;
 import com.nrigas.mastercard.service.Consent.response.AuthorizeConsentResponse;
-import com.nrigas.mastercard.service.Consent.response.GetConsentResponse;
 
 public class Example {
 
@@ -26,7 +26,7 @@ public class Example {
 		);
 		MastercardAis mastercardAis = new MastercardAis(config);
 
-		GetConsentRequest getConsentRequest = new GetConsentRequestBuilder()
+		ConsentRequest getConsentRequest = new ConsentRequestBuilder()
 				.withAspsId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
 				.withTppRedirectUri("https://tpp-ob.com/callback")
 				.withMerchant("MerchantId", "MerchantName")
@@ -35,7 +35,7 @@ public class Example {
 				.addConsentPermission(ConsentPermission.allPSD2)
 				.addConsentAccount("ACCNUMBR1234567", "EUR")
 				.build();
-		GetConsentResponse getConsentResponse = mastercardAis.consent().get(getConsentRequest);
+		Consent getConsentResponse = mastercardAis.consent().get(getConsentRequest);
 
 		AuthConsentRequest authConsentRequest = new AuthConsentRequestBuilder()
 				.withAspsId("420e5cff-0e2a-4156-991a-f6eeef0478cf")

@@ -3,29 +3,27 @@ package com.nrigas.mastercard.requestBuilders;
 import com.nrigas.mastercard.model.ConsentAccount;
 import com.nrigas.mastercard.model.ConsentPermission;
 import com.nrigas.mastercard.model.Credentials;
-import com.nrigas.mastercard.model.Merchant;
-import com.nrigas.mastercard.service.Consent.request.GetConsentRequest;
+import com.nrigas.mastercard.service.Consent.request.ConsentRequest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class GetConsentRequestBuilder extends RequestBuilder {
+public class ConsentRequestBuilder extends RequestBuilder {
 
 	private final ArrayList<ConsentPermission> consentPermissions;
 	private final ArrayList<ConsentAccount> consentAccounts;
-	private Merchant merchant = null;
 	private String tppRedirectUri;
 	private Credentials credentials = null;
 	private LocalDateTime validUntilDateTime = null;
 
-	public GetConsentRequestBuilder() {
+	public ConsentRequestBuilder() {
 		this.consentPermissions = new ArrayList<ConsentPermission>();
 		this.consentAccounts = new ArrayList<ConsentAccount>();
 	}
 
 	@Override
-	public GetConsentRequestBuilder withPsu(
+	public ConsentRequestBuilder withPsu(
 			Boolean isLivePsuRequest,
 			String psuAgent,
 			String psuIpAddress,
@@ -36,46 +34,46 @@ public class GetConsentRequestBuilder extends RequestBuilder {
 	}
 
 	@Override
-	public GetConsentRequestBuilder withMerchant(String merchantId, String merchantName) {
+	public ConsentRequestBuilder withMerchant(String merchantId, String merchantName) {
 		super.withMerchant(merchantId, merchantName);
 		return this;
 	}
 
 	@Override
-	public GetConsentRequestBuilder withAspsId(String aspsId) {
+	public ConsentRequestBuilder withAspsId(String aspsId) {
 		super.withAspsId(aspsId);
 		return this;
 	}
 
-	public GetConsentRequestBuilder withTppRedirectUri(String tppRedirectUri) {
+	public ConsentRequestBuilder withTppRedirectUri(String tppRedirectUri) {
 		this.tppRedirectUri = tppRedirectUri;
 		return this;
 	}
 
-	public GetConsentRequestBuilder addConsentPermission(ConsentPermission consentPermission) {
+	public ConsentRequestBuilder addConsentPermission(ConsentPermission consentPermission) {
 		this.consentPermissions.add(consentPermission);
 		return this;
 	}
 
-	public GetConsentRequestBuilder withCredentials(String iban) {
+	public ConsentRequestBuilder withCredentials(String iban) {
 		this.credentials = new Credentials(iban);
 		return this;
 	}
 
-	public GetConsentRequestBuilder withValidUntilDateTime(LocalDateTime validUntilDateTime) {
+	public ConsentRequestBuilder withValidUntilDateTime(LocalDateTime validUntilDateTime) {
 		this.validUntilDateTime = validUntilDateTime;
 		return this;
 	}
 
-	public GetConsentRequestBuilder addConsentAccount(String id, String currency) {
+	public ConsentRequestBuilder addConsentAccount(String id, String currency) {
 		ConsentAccount consentAccount = new ConsentAccount(id, currency);
 		this.consentAccounts.add(consentAccount);
 		return this;
 	}
 
-	public GetConsentRequest build() {
+	public ConsentRequest build() {
 
-		return new GetConsentRequest(
+		return new ConsentRequest(
 				this.aspsId,
 				this.tppRedirectUri,
 				this.consentPermissions,

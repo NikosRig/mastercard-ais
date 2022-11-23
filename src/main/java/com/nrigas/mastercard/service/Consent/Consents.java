@@ -1,13 +1,15 @@
 package com.nrigas.mastercard.service.Consent;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nrigas.mastercard.http.MastercardAisClient;
+import com.nrigas.mastercard.model.Consent;
 import com.nrigas.mastercard.model.ConsentAccount;
 import com.nrigas.mastercard.model.ConsentPermission;
 import com.nrigas.mastercard.service.Consent.request.AuthConsentRequest;
+import com.nrigas.mastercard.service.Consent.request.ConsentRequest;
 import com.nrigas.mastercard.service.Consent.request.DeleteConsentRequest;
-import com.nrigas.mastercard.service.Consent.request.GetConsentRequest;
 import com.nrigas.mastercard.service.Consent.response.AuthorizeConsentResponse;
-import com.nrigas.mastercard.service.Consent.response.GetConsentResponse;
 import com.nrigas.mastercard.service.MastercardAisService;
 import org.json.JSONObject;
 
@@ -21,10 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Consent extends MastercardAisService {
+public class Consents extends MastercardAisService {
 
-    public Consent(MastercardAisClient client) {
+    private final Gson gsonBuilder;
+
+    public Consents(MastercardAisClient client) {
         super(client);
+        this.gsonBuilder = new GsonBuilder().create();
     }
 
     public AuthorizeConsentResponse authorize(AuthConsentRequest request) throws Exception {
@@ -53,7 +58,7 @@ public class Consent extends MastercardAisService {
         );
     }
 
-    public GetConsentResponse get(GetConsentRequest request) throws Exception {
+    public Consent get(ConsentRequest request) throws Exception {
 
         JsonObjectBuilder requestInfoBuilder = Json.createObjectBuilder()
                 .add("xRequestId", UUID.randomUUID().toString())
@@ -83,8 +88,7 @@ public class Consent extends MastercardAisService {
                 payload.build().toString()
         );
         JSONObject responsePayload = new JSONObject(response.body());
-
-        return new GetConsentResponse(
+        return new Consent(
                 responsePayload.getString("consentRequestId"),
                 responsePayload.getJSONObject("_links").getString("scaRedirect"),
                 responsePayload.getJSONObject("originalRequestInfo").getString("xRequestId")

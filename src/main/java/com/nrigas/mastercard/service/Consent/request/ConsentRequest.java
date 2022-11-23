@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class GetConsentRequest {
+public class ConsentRequest {
 
     public final String aspspId;
     public final String tppRedirectURI;
@@ -17,7 +17,7 @@ public class GetConsentRequest {
     public final Credentials credentials;
     public final ArrayList<ConsentAccount> consentAccountsList;
 
-    public GetConsentRequest(
+    public ConsentRequest(
             String aspspId,
             String tppRedirectURI,
             ArrayList<ConsentPermission> permissions,

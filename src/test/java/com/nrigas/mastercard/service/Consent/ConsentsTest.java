@@ -2,149 +2,178 @@ package com.nrigas.mastercard.service.Consent;
 
 import com.nrigas.mastercard.TestCase;
 import com.nrigas.mastercard.http.MastercardAisClient;
+import com.nrigas.mastercard.model.Consent;
 import com.nrigas.mastercard.requestBuilders.AuthConsentRequestBuilder;
-import com.nrigas.mastercard.requestBuilders.GetConsentRequestBuilder;
+import com.nrigas.mastercard.requestBuilders.ConsentRequestBuilder;
 import com.nrigas.mastercard.service.Consent.request.AuthConsentRequest;
-import com.nrigas.mastercard.service.Consent.request.GetConsentRequest;
-import org.json.JSONArray;
+import com.nrigas.mastercard.service.Consent.request.ConsentRequest;
 import org.json.JSONObject;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 
-public class ConsentTest extends TestCase {
+public class ConsentsTest extends TestCase {
 
-    private Consent consent;
+    private Consents consent;
     private MastercardAisClient mastercardAisClient;
 
     @Before
     public void setUp() {
-        HttpClient client = Mockito.mock(HttpClient.class);
         this.mastercardAisClient = Mockito.mock(MastercardAisClient.class);
-        this.consent = new Consent(this.mastercardAisClient);
+        this.consent = new Consents(this.mastercardAisClient);
     }
 
     @Test
-    public void getConsentShouldAddPsuAgentWhenExists() throws Exception {
-        HttpResponse getConsentResponse = this.mockGetConsentResponse();
-        Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getConsentResponse);
+    public void testVerifyGetConsentPsuAgentIsOptional() throws Exception {
+        this.mockGetConsentResponse();
 
-        GetConsentRequest getConsentRequestWithPsuAgent = new GetConsentRequestBuilder()
+        ConsentRequest request = new ConsentRequestBuilder()
                 .withAspsId("aspspId")
                 .withTppRedirectUri("tppRedirectURI")
-                .withPsu(true, "agent", null, null)
+                .withPsu(true, null, "127.0.0.1", "psuTppCustomerId")
                 .build();
+        this.consent.get(request);
 
-        GetConsentRequest getConsentRequestWithoutPsuAgent = new GetConsentRequestBuilder()
-                .withAspsId("aspspId")
-                .withTppRedirectUri("tppRedirectURI")
-                .withPsu(true, null, null, null)
-                .build();
-
-        this.consent.get(getConsentRequestWithPsuAgent);
-        this.assertRequestInfoHas("psuAgent");
-
-        this.consent.get(getConsentRequestWithoutPsuAgent);
         this.assertRequestInfoNotHas("psuAgent");
     }
 
     @Test
-    public void getConsentShouldAddTppCustomerIdWhenExists() throws Exception {
-        HttpResponse getConsentResponse = this.mockGetConsentResponse();
-        Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getConsentResponse);
+    public void testVerifyGetConsentPsuAgentWillBePassed() throws Exception {
+        this.mockGetConsentResponse();
 
-        GetConsentRequest getConsentRequestWithTppCustomerId = new GetConsentRequestBuilder()
+        ConsentRequest request = new ConsentRequestBuilder()
                 .withAspsId("aspspId")
                 .withTppRedirectUri("tppRedirectURI")
-                .withPsu(true, null, null, "tppCustomer")
+                .withPsu(true, "agent", null, null)
                 .build();
+        this.consent.get(request);
 
-        GetConsentRequest getConsentRequestWithoutTppCustomerId = new GetConsentRequestBuilder()
+        this.assertRequestInfoHas("psuAgent");
+    }
+
+    @Test
+    public void testVerifyGetConsentPsuTppCustomerIsOptional() throws Exception {
+        this.mockGetConsentResponse();
+
+        ConsentRequest request = new ConsentRequestBuilder()
                 .withAspsId("aspspId")
                 .withTppRedirectUri("tppRedirectURI")
                 .withPsu(true, null, null, null)
                 .build();
+        this.consent.get(request);
 
-        this.consent.get(getConsentRequestWithTppCustomerId);
-        this.assertRequestInfoHas("psuTppCustomerId");
-
-        this.consent.get(getConsentRequestWithoutTppCustomerId);
         this.assertRequestInfoNotHas("psuTppCustomerId");
     }
 
     @Test
-    public void getConsentShouldAddMerchantWhenExists() throws Exception {
-        HttpResponse getConsentResponse = this.mockGetConsentResponse();
-        Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getConsentResponse);
+    public void testVerifyGetConsentPsuTppCustomerWillBePassed() throws Exception {
+        this.mockGetConsentResponse();
 
-        GetConsentRequest getConsentRequestWithMerchant = new GetConsentRequestBuilder()
+        ConsentRequest request = new ConsentRequestBuilder()
+                .withAspsId("aspspId")
+                .withTppRedirectUri("tppRedirectURI")
+                .withPsu(true, null, null, "psuTppCustomerId")
+                .build();
+        this.consent.get(request);
+
+        this.assertRequestInfoHas("psuTppCustomerId");
+    }
+
+    @Test
+    public void testVerifyGetConsent() throws Exception {
+
+        this.mockGetConsentResponse();
+        ConsentRequest request = new ConsentRequestBuilder()
                 .withAspsId("aspspId")
                 .withTppRedirectUri("tppRedirectURI")
                 .withPsu(true, null, null, null)
                 .withMerchant("id", "name")
                 .build();
+        Consent consent = this.consent.get(request);
 
-        GetConsentRequest getConsentRequestWithoutMerchant = new GetConsentRequestBuilder()
+        Assert.assertNotNull(consent.consentRequestId);
+        Assert.assertNotNull(consent.scaRedirectUri);
+        Assert.assertNotNull(consent.xRequestId);
+    }
+
+    @Test
+    public void testVerifyGetConsentMerchantWillBePassed() throws Exception {
+        this.mockGetConsentResponse();
+
+        ConsentRequest request = new ConsentRequestBuilder()
+                .withAspsId("aspspId")
+                .withTppRedirectUri("tppRedirectURI")
+                .withPsu(true, null, null, null)
+                .withMerchant("id", "name")
+                .build();
+        this.consent.get(request);
+
+        this.assertRequestInfoHas("merchant");
+    }
+
+    @Test
+    public void testVerifyGetConsentMerchantIsOptional() throws Exception {
+        this.mockGetConsentResponse();
+
+        ConsentRequest request = new ConsentRequestBuilder()
                 .withAspsId("aspspId")
                 .withTppRedirectUri("tppRedirectURI")
                 .withPsu(true, null, null, null)
                 .build();
+        this.consent.get(request);
 
-        this.consent.get(getConsentRequestWithMerchant);
-        this.assertRequestInfoHas("merchant");
-
-        this.consent.get(getConsentRequestWithoutMerchant);
         this.assertRequestInfoNotHas("merchant");
     }
 
     @Test
-    public void getConsentShouldAddPsuIpAddressOnlyWhenExists() throws Exception {
-        HttpResponse getConsentResponse = this.mockGetConsentResponse();
-        Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getConsentResponse);
+    public void testVerifyGetConsentPsuIpAddressWillBePassed() throws Exception {
+        this.mockGetConsentResponse();
 
-        GetConsentRequest getConsentRequestWithPsuIp = new GetConsentRequestBuilder()
+        ConsentRequest request = new ConsentRequestBuilder()
                 .withAspsId("aspspId")
                 .withTppRedirectUri("tppRedirectURI")
                 .withPsu(true, null, "127.0.0.1", null)
                 .build();
+        this.consent.get(request);
 
-        GetConsentRequest getConsentRequestWithoutPsuIp = new GetConsentRequestBuilder()
+        this.assertRequestInfoHas("psuIPAddress");
+    }
+
+    @Test
+    public void testVerifyGetConsentPsuIpAddressIsOptional() throws Exception {
+        this.mockGetConsentResponse();
+
+        ConsentRequest request = new ConsentRequestBuilder()
                 .withAspsId("aspspId")
                 .withTppRedirectUri("tppRedirectURI")
                 .withPsu(true, null, null, null)
                 .build();
+        this.consent.get(request);
 
-        this.consent.get(getConsentRequestWithPsuIp);
-        this.assertRequestInfoHas("psuIPAddress");
-
-        this.consent.get(getConsentRequestWithoutPsuIp);
         this.assertRequestInfoNotHas("psuIPAddress");
     }
 
     @Test
-    public void getConsentShouldAddMultipleAccounts() throws Exception {
-        HttpResponse getConsentResponse = this.mockGetConsentResponse();
-        Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getConsentResponse);
+    public void testVerifyGetConsentMultipleAccountsCanBeAdded() throws Exception {
+        this.mockGetConsentResponse();
 
-        GetConsentRequest request = new GetConsentRequestBuilder()
+        ConsentRequest request = new ConsentRequestBuilder()
                 .withAspsId("aspspId")
                 .withTppRedirectUri("tppRedirectURI")
                 .withPsu(true, null, "127.0.0.1", null)
                 .addConsentAccount("ACCNUMBR1234567", "EUR")
                 .addConsentAccount("ACCNUMBR1234567", "EUR")
                 .build();
-
         this.consent.get(request);
 
         Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
-            JSONArray accounts = new JSONObject(jsonBody).getJSONArray("accounts");
-            return accounts.length() == 2;
+            return new JSONObject(jsonBody).getJSONArray("accounts").length() == 2;
         }));
     }
 
@@ -191,9 +220,10 @@ public class ConsentTest extends TestCase {
         return this.mockHttpResponse(responseBody, 400);
     }
 
-    private HttpResponse mockGetConsentResponse() {
+    private void mockGetConsentResponse() throws Exception {
         String responseBody = "{\"originalRequestInfo\":{\"xRequestId\":\"e4dfcca5\"},\"aspspSCAApproach\":\"REDIRECT\",\"consentRequestId\":\"12345\",\"_links\":{\"scaRedirect\":\"https://openbanking.mastercard.eu/sandbox/mock/index.html?state=0418ae31-2e1e-49e3-a258-2c52c252a975&request=eyJjb25zZW50UmVxdWVzdElkIjoiMTIzNDUiLCJ0cHBSZWRpcmVjdFVSSSI6Imh0dHBzOi8vdHBwLW9iLmNvbS9jYWxsYmFjayJ9\"}}";
-        return this.mockHttpResponse(responseBody, 200);
+        HttpResponse response = this.mockHttpResponse(responseBody, 200);
+        Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(response);
     }
 
     private HttpResponse mockAuthConsentResponse() {

@@ -1,12 +1,12 @@
-package com.nrigas.mastercard.service.Consent.response;
+package com.nrigas.mastercard.model;
 
-final public class GetConsentResponse {
+final public class Consent {
 
     public final String consentRequestId;
     public final String scaRedirectUri;
     public final String xRequestId;
 
-    public GetConsentResponse(
+    public Consent(
             String consentRequestId,
             String scaRedirectUri,
             String xRequestId
