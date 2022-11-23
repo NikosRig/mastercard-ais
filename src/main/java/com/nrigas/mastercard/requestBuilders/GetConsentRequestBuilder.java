@@ -1,20 +1,21 @@
 package com.nrigas.mastercard.requestBuilders;
 
-import com.nrigas.mastercard.model.*;
-import com.nrigas.mastercard.request.GetConsentRequest;
+import com.nrigas.mastercard.model.ConsentAccount;
+import com.nrigas.mastercard.model.ConsentPermission;
+import com.nrigas.mastercard.model.Credentials;
+import com.nrigas.mastercard.model.Merchant;
+import com.nrigas.mastercard.service.Consent.GetConsentRequest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class GetConsentRequestBuilder {
+public class GetConsentRequestBuilder extends RequestBuilder {
 
 	private final ArrayList<ConsentPermission> consentPermissions;
 	private final ArrayList<ConsentAccount> consentAccounts;
 	private Merchant merchant = null;
-	private String aspsId;
 	private String tppRedirectUri;
-	private Psu psu;
 	private Credentials credentials = null;
 	private LocalDateTime validUntilDateTime = null;
 
@@ -23,18 +24,14 @@ public class GetConsentRequestBuilder {
 		this.consentAccounts = new ArrayList<ConsentAccount>();
 	}
 
+	@Override
 	public GetConsentRequestBuilder withPsu(
 			Boolean isLivePsuRequest,
 			String psuAgent,
 			String psuIpAddress,
 			String psuTppCustomerId
 	) {
-		this.psu = new Psu(
-				isLivePsuRequest,
-				Optional.ofNullable(psuIpAddress),
-				Optional.ofNullable(psuAgent),
-				Optional.ofNullable(psuTppCustomerId)
-		);
+		super.withPsu(isLivePsuRequest, psuAgent, psuIpAddress, psuTppCustomerId);
 		return this;
 	}
 
@@ -43,8 +40,9 @@ public class GetConsentRequestBuilder {
 		return this;
 	}
 
+	@Override
 	public GetConsentRequestBuilder withAspsId(String aspsId) {
-		this.aspsId = aspsId;
+		super.withAspsId(aspsId);
 		return this;
 	}
 

@@ -1,8 +1,8 @@
-package com.nrigas.mastercard.service;
+package com.nrigas.mastercard.service.Consent;
 
 import com.nrigas.mastercard.TestCase;
 import com.nrigas.mastercard.http.MastercardAisClient;
-import com.nrigas.mastercard.request.GetConsentRequest;
+import com.nrigas.mastercard.requestBuilders.AuthConsentRequestBuilder;
 import com.nrigas.mastercard.requestBuilders.GetConsentRequestBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,14 +22,14 @@ public class ConsentTest extends TestCase {
     private MastercardAisClient mastercardAisClient;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         HttpClient client = Mockito.mock(HttpClient.class);
         this.mastercardAisClient = Mockito.mock(MastercardAisClient.class);
         this.consent = new Consent(this.mastercardAisClient);
     }
 
     @Test
-    public void itShouldAddPsuAgentWhenExists() throws Exception {
+    public void getConsentShouldAddPsuAgentWhenExists() throws Exception {
         HttpResponse getConsentResponse = this.mockGetConsentResponse();
         Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getConsentResponse);
 
@@ -53,7 +53,7 @@ public class ConsentTest extends TestCase {
     }
 
     @Test
-    public void itShouldAddTppCustomerIdWhenExists() throws Exception {
+    public void getConsentShouldAddTppCustomerIdWhenExists() throws Exception {
         HttpResponse getConsentResponse = this.mockGetConsentResponse();
         Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getConsentResponse);
 
@@ -77,7 +77,7 @@ public class ConsentTest extends TestCase {
     }
 
     @Test
-    public void itShouldAddMerchantWhenExists() throws Exception {
+    public void getConsentShouldAddMerchantWhenExists() throws Exception {
         HttpResponse getConsentResponse = this.mockGetConsentResponse();
         Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getConsentResponse);
 
@@ -102,7 +102,7 @@ public class ConsentTest extends TestCase {
     }
 
     @Test
-    public void itShouldAddPsuIpAddressOnlyWhenExists() throws Exception {
+    public void getConsentShouldAddPsuIpAddressOnlyWhenExists() throws Exception {
         HttpResponse getConsentResponse = this.mockGetConsentResponse();
         Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getConsentResponse);
 
@@ -126,7 +126,7 @@ public class ConsentTest extends TestCase {
     }
 
     @Test
-    public void itShouldAddMultipleAccounts() throws Exception {
+    public void getConsentShouldAddMultipleAccounts() throws Exception {
         HttpResponse getConsentResponse = this.mockGetConsentResponse();
         Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getConsentResponse);
 
@@ -144,6 +144,30 @@ public class ConsentTest extends TestCase {
             JSONArray accounts = new JSONObject(jsonBody).getJSONArray("accounts");
             return accounts.length() == 2;
         }));
+    }
+
+    @Test
+    public void authConsentShouldAddPsuIpAddressOnlyWhenExists() throws Exception {
+        HttpResponse authConsentResponse = this.mockAuthConsentResponse();
+        Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(authConsentResponse);
+
+        AuthConsentRequest authConsentRequest = new AuthConsentRequestBuilder()
+                .withAspsId("aspspId")
+                .withAuthCode("code=xxxx")
+                .withPsu(true, null, "127.0.0.1")
+                .build();
+
+        AuthConsentRequest authConsentRequestWithoutPsuIp = new AuthConsentRequestBuilder()
+                .withAspsId("aspspId")
+                .withAuthCode("code=xxxx")
+                .withPsu(true, null, null)
+                .build();
+
+        this.consent.authorize(authConsentRequest);
+        this.assertRequestInfoHas("psuIPAddress");
+
+        this.consent.authorize(authConsentRequestWithoutPsuIp);
+        this.assertRequestInfoNotHas("psuIPAddress");
     }
 
     private void assertRequestInfoHas(String key) throws Exception {
@@ -169,4 +193,10 @@ public class ConsentTest extends TestCase {
         String responseBody = "{\"originalRequestInfo\":{\"xRequestId\":\"e4dfcca5\"},\"aspspSCAApproach\":\"REDIRECT\",\"consentRequestId\":\"12345\",\"_links\":{\"scaRedirect\":\"https://openbanking.mastercard.eu/sandbox/mock/index.html?state=0418ae31-2e1e-49e3-a258-2c52c252a975&request=eyJjb25zZW50UmVxdWVzdElkIjoiMTIzNDUiLCJ0cHBSZWRpcmVjdFVSSSI6Imh0dHBzOi8vdHBwLW9iLmNvbS9jYWxsYmFjayJ9\"}}";
         return this.mockHttpResponse(responseBody, 200);
     }
+
+    private HttpResponse mockAuthConsentResponse() {
+        String responseBody = "{\"originalRequestInfo\":{\"xRequestId\":\"6fae488b-c8ac-44ec-a531-1dbb32e6b6f1\"},\"consentId\":\"GFiTpF3:EBy5xGqQMatk\",\"consentRequestId\":\"12345\"}";
+        return this.mockHttpResponse(responseBody, 200);
+    }
+
 }

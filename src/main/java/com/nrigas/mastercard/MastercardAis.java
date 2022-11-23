@@ -2,7 +2,7 @@ package com.nrigas.mastercard;
 
 import com.nrigas.mastercard.http.MastercardAisAuthUtil;
 import com.nrigas.mastercard.http.MastercardAisClient;
-import com.nrigas.mastercard.service.Consent;
+import com.nrigas.mastercard.service.Consent.Consent;
 
 import java.net.http.HttpClient;
 

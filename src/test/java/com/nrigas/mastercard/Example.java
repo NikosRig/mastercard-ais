@@ -1,9 +1,12 @@
 package com.nrigas.mastercard;
 
 import com.nrigas.mastercard.model.ConsentPermission;
-import com.nrigas.mastercard.request.GetConsentRequest;
+import com.nrigas.mastercard.requestBuilders.AuthConsentRequestBuilder;
 import com.nrigas.mastercard.requestBuilders.GetConsentRequestBuilder;
-import com.nrigas.mastercard.response.GetConsentResponse;
+import com.nrigas.mastercard.service.Consent.AuthConsentRequest;
+import com.nrigas.mastercard.service.Consent.AuthorizeConsentResponse;
+import com.nrigas.mastercard.service.Consent.GetConsentRequest;
+import com.nrigas.mastercard.service.Consent.GetConsentResponse;
 
 public class Example {
 
@@ -28,5 +31,13 @@ public class Example {
 				.addConsentAccount("ACCNUMBR1234567", "EUR")
 				.build();
 		GetConsentResponse getConsentResponse = mastercardAis.consent().get(getConsentRequest);
+
+		AuthConsentRequest authConsentRequest = new AuthConsentRequestBuilder()
+				.withAspsId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+				.withMerchant("MerchantId", "MerchantName")
+				.withAuthCode("code=UKaccountEsbGdTB2a9MbSdt53serRsv0aUK001&state=c4ebdeb0-fdce-4879-ab84-62fdfaa28b80")
+				.withPsu(true, "PostmanRuntime/7.20.1", "127.0.0.1")
+				.build();
+		AuthorizeConsentResponse authConsentResponse = mastercardAis.consent().authorize(authConsentRequest);
 	}
 }
