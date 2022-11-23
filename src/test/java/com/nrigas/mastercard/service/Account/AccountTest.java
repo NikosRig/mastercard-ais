@@ -51,6 +51,8 @@ public class AccountTest extends TestCase {
 		Assert.assertNotNull(getAccountResponse.schemeName);
 		Assert.assertNotNull(getAccountResponse.auxData);
 		Assert.assertNotNull(getAccountResponse.holderNameAddress);
+		Assert.assertNotNull(getAccountResponse.accountPsuRelations);
+		Assert.assertNotNull(getAccountResponse.holderAddress);
 	}
 
 	private HttpResponse mockGetAccountResponse() {

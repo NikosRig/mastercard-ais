@@ -13,4 +13,6 @@ public class GetAccountResponse {
 	public String schemeName;
 	public String auxData;
 	public String[] holderNameAddress;
+	public Object[] accountPsuRelations;
+	public HolderAddress holderAddress;
 }
