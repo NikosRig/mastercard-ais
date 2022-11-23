@@ -1,6 +1,5 @@
 package com.nrigas.mastercard;
 
-import com.nrigas.mastercard.gateway.MastercardGatewayConfig;
 import com.nrigas.mastercard.http.MastercardAisAuthUtil;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import org.mockito.Mockito;
@@ -24,11 +23,6 @@ public class TestCase {
                 "keyalias",
                 "keystorepassword",
                 "nowzQEeE32g6FnESTjKEM6bq2mECwDX2SdOqfL9zae61ec44!5dda6ce1d93d4e2392232d711c4afb3f0000000000000000"
-        );
-
-        MastercardGatewayConfig config = new MastercardGatewayConfig(
-                "https://tpp-ob.com/callback",
-                true
         );
 
         return new MastercardAisClient(client, authUtil, true);
