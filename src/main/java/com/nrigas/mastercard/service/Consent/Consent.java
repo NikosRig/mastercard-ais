@@ -88,6 +88,25 @@ public class Consent extends MastercardAisService {
         );
     }
 
+    public void delete(DeleteConsentRequest request) throws Exception {
+
+        JsonObjectBuilder requestInfoBuilder = Json.createObjectBuilder()
+                .add("xRequestId", UUID.randomUUID().toString())
+                .add("aspspId", request.aspspId)
+                .add("psuTppCustomerId", request.psuTppCustomerId);
+        this.addMerchant(request.merchant, requestInfoBuilder);
+
+        JsonObject payload = Json.createObjectBuilder()
+                .add("consentId", request.consentId)
+                .add("requestInfo", requestInfoBuilder)
+                .build();
+
+        HttpResponse<String> response = this.client.postJson(
+                "/openbanking/connect/api/accounts/consents/delete",
+                payload.toString()
+        );
+    }
+
     private void addPermissions(List<ConsentPermission> permissionsList, JsonObjectBuilder payload) {
 
         JsonArrayBuilder permissions = Json.createArrayBuilder();

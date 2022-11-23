@@ -2,11 +2,9 @@ package com.nrigas.mastercard;
 
 import com.nrigas.mastercard.model.ConsentPermission;
 import com.nrigas.mastercard.requestBuilders.AuthConsentRequestBuilder;
+import com.nrigas.mastercard.requestBuilders.DeleteConsentRequestBuilder;
 import com.nrigas.mastercard.requestBuilders.GetConsentRequestBuilder;
-import com.nrigas.mastercard.service.Consent.AuthConsentRequest;
-import com.nrigas.mastercard.service.Consent.AuthorizeConsentResponse;
-import com.nrigas.mastercard.service.Consent.GetConsentRequest;
-import com.nrigas.mastercard.service.Consent.GetConsentResponse;
+import com.nrigas.mastercard.service.Consent.*;
 
 public class Example {
 
@@ -39,5 +37,13 @@ public class Example {
 				.withPsu(true, "PostmanRuntime/7.20.1", "127.0.0.1")
 				.build();
 		AuthorizeConsentResponse authConsentResponse = mastercardAis.consent().authorize(authConsentRequest);
+
+		DeleteConsentRequest deleteConsentRequest = new DeleteConsentRequestBuilder()
+				.withAspsId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+				.withMerchant("MerchantId", "MerchantName")
+				.withPsuTppCustomerId("psuTppCustomerId")
+				.withConsentId("GFiTpF3:EBy5xGqQMatk")
+				.build();
+		mastercardAis.consent().delete(deleteConsentRequest);
 	}
 }
