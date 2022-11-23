@@ -1,7 +1,7 @@
 package com.nrigas.mastercard.requestBuilders;
 
 import com.nrigas.mastercard.model.Merchant;
-import com.nrigas.mastercard.service.Consent.AuthConsentRequest;
+import com.nrigas.mastercard.service.Consent.request.AuthConsentRequest;
 
 import java.util.Optional;
 
@@ -25,8 +25,9 @@ public class AuthConsentRequestBuilder extends RequestBuilder {
 		return this;
 	}
 
+	@Override
 	public AuthConsentRequestBuilder withMerchant(String merchantId, String merchantName) {
-		this.merchant = new Merchant(merchantId, merchantName);
+		super.withMerchant(merchantId, merchantName);
 		return this;
 	}
 

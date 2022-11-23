@@ -1,4 +1,4 @@
-package com.nrigas.mastercard.service.Consent;
+package com.nrigas.mastercard.service.Consent.response;
 
 final public class GetConsentResponse {
 

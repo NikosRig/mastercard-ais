@@ -1,7 +1,7 @@
 package com.nrigas.mastercard.requestBuilders;
 
 import com.nrigas.mastercard.model.Merchant;
-import com.nrigas.mastercard.service.Consent.DeleteConsentRequest;
+import com.nrigas.mastercard.service.Consent.request.DeleteConsentRequest;
 
 import java.util.Optional;
 

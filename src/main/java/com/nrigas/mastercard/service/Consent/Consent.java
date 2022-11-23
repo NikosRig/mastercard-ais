@@ -3,8 +3,11 @@ package com.nrigas.mastercard.service.Consent;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.model.ConsentAccount;
 import com.nrigas.mastercard.model.ConsentPermission;
-import com.nrigas.mastercard.model.Merchant;
-import com.nrigas.mastercard.model.Psu;
+import com.nrigas.mastercard.service.Consent.request.AuthConsentRequest;
+import com.nrigas.mastercard.service.Consent.request.DeleteConsentRequest;
+import com.nrigas.mastercard.service.Consent.request.GetConsentRequest;
+import com.nrigas.mastercard.service.Consent.response.AuthorizeConsentResponse;
+import com.nrigas.mastercard.service.Consent.response.GetConsentResponse;
 import com.nrigas.mastercard.service.MastercardAisService;
 import org.json.JSONObject;
 
@@ -135,36 +138,5 @@ public class Consent extends MastercardAisService {
             accounts.add(accountObj);
         });
         payload.add("accounts", accounts);
-    }
-
-    private void addPsu(Psu psu, JsonObjectBuilder payload) {
-
-        payload.add("isLivePsuRequest", psu.isLivePsuRequest());
-
-        if (psu.getIpAddress() != null) {
-            payload.add("psuIPAddress", psu.getIpAddress());
-        }
-
-        if (psu.getAgent() != null) {
-            payload.add("psuAgent", psu.getAgent());
-        }
-
-        if (psu.getTppCustomerId() != null) {
-            payload.add("psuTppCustomerId", psu.getTppCustomerId());
-        }
-    }
-
-    private void addMerchant(Merchant merchant, JsonObjectBuilder requestInfoBuilder) {
-
-        if (merchant == null) {
-            return;
-        }
-
-        JsonObject merchantObj = Json.createObjectBuilder()
-                .add("id", merchant.getId())
-                .add("name", merchant.getName())
-                .build();
-
-        requestInfoBuilder.add("merchant", merchantObj);
     }
 }

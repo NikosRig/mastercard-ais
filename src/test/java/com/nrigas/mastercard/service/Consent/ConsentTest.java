@@ -4,6 +4,8 @@ import com.nrigas.mastercard.TestCase;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.requestBuilders.AuthConsentRequestBuilder;
 import com.nrigas.mastercard.requestBuilders.GetConsentRequestBuilder;
+import com.nrigas.mastercard.service.Consent.request.AuthConsentRequest;
+import com.nrigas.mastercard.service.Consent.request.GetConsentRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;

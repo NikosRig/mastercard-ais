@@ -4,7 +4,7 @@ import com.nrigas.mastercard.model.ConsentAccount;
 import com.nrigas.mastercard.model.ConsentPermission;
 import com.nrigas.mastercard.model.Credentials;
 import com.nrigas.mastercard.model.Merchant;
-import com.nrigas.mastercard.service.Consent.GetConsentRequest;
+import com.nrigas.mastercard.service.Consent.request.GetConsentRequest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,8 +35,9 @@ public class GetConsentRequestBuilder extends RequestBuilder {
 		return this;
 	}
 
+	@Override
 	public GetConsentRequestBuilder withMerchant(String merchantId, String merchantName) {
-		this.merchant = new Merchant(merchantId, merchantName);
+		super.withMerchant(merchantId, merchantName);
 		return this;
 	}
 

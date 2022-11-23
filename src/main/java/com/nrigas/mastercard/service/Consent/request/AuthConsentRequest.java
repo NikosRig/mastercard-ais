@@ -1,4 +1,4 @@
-package com.nrigas.mastercard.service.Consent;
+package com.nrigas.mastercard.service.Consent.request;
 
 import com.nrigas.mastercard.model.Merchant;
 import com.nrigas.mastercard.model.Psu;

@@ -1,5 +1,6 @@
 package com.nrigas.mastercard.requestBuilders;
 
+import com.nrigas.mastercard.model.Merchant;
 import com.nrigas.mastercard.model.Psu;
 
 import java.util.Optional;
@@ -8,11 +9,7 @@ abstract public class RequestBuilder {
 
 	protected Psu psu;
 	protected String aspsId;
-
-	public RequestBuilder withPsu(Psu psu) {
-		this.psu = psu;
-		return this;
-	}
+	protected Merchant merchant;
 
 	protected RequestBuilder withPsu(
 			Boolean isLivePsuRequest,
@@ -28,6 +25,11 @@ abstract public class RequestBuilder {
 		);
 		return this;
 	};
+
+	protected RequestBuilder withMerchant(String merchantId, String merchantName) {
+		this.merchant = new Merchant(merchantId, merchantName);
+		return this;
+	}
 
 	protected RequestBuilder withAspsId(String aspsId) {
 		this.aspsId = aspsId;
