@@ -13,7 +13,6 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class Consent extends MastercardAisService {
         super(client);
     }
 
-    public GetConsentResponse get(GetConsentRequest request) throws IOException, InterruptedException {
+    public GetConsentResponse get(GetConsentRequest request) throws Exception {
 
         GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
 
@@ -116,7 +115,7 @@ public class Consent extends MastercardAisService {
 
         JsonObject merchant = Json.createObjectBuilder()
                 .add("id", request.merchant.getId())
-                .add("merchantName", request.merchant.getName())
+                .add("name", request.merchant.getName())
                 .build();
 
         requestInfoBuilder.add("merchant", merchant);

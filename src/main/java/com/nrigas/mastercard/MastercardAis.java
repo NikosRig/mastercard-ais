@@ -17,7 +17,6 @@ public class MastercardAis {
                 config.signingKeyPassword,
                 config.consumerKey
         );
-
         this.mastercardClient = new MastercardAisClient(
                 HttpClient.newHttpClient(),
                 authUtil,

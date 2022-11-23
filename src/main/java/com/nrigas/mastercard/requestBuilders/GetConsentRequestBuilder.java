@@ -53,7 +53,7 @@ public class GetConsentRequestBuilder {
 		return this;
 	}
 
-	public GetConsentRequestBuilder addPermission(ConsentPermission consentPermission) {
+	public GetConsentRequestBuilder addConsentPermission(ConsentPermission consentPermission) {
 		this.consentPermissions.add(consentPermission);
 		return this;
 	}

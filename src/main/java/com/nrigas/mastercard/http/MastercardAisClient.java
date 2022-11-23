@@ -1,6 +1,5 @@
 package com.nrigas.mastercard.http;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -20,16 +19,22 @@ public class MastercardAisClient {
         this.host = sandboxMode ? sandboxHost : productionHost;
     }
 
-    public HttpResponse<String> postJson(String endpoint, String jsonBody) throws IOException, InterruptedException {
+    public HttpResponse postJson(String endpoint, String jsonBody) throws Exception {
 
         URI url = URI.create(String.format("%s" + endpoint, this.host));
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .uri(url)
                 .header("Content-Type", "application/json")
-                .header("Authorization", "")
+                .header("Authorization", this.authUtil.createAuthHeader(url, jsonBody))
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                 .build();
 
-        return this.client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse response = this.client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            throw new Exception(response.body().toString());
+        }
+
+        return response;
     }
 }

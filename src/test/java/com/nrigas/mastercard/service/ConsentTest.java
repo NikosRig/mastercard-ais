@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 
@@ -18,20 +17,18 @@ import static org.mockito.ArgumentMatchers.argThat;
 
 public class ConsentTest extends TestCase {
 
-
-    private HttpClient client;
     private Consent consent;
     private MastercardAisClient mastercardAisClient;
 
     @Before
     public void setUp() throws Exception {
-        this.client = Mockito.mock(HttpClient.class);
+        HttpClient client = Mockito.mock(HttpClient.class);
         this.mastercardAisClient = Mockito.mock(MastercardAisClient.class);
         this.consent = new Consent(this.mastercardAisClient);
     }
 
     @Test
-    public void itShouldAddPsuAgentWhenExists() throws IOException, InterruptedException {
+    public void itShouldAddPsuAgentWhenExists() throws Exception {
         HttpResponse getConsentResponse = this.mockGetConsentResponse();
         Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getConsentResponse);
 
@@ -55,7 +52,7 @@ public class ConsentTest extends TestCase {
     }
 
     @Test
-    public void itShouldAddTppCustomerIdWhenExists() throws IOException, InterruptedException {
+    public void itShouldAddTppCustomerIdWhenExists() throws Exception {
         HttpResponse getConsentResponse = this.mockGetConsentResponse();
         Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getConsentResponse);
 
@@ -79,7 +76,7 @@ public class ConsentTest extends TestCase {
     }
 
     @Test
-    public void itShouldAddMerchantWhenExists() throws IOException, InterruptedException {
+    public void itShouldAddMerchantWhenExists() throws Exception {
         HttpResponse getConsentResponse = this.mockGetConsentResponse();
         Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getConsentResponse);
 
@@ -104,7 +101,7 @@ public class ConsentTest extends TestCase {
     }
 
     @Test
-    public void itShouldAddPsuIpAddressOnlyWhenExists() throws IOException, InterruptedException {
+    public void itShouldAddPsuIpAddressOnlyWhenExists() throws Exception {
         HttpResponse getConsentResponse = this.mockGetConsentResponse();
         Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getConsentResponse);
 
@@ -127,18 +124,23 @@ public class ConsentTest extends TestCase {
         this.assertRequestInfoNotHas("psuIPAddress");
     }
 
-    private void assertRequestInfoHas(String key) throws IOException, InterruptedException {
+    private void assertRequestInfoHas(String key) throws Exception {
         Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
             JSONObject requestInfo = new JSONObject(jsonBody).getJSONObject("requestInfo");
             return requestInfo.has(key);
         }));
     }
 
-    private void assertRequestInfoNotHas(String key) throws IOException, InterruptedException {
+    private void assertRequestInfoNotHas(String key) throws Exception {
         Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
             JSONObject requestInfo = new JSONObject(jsonBody).getJSONObject("requestInfo");
             return !requestInfo.has(key);
         }));
+    }
+
+    private HttpResponse mockFormatErrorResponse() {
+        String responseBody = "{\"Errors\":{\"Error\":[{\"Source\":\"OBC\",\"ReasonCode\":\"FORMAT_ERROR\",\"Description\":\"[Path '/requestInfo/merchant'] Object instance has properties which are not allowed by the schema: [\\\"merchantName\\\"]\",\"Details\":\"path[0]=/requestInfo/merchant\"},{\"Source\":\"OBC\",\"ReasonCode\":\"FORMAT_ERROR\",\"Description\":\"[Path '/requestInfo/merchant'] Object has missing required properties ([\\\"name\\\"])\",\"Details\":\"path[0]=/requestInfo/merchant\"}]}}";
+        return this.mockHttpResponse(responseBody, 400);
     }
 
     private HttpResponse mockGetConsentResponse() {
