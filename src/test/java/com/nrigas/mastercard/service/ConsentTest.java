@@ -4,6 +4,7 @@ import com.nrigas.mastercard.TestCase;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.request.GetConsentRequest;
 import com.nrigas.mastercard.requestBuilders.GetConsentRequestBuilder;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -122,6 +123,27 @@ public class ConsentTest extends TestCase {
 
         this.consent.get(getConsentRequestWithoutPsuIp);
         this.assertRequestInfoNotHas("psuIPAddress");
+    }
+
+    @Test
+    public void itShouldAddMultipleAccounts() throws Exception {
+        HttpResponse getConsentResponse = this.mockGetConsentResponse();
+        Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getConsentResponse);
+
+        GetConsentRequest request = new GetConsentRequestBuilder()
+                .withAspsId("aspspId")
+                .withTppRedirectUri("tppRedirectURI")
+                .withPsu(true, null, "127.0.0.1", null)
+                .addConsentAccount("ACCNUMBR1234567", "EUR")
+                .addConsentAccount("ACCNUMBR1234567", "EUR")
+                .build();
+
+        this.consent.get(request);
+
+        Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
+            JSONArray accounts = new JSONObject(jsonBody).getJSONArray("accounts");
+            return accounts.length() == 2;
+        }));
     }
 
     private void assertRequestInfoHas(String key) throws Exception {

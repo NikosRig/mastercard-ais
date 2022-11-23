@@ -68,6 +68,12 @@ public class GetConsentRequestBuilder {
 		return this;
 	}
 
+	public GetConsentRequestBuilder addConsentAccount(String id, String currency) {
+		ConsentAccount consentAccount = new ConsentAccount(id, currency);
+		this.consentAccounts.add(consentAccount);
+		return this;
+	}
+
 	public GetConsentRequest build() {
 
 		return new GetConsentRequest(

@@ -75,7 +75,7 @@ public class Consent extends MastercardAisService {
 
         consentAccountList.forEach( account -> {
             JsonObjectBuilder accountNumber = Json.createObjectBuilder()
-                    .add("identification", account.getIban())
+                    .add("identification", account.getId())
                     .add("schemeName", "IBAN");
 
             JsonObjectBuilder accountReference = Json.createObjectBuilder()

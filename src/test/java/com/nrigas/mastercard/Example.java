@@ -23,8 +23,9 @@ public class Example {
 				.withTppRedirectUri("https://tpp-ob.com/callback")
 				.withMerchant("MerchantId", "MerchantName")
 				.withPsu(true, "PostmanRuntime/7.20.1", "127.0.0.1", "psuTppCustomerId")
-				.addConsentPermission(ConsentPermission.allPSD2)
 				.withCredentials("DE357543513")
+				.addConsentPermission(ConsentPermission.allPSD2)
+				.addConsentAccount("ACCNUMBR1234567", "EUR")
 				.build();
 		GetConsentResponse getConsentResponse = mastercardAis.consent().get(getConsentRequest);
 	}
