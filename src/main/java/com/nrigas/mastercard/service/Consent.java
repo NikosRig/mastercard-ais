@@ -1,6 +1,5 @@
 package com.nrigas.mastercard.service;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.model.ConsentAccount;
@@ -8,6 +7,7 @@ import com.nrigas.mastercard.model.ConsentPermission;
 import com.nrigas.mastercard.model.Psu;
 import com.nrigas.mastercard.request.GetConsentRequest;
 import com.nrigas.mastercard.response.GetConsentResponse;
+import org.json.JSONObject;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -56,8 +56,13 @@ public class Consent extends MastercardAisService {
                 "/openbanking/connect/api/accounts/consents",
                 payload.build().toString()
         );
+        JSONObject responsePayload = new JSONObject(response.body());
 
-        return new Gson().fromJson(response.body(), GetConsentResponse.class);
+        return new GetConsentResponse(
+                responsePayload.getString("consentRequestId"),
+                responsePayload.getJSONObject("_links").getString("scaRedirect"),
+                responsePayload.getJSONObject("originalRequestInfo").getString("xRequestId")
+        );
     }
 
     private void addPermissions(List<ConsentPermission> permissionsList, JsonObjectBuilder payload) {
