@@ -1,6 +1,6 @@
 package com.nrigas.mastercard.request.requestInfo;
 
-public class GetAccountRequestInfo extends RequestInfoImpl {
+public class GetAccountRequestInfo extends RequestInfo {
 
 	public String consentId;
 

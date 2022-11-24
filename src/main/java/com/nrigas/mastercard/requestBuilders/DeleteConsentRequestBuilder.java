@@ -2,15 +2,15 @@ package com.nrigas.mastercard.requestBuilders;
 
 import com.nrigas.mastercard.request.DeleteConsentRequest;
 import com.nrigas.mastercard.request.requestInfo.Merchant;
-import com.nrigas.mastercard.request.requestInfo.RequestInfoImpl;
+import com.nrigas.mastercard.request.requestInfo.RequestInfo;
 
 public class DeleteConsentRequestBuilder {
 
-	protected RequestInfoImpl requestInfo;
+	protected RequestInfo requestInfo;
 	private String consentId;
 
 	public DeleteConsentRequestBuilder() {
-		this.requestInfo = new RequestInfoImpl();
+		this.requestInfo = new RequestInfo();
 	}
 
 	public DeleteConsentRequestBuilder withMerchant(String merchantId, String merchantName) {
