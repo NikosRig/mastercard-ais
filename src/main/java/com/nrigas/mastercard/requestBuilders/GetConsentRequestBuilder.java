@@ -9,15 +9,45 @@ import java.util.ArrayList;
 
 public class GetConsentRequestBuilder {
 
-	private GetConsentRequestInfo requestInfo = new GetConsentRequestInfo();
+	private final GetConsentRequestInfo requestInfo;
 	private final ArrayList<ConsentPermission> permissions;
 	private final ArrayList<ConsentAccount> consentAccounts;
 	private LocalDateTime validUntilDateTime = null;
 
 	public GetConsentRequestBuilder() {
-		super();
+		this.requestInfo = new GetConsentRequestInfo();
 		this.permissions = new ArrayList<ConsentPermission>();
 		this.consentAccounts = new ArrayList<ConsentAccount>();
+	}
+
+	public GetConsentRequestBuilder withPsuAgent(String psuAgent) {
+		this.requestInfo.psuAgent = psuAgent;
+		return this;
+	};
+
+	public GetConsentRequestBuilder withPsuIPAddress(String psuIPAddress) {
+		this.requestInfo.psuIPAddress = psuIPAddress;
+		return this;
+	};
+
+	public GetConsentRequestBuilder withIsLivePsuRequest(Boolean isLivePsuRequest) {
+		this.requestInfo.isLivePsuRequest = isLivePsuRequest;
+		return this;
+	};
+
+	public GetConsentRequestBuilder withPsuTppCustomerId(String psuTppCustomerId) {
+		this.requestInfo.psuTppCustomerId = psuTppCustomerId;
+		return this;
+	};
+
+	public GetConsentRequestBuilder withAspspId(String aspspId) {
+		this.requestInfo.aspspId = aspspId;
+		return this;
+	}
+
+	public GetConsentRequestBuilder withMerchant(String merchantId, String merchantName) {
+		this.requestInfo.merchant = new Merchant(merchantId, merchantName);
+		return this;
 	}
 
 	public GetConsentRequestBuilder withTppRedirectURI(String tppRedirectURI) {

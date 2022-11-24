@@ -1,4 +1,4 @@
-package com.nrigas.mastercard.model;
+package com.nrigas.mastercard.request.requestInfo;
 
 public enum ConsentPermission {
     allPSD2,

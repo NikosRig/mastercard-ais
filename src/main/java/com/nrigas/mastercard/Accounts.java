@@ -1,4 +1,4 @@
-package com.nrigas.mastercard.service;
+package com.nrigas.mastercard;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

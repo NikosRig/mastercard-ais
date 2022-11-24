@@ -26,7 +26,7 @@ public class Consents extends MastercardAisService {
 
     public AuthorizeConsentResponse authorize(AuthConsentRequest request) throws Exception {
 
-        com.google.gson.JsonObject payload = new com.google.gson.JsonObject();
+        JsonObject payload = new JsonObject();
         payload.add("requestInfo", this.gson.toJsonTree(request.requestInfo));
         payload.add("authorization", new JsonPrimitive(request.authorization));
 

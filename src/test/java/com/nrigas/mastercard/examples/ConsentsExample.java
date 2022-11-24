@@ -4,7 +4,8 @@ import com.nrigas.mastercard.MastercardAis;
 import com.nrigas.mastercard.MastercardAisConfig;
 import com.nrigas.mastercard.TestCase;
 import com.nrigas.mastercard.model.Consent;
-import com.nrigas.mastercard.model.ConsentPermission;
+import com.nrigas.mastercard.request.GetConsentRequest;
+import com.nrigas.mastercard.request.requestInfo.ConsentPermission;
 import com.nrigas.mastercard.requestBuilders.GetConsentRequestBuilder;
 
 public class ConsentsExample extends TestCase {
@@ -20,16 +21,17 @@ public class ConsentsExample extends TestCase {
 		);
 		MastercardAis mastercardAis = new MastercardAis(config);
 
-		GetConsentRequestBuilder consentRequestBuilder = new GetConsentRequestBuilder();
-		consentRequestBuilder.addAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf");
-		consentRequestBuilder.addTppRedirectURI("https://tpp-ob.com/callback");
-		consentRequestBuilder.addMerchant("MerchantId", "MerchantName");
-		consentRequestBuilder.addPsu(true, "PostmanRuntime/7.20.1", "127.0.0.1", "psuTppCustomerId");
-		consentRequestBuilder.addCredentials("DE357543513");
-		consentRequestBuilder.addConsentPermission(ConsentPermission.allPSD2);
-		consentRequestBuilder.addAccount("ACCNUMBR1234567", "EUR", "IBAN");
-
-		Consent consent = mastercardAis.consents()
-				.get(consentRequestBuilder.build());
+		GetConsentRequest request = new GetConsentRequestBuilder()
+				.withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+				.withMerchant("MerchantId", "MerchantName")
+				.withIsLivePsuRequest(true)
+				.withPsuAgent("PostmanRuntime/7.20.1")
+				.withPsuIPAddress("127.0.0.1")
+				.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+				.addConsentPermission(ConsentPermission.allPSD2)
+				.addAccount("ACCNUMBR1234567", "EUR", "IBAN")
+				.withTppRedirectURI("https://tpp-ob.com/callback")
+				.build();
+		Consent consent = mastercardAis.consents().get(request);
 	}
 }

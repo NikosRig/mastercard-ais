@@ -1,8 +1,8 @@
 package com.nrigas.mastercard.request;
 
-import com.nrigas.mastercard.model.ConsentAccount;
-import com.nrigas.mastercard.model.ConsentPermission;
-import com.nrigas.mastercard.model.GetConsentRequestInfo;
+import com.nrigas.mastercard.request.requestInfo.ConsentAccount;
+import com.nrigas.mastercard.request.requestInfo.ConsentPermission;
+import com.nrigas.mastercard.request.requestInfo.GetConsentRequestInfo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.nrigas.mastercard.model;
+package com.nrigas.mastercard.request.requestInfo;
 
 public class GetConsentRequestInfo extends RequestInfoImpl {
 
