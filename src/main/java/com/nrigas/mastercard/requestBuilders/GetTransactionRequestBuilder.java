@@ -1,8 +1,8 @@
 package com.nrigas.mastercard.requestBuilders;
 
-import com.nrigas.mastercard.model.Merchant;
 import com.nrigas.mastercard.request.GetTransactionRequest;
-import com.nrigas.mastercard.request.TransactionRequestInfo;
+import com.nrigas.mastercard.request.requestInfo.Merchant;
+import com.nrigas.mastercard.request.requestInfo.TransactionRequestInfo;
 
 public class GetTransactionRequestBuilder {
 

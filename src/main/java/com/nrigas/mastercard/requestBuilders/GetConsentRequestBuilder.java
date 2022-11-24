@@ -1,12 +1,13 @@
 package com.nrigas.mastercard.requestBuilders;
 
-import com.nrigas.mastercard.model.*;
+import com.nrigas.mastercard.model.AccountNumber;
 import com.nrigas.mastercard.request.GetConsentRequest;
+import com.nrigas.mastercard.request.requestInfo.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class GetConsentRequestBuilder extends RequestBuilder {
+public class GetConsentRequestBuilder {
 
 	private GetConsentRequestInfo requestInfo = new GetConsentRequestInfo();
 	private final ArrayList<ConsentPermission> permissions;
@@ -19,20 +20,24 @@ public class GetConsentRequestBuilder extends RequestBuilder {
 		this.consentAccounts = new ArrayList<ConsentAccount>();
 	}
 
-	public void addTppRedirectURI(String tppRedirectURI) {
+	public GetConsentRequestBuilder withTppRedirectURI(String tppRedirectURI) {
 		this.requestInfo.setTppRedirectURI(tppRedirectURI);
+		return this;
 	}
 
-	public void addConsentPermission(ConsentPermission consentPermission) {
+	public GetConsentRequestBuilder addConsentPermission(ConsentPermission consentPermission) {
 		this.permissions.add(consentPermission);
+		return this;
 	}
 
-	public void addCredentials(String iban) {
+	public GetConsentRequestBuilder withCredentials(String iban) {
 		this.requestInfo.setCredentials(new Credentials(iban));
+		return this;
 	}
 
-	public void addValidUntilDateTime(LocalDateTime validUntilDateTime) {
+	public GetConsentRequestBuilder withValidUntilDateTime(LocalDateTime validUntilDateTime) {
 		this.validUntilDateTime = validUntilDateTime;
+		return this;
 	}
 
 	public GetConsentRequestBuilder addAccount(String identification, String currency, String schemeName) {

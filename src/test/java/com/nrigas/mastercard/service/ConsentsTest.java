@@ -1,5 +1,6 @@
 package com.nrigas.mastercard.service;
 
+import com.nrigas.mastercard.Consents;
 import com.nrigas.mastercard.TestCase;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.model.Consent;
@@ -18,13 +19,13 @@ import static org.mockito.ArgumentMatchers.argThat;
 
 public class ConsentsTest extends TestCase {
 
-    private Consents consent;
+    private Consents consents;
     private MastercardAisClient mastercardAisClient;
 
     @Before
     public void setUp() {
         this.mastercardAisClient = Mockito.mock(MastercardAisClient.class);
-        this.consent = new Consents(this.mastercardAisClient);
+        this.consents = new Consents(this.mastercardAisClient);
     }
 
     @Test
@@ -33,7 +34,7 @@ public class ConsentsTest extends TestCase {
 
         GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
         requestBuilder.addAspspId("aspspId");
-        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.withTppRedirectURI("tppRedirectURI");
         requestBuilder.addPsu(true, null, "127.0.0.1", "psuTppCustomerId");
         this.consent.get(requestBuilder.build());
 
@@ -46,7 +47,7 @@ public class ConsentsTest extends TestCase {
 
         GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
         requestBuilder.addAspspId("aspspId");
-        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.withTppRedirectURI("tppRedirectURI");
         requestBuilder.addPsu(true, "agent", null, null);
         this.consent.get(requestBuilder.build());
 
@@ -59,7 +60,7 @@ public class ConsentsTest extends TestCase {
 
         GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
         requestBuilder.addAspspId("aspspId");
-        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.withTppRedirectURI("tppRedirectURI");
         requestBuilder  .addPsu(true, null, null, null);
         this.consent.get(requestBuilder.build());
 
@@ -72,7 +73,7 @@ public class ConsentsTest extends TestCase {
 
         GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
         requestBuilder.addAspspId("aspspId");
-        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.withTppRedirectURI("tppRedirectURI");
         requestBuilder.addPsu(true, null, null, "psuTppCustomerId");
         this.consent.get(requestBuilder.build());
 
@@ -85,7 +86,7 @@ public class ConsentsTest extends TestCase {
         this.mockGetConsentResponse();
         GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
         requestBuilder.addAspspId("aspspId");
-        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.withTppRedirectURI("tppRedirectURI");
         requestBuilder.addPsu(true, null, null, null);
         requestBuilder.addMerchant("id", "name");
         Consent consent = this.consent.get(requestBuilder.build());
@@ -101,7 +102,7 @@ public class ConsentsTest extends TestCase {
 
         GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
         requestBuilder.addAspspId("aspspId");
-        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.withTppRedirectURI("tppRedirectURI");
         requestBuilder.addPsu(true, null, null, null);
         requestBuilder.addMerchant("id", "name");
         this.consent.get(requestBuilder.build());
@@ -115,7 +116,7 @@ public class ConsentsTest extends TestCase {
 
         GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
         requestBuilder.addAspspId("aspspId");
-        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.withTppRedirectURI("tppRedirectURI");
         requestBuilder.addPsu(true, null, null, null);
         this.consent.get(requestBuilder.build());
 
@@ -128,7 +129,7 @@ public class ConsentsTest extends TestCase {
 
         GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
         requestBuilder.addAspspId("aspspId");
-        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.withTppRedirectURI("tppRedirectURI");
         requestBuilder.addPsu(true, null, "127.0.0.1", null);
         this.consent.get(requestBuilder.build());
 
@@ -141,7 +142,7 @@ public class ConsentsTest extends TestCase {
 
         GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
         requestBuilder.addAspspId("aspspId");
-        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.withTppRedirectURI("tppRedirectURI");
         requestBuilder.addPsu(true, null, null, null);
         this.consent.get(requestBuilder.build());
 
@@ -154,7 +155,7 @@ public class ConsentsTest extends TestCase {
 
         GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
         requestBuilder.addAspspId("aspspId");
-        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.withTppRedirectURI("tppRedirectURI");
         requestBuilder.addPsu(true, null, "127.0.0.1", null);
         requestBuilder.addAccount("ACCNUMBR1234567", "EUR", "IBAN");
         requestBuilder.addAccount("ACCNUMBR1234567", "EUR", "IBAN");

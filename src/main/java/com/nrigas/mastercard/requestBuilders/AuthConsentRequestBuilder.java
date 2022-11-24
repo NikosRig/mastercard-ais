@@ -1,51 +1,52 @@
 package com.nrigas.mastercard.requestBuilders;
 
-import com.nrigas.mastercard.model.Merchant;
-import com.nrigas.mastercard.model.RequestInfoImpl;
 import com.nrigas.mastercard.request.AuthConsentRequest;
+import com.nrigas.mastercard.request.requestInfo.Merchant;
+import com.nrigas.mastercard.request.requestInfo.RequestInfoImpl;
 
-public class AuthConsentRequestBuilder extends RequestBuilder {
+public class AuthConsentRequestBuilder {
 
 	protected RequestInfoImpl requestInfo;
 	private String authorization;
 
-	public void addPsu(
-			Boolean isLivePsuRequest,
-			String psuAgent,
-			String psuIPAddress
-	) {
-		this.requestInfo.setPsuIPAddress(psuIPAddress);
-		this.requestInfo.setPsuAgent(psuAgent);
-		this.requestInfo.setLivePsuRequest(isLivePsuRequest);
-
+	public AuthConsentRequestBuilder() {
+		this.requestInfo = new RequestInfoImpl();
 	}
 
-	@Override
-	public void addAspspId(String aspspId) {
-		this.requestInfo.setAspspId(aspspId);
+	public AuthConsentRequestBuilder withMerchant(String merchantId, String merchantName) {
+		this.requestInfo.merchant = new Merchant(merchantId, merchantName);
+		return this;
 	}
 
-	@Override
-	public void addMerchant(String merchantId, String merchantName) {
-		this.requestInfo.setMerchant(new Merchant(merchantId, merchantName));
+	public AuthConsentRequestBuilder withAspspId(String aspspId) {
+		this.requestInfo.aspspId = aspspId;
+		return this;
 	}
 
-	public void addAuthorization(String authorization) {
+	public AuthConsentRequestBuilder withPsuAgent(String psuAgent) {
+		this.requestInfo.psuAgent = psuAgent;
+		return this;
+	};
+
+	public AuthConsentRequestBuilder withPsuIPAddress(String psuIPAddress) {
+		this.requestInfo.psuIPAddress = psuIPAddress;
+		return this;
+	};
+
+	public AuthConsentRequestBuilder withIsLivePsuRequest(Boolean isLivePsuRequest) {
+		this.requestInfo.isLivePsuRequest = isLivePsuRequest;
+		return this;
+	};
+
+	public AuthConsentRequestBuilder withPsuTppCustomerId(String psuTppCustomerId) {
+		this.requestInfo.psuTppCustomerId = psuTppCustomerId;
+		return this;
+	};
+
+	public AuthConsentRequestBuilder withAuthorization(String authorization) {
 		this.authorization = authorization;
-	}
-
-	@Override
-	public void addPsu(
-			Boolean isLivePsuRequest,
-			String psuAgent,
-			String psuIPAddress,
-			String psuTppCustomerId
-	) {
-		this.requestInfo.setPsuTppCustomerId(psuTppCustomerId);
-		this.requestInfo.setPsuIPAddress(psuIPAddress);
-		this.requestInfo.setPsuAgent(psuAgent);
-		this.requestInfo.setLivePsuRequest(isLivePsuRequest);
-	}
+		return this;
+	};
 
 	public AuthConsentRequest build() {
 		return new AuthConsentRequest(
