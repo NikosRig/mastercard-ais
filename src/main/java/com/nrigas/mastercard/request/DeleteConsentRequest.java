@@ -1,6 +1,6 @@
 package com.nrigas.mastercard.request;
 
-import com.nrigas.mastercard.model.RequestInfoImpl;
+import com.nrigas.mastercard.request.requestInfo.RequestInfoImpl;
 
 public class DeleteConsentRequest {
 

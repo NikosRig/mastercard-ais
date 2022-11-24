@@ -1,8 +1,7 @@
-package com.nrigas.mastercard.service;
+package com.nrigas.mastercard;
 
 import com.nrigas.mastercard.http.MastercardAisClient;
-import com.nrigas.mastercard.model.Merchant;
-import com.nrigas.mastercard.model.Psu;
+import com.nrigas.mastercard.request.requestInfo.Merchant;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -14,23 +13,6 @@ abstract public class MastercardAisService {
 
     public MastercardAisService(MastercardAisClient client) {
         this.client = client;
-    }
-
-    public void addPsu(Psu psu, JsonObjectBuilder payload) {
-
-        payload.add("isLivePsuRequest", psu.isLivePsuRequest());
-
-        if (psu.getIpAddress() != null) {
-            payload.add("psuIPAddress", psu.getIpAddress());
-        }
-
-        if (psu.getAgent() != null) {
-            payload.add("psuAgent", psu.getAgent());
-        }
-
-        if (psu.getTppCustomerId() != null) {
-            payload.add("psuTppCustomerId", psu.getTppCustomerId());
-        }
     }
 
     public void addMerchant(Merchant merchant, JsonObjectBuilder requestInfoBuilder) {

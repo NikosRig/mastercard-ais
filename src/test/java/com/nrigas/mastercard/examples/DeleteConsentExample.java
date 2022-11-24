@@ -2,6 +2,7 @@ package com.nrigas.mastercard.examples;
 
 import com.nrigas.mastercard.MastercardAis;
 import com.nrigas.mastercard.MastercardAisConfig;
+import com.nrigas.mastercard.request.DeleteConsentRequest;
 import com.nrigas.mastercard.requestBuilders.DeleteConsentRequestBuilder;
 
 public class DeleteConsentExample {
@@ -17,12 +18,12 @@ public class DeleteConsentExample {
 		);
 		MastercardAis mastercardAis = new MastercardAis(config);
 
-		DeleteConsentRequestBuilder deleteConsentRequestBuilder = new DeleteConsentRequestBuilder();
-		deleteConsentRequestBuilder.addAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf");
-		deleteConsentRequestBuilder.addMerchant("MerchantId", "MerchantName");
-		deleteConsentRequestBuilder.addConsentId("GFiTpF3:EBy5xGqQMatk");
-		deleteConsentRequestBuilder.addPsuTppCustomerId("psuTppCustomerId");
-
-		mastercardAis.consents().delete(deleteConsentRequestBuilder.build());
+		DeleteConsentRequest request = new DeleteConsentRequestBuilder()
+				.withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+				.withMerchant("MerchantId", "MerchantName")
+				.withConsentId("GFiTpF3:EBy5xGqQMatk")
+				.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+				.build();
+		mastercardAis.consents().delete(request);
 	}
 }
