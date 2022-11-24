@@ -3,8 +3,6 @@ package com.nrigas.mastercard.service;
 import com.nrigas.mastercard.TestCase;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.model.Consent;
-import com.nrigas.mastercard.request.AuthConsentRequest;
-import com.nrigas.mastercard.request.GetConsentRequest;
 import com.nrigas.mastercard.requestBuilders.AuthConsentRequestBuilder;
 import com.nrigas.mastercard.requestBuilders.GetConsentRequestBuilder;
 import org.json.JSONObject;
@@ -33,12 +31,11 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentPsuAgentIsOptional() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new GetConsentRequestBuilder()
-                .withAspspId("aspspId")
-                .withTppRedirectURI("tppRedirectURI")
-                .withPsu(true, null, "127.0.0.1", "psuTppCustomerId")
-                .build();
-        this.consent.get(request);
+        GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
+        requestBuilder.addAspspId("aspspId");
+        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.addPsu(true, null, "127.0.0.1", "psuTppCustomerId");
+        this.consent.get(requestBuilder.build());
 
         this.assertRequestInfoNotHas("psuAgent");
     }
@@ -47,12 +44,11 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentPsuAgentWillBePassed() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new GetConsentRequestBuilder()
-                .withAspspId("aspspId")
-                .withTppRedirectURI("tppRedirectURI")
-                .withPsu(true, "agent", null, null)
-                .build();
-        this.consent.get(request);
+        GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
+        requestBuilder.addAspspId("aspspId");
+        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.addPsu(true, "agent", null, null);
+        this.consent.get(requestBuilder.build());
 
         this.assertRequestInfoHas("psuAgent");
     }
@@ -61,12 +57,11 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentPsuTppCustomerIsOptional() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new GetConsentRequestBuilder()
-                .withAspspId("aspspId")
-                .withTppRedirectURI("tppRedirectURI")
-                .withPsu(true, null, null, null)
-                .build();
-        this.consent.get(request);
+        GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
+        requestBuilder.addAspspId("aspspId");
+        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder  .addPsu(true, null, null, null);
+        this.consent.get(requestBuilder.build());
 
         this.assertRequestInfoNotHas("psuTppCustomerId");
     }
@@ -75,12 +70,11 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentPsuTppCustomerWillBePassed() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new GetConsentRequestBuilder()
-                .withAspspId("aspspId")
-                .withTppRedirectURI("tppRedirectURI")
-                .withPsu(true, null, null, "psuTppCustomerId")
-                .build();
-        this.consent.get(request);
+        GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
+        requestBuilder.addAspspId("aspspId");
+        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.addPsu(true, null, null, "psuTppCustomerId");
+        this.consent.get(requestBuilder.build());
 
         this.assertRequestInfoHas("psuTppCustomerId");
     }
@@ -89,13 +83,12 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsent() throws Exception {
 
         this.mockGetConsentResponse();
-        GetConsentRequest request = new GetConsentRequestBuilder()
-                .withAspspId("aspspId")
-                .withTppRedirectURI("tppRedirectURI")
-                .withPsu(true, null, null, null)
-                .withMerchant("id", "name")
-                .build();
-        Consent consent = this.consent.get(request);
+        GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
+        requestBuilder.addAspspId("aspspId");
+        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.addPsu(true, null, null, null);
+        requestBuilder.addMerchant("id", "name");
+        Consent consent = this.consent.get(requestBuilder.build());
 
         Assert.assertNotNull(consent.consentRequestId);
         Assert.assertNotNull(consent.scaRedirectUri);
@@ -106,13 +99,12 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentMerchantWillBePassed() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new GetConsentRequestBuilder()
-                .withAspspId("aspspId")
-                .withTppRedirectURI("tppRedirectURI")
-                .withPsu(true, null, null, null)
-                .withMerchant("id", "name")
-                .build();
-        this.consent.get(request);
+        GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
+        requestBuilder.addAspspId("aspspId");
+        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.addPsu(true, null, null, null);
+        requestBuilder.addMerchant("id", "name");
+        this.consent.get(requestBuilder.build());
 
         this.assertRequestInfoHas("merchant");
     }
@@ -121,12 +113,11 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentMerchantIsOptional() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new GetConsentRequestBuilder()
-                .withAspspId("aspspId")
-                .withTppRedirectURI("tppRedirectURI")
-                .withPsu(true, null, null, null)
-                .build();
-        this.consent.get(request);
+        GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
+        requestBuilder.addAspspId("aspspId");
+        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.addPsu(true, null, null, null);
+        this.consent.get(requestBuilder.build());
 
         this.assertRequestInfoNotHas("merchant");
     }
@@ -135,12 +126,11 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentPsuIpAddressWillBePassed() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new GetConsentRequestBuilder()
-                .withAspspId("aspspId")
-                .withTppRedirectURI("tppRedirectURI")
-                .withPsu(true, null, "127.0.0.1", null)
-                .build();
-        this.consent.get(request);
+        GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
+        requestBuilder.addAspspId("aspspId");
+        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.addPsu(true, null, "127.0.0.1", null);
+        this.consent.get(requestBuilder.build());
 
         this.assertRequestInfoHas("psuIPAddress");
     }
@@ -149,12 +139,11 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentPsuIpAddressIsOptional() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new GetConsentRequestBuilder()
-                .withAspspId("aspspId")
-                .withTppRedirectURI("tppRedirectURI")
-                .withPsu(true, null, null, null)
-                .build();
-        this.consent.get(request);
+        GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
+        requestBuilder.addAspspId("aspspId");
+        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.addPsu(true, null, null, null);
+        this.consent.get(requestBuilder.build());
 
         this.assertRequestInfoNotHas("psuIPAddress");
     }
@@ -163,14 +152,13 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentMultipleAccountsCanBeAdded() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new GetConsentRequestBuilder()
-                .withAspspId("aspspId")
-                .withTppRedirectURI("tppRedirectURI")
-                .withPsu(true, null, "127.0.0.1", null)
-                .addAccount("ACCNUMBR1234567", "EUR", "IBAN")
-                .addAccount("ACCNUMBR1234567", "EUR", "IBAN")
-                .build();
-        this.consent.get(request);
+        GetConsentRequestBuilder requestBuilder = new GetConsentRequestBuilder();
+        requestBuilder.addAspspId("aspspId");
+        requestBuilder.addTppRedirectURI("tppRedirectURI");
+        requestBuilder.addPsu(true, null, "127.0.0.1", null);
+        requestBuilder.addAccount("ACCNUMBR1234567", "EUR", "IBAN");
+        requestBuilder.addAccount("ACCNUMBR1234567", "EUR", "IBAN");
+        this.consent.get(requestBuilder.build());
 
         Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
             return new JSONObject(jsonBody).getJSONArray("accounts").length() == 2;
@@ -178,32 +166,32 @@ public class ConsentsTest extends TestCase {
     }
 
     @Test
-    public void authConsentShouldAddPsuIpAddressOnlyWhenExists() throws Exception {
+    public void authConsentShouldAddPsuIpAddressWhenExists() throws Exception {
         HttpResponse authConsentResponse = this.mockAuthConsentResponse();
         Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(authConsentResponse);
 
-        AuthConsentRequest authConsentRequest = new AuthConsentRequestBuilder()
-                .withAspspId("aspspId")
-                .withAuthorization("code=xxxx")
-                .withPsu(true, null, "127.0.0.1")
-                .build();
+        AuthConsentRequestBuilder requestBuilder = new AuthConsentRequestBuilder();
+        requestBuilder.addAspspId("aspspId");
+        requestBuilder.addAspspId("code=xxxx");
+        requestBuilder.addPsu(true, null, "127.0.0.1");
+        requestBuilder.addAuthorization("authorization");
+        this.consent.authorize(requestBuilder.build());
 
-        AuthConsentRequest authConsentRequestWithoutPsuIp = new AuthConsentRequestBuilder()
-                .withAspspId("aspspId")
-                .withAuthorization("code=xxxx")
-                .withPsu(true, null, null)
-                .build();
-
-        this.consent.authorize(authConsentRequest);
         this.assertRequestInfoHas("psuIPAddress");
-
-        this.consent.authorize(authConsentRequestWithoutPsuIp);
-        this.assertRequestInfoNotHas("psuIPAddress");
     }
 
     @Test
-    public void testMe() {
+    public void authConsentShouldNotAddPsuIpAddressWhenNotExists() throws Exception {
+        HttpResponse authConsentResponse = this.mockAuthConsentResponse();
+        Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(authConsentResponse);
 
+        AuthConsentRequestBuilder requestBuilder = new AuthConsentRequestBuilder();
+        requestBuilder.addAspspId("aspspId");
+        requestBuilder .addAuthorization("code=xxxx");
+        requestBuilder.addPsu(true, null, null);
+        this.consent.authorize(requestBuilder.build());
+
+        this.assertRequestInfoNotHas("psuIPAddress");
     }
 
     private void assertRequestInfoHas(String key) throws Exception {

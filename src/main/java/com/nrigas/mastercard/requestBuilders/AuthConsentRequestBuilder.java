@@ -13,34 +13,42 @@ public class AuthConsentRequestBuilder extends RequestBuilder {
 		this.requestInfo = new RequestInfo();
 	}
 
-	public AuthConsentRequestBuilder withPsu(
+	public void addPsu(
 			Boolean isLivePsuRequest,
 			String psuAgent,
 			String psuIPAddress
+	) {
+		this.requestInfo.setPsuIPAddress(psuIPAddress);
+		this.requestInfo.setPsuAgent(psuAgent);
+		this.requestInfo.setLivePsuRequest(isLivePsuRequest);
+
+	}
+
+	@Override
+	public void addAspspId(String aspspId) {
+		this.requestInfo.setAspspId(aspspId);
+	}
+
+	@Override
+	public void addMerchant(String merchantId, String merchantName) {
+		this.requestInfo.setMerchant(new Merchant(merchantId, merchantName));
+	}
+
+	public void addAuthorization(String authorization) {
+		this.authorization = authorization;
+	}
+
+	@Override
+	public void addPsu(
+			Boolean isLivePsuRequest,
+			String psuAgent,
+			String psuIPAddress,
+			String psuTppCustomerId
 	) {
 		this.requestInfo.setPsuTppCustomerId(psuTppCustomerId);
 		this.requestInfo.setPsuIPAddress(psuIPAddress);
 		this.requestInfo.setPsuAgent(psuAgent);
 		this.requestInfo.setLivePsuRequest(isLivePsuRequest);
-
-		return this;
-	}
-
-	@Override
-	public AuthConsentRequestBuilder withAspspId(String aspspId) {
-		this.requestInfo.setAspspId(aspspId);
-		return this;
-	}
-
-	@Override
-	public AuthConsentRequestBuilder withMerchant(String merchantId, String merchantName) {
-		this.requestInfo.setMerchant(new Merchant(merchantId, merchantName));
-		return this;
-	}
-
-	public AuthConsentRequestBuilder withAuthorization(String authorization) {
-		this.authorization = authorization;
-		return this;
 	}
 
 	public AuthConsentRequest build() {

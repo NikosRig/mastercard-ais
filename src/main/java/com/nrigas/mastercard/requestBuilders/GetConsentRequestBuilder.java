@@ -20,7 +20,7 @@ public class GetConsentRequestBuilder extends RequestBuilder {
 	}
 
 	@Override
-	public GetConsentRequestBuilder withPsu(
+	public void addPsu(
 			Boolean isLivePsuRequest,
 			String psuAgent,
 			String psuIPAddress,
@@ -30,40 +30,32 @@ public class GetConsentRequestBuilder extends RequestBuilder {
 		this.requestInfo.setPsuIPAddress(psuIPAddress);
 		this.requestInfo.setPsuAgent(psuAgent);
 		this.requestInfo.setLivePsuRequest(isLivePsuRequest);
-
-		return this;
 	}
 
 	@Override
-	public GetConsentRequestBuilder withMerchant(String merchantId, String merchantName) {
+	public void addMerchant(String merchantId, String merchantName) {
 		this.requestInfo.setMerchant(new Merchant(merchantId, merchantName));
-		return this;
 	}
 
 	@Override
-	public GetConsentRequestBuilder withAspspId(String aspspId) {
+	public void addAspspId(String aspspId) {
 		this.requestInfo.setAspspId(aspspId);
-		return this;
 	}
 
-	public GetConsentRequestBuilder withTppRedirectURI(String tppRedirectURI) {
+	public void addTppRedirectURI(String tppRedirectURI) {
 		this.requestInfo.setTppRedirectURI(tppRedirectURI);
-		return this;
 	}
 
-	public GetConsentRequestBuilder addConsentPermission(ConsentPermission consentPermission) {
+	public void addConsentPermission(ConsentPermission consentPermission) {
 		this.permissions.add(consentPermission);
-		return this;
 	}
 
-	public GetConsentRequestBuilder withCredentials(String iban) {
+	public void addCredentials(String iban) {
 		this.requestInfo.setCredentials(new Credentials(iban));
-		return this;
 	}
 
-	public GetConsentRequestBuilder withValidUntilDateTime(LocalDateTime validUntilDateTime) {
+	public void addValidUntilDateTime(LocalDateTime validUntilDateTime) {
 		this.validUntilDateTime = validUntilDateTime;
-		return this;
 	}
 
 	public GetConsentRequestBuilder addAccount(String identification, String currency, String schemeName) {

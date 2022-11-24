@@ -2,7 +2,6 @@ package com.nrigas.mastercard.service;
 
 import com.nrigas.mastercard.TestCase;
 import com.nrigas.mastercard.http.MastercardAisClient;
-import com.nrigas.mastercard.request.GetAccountRequest;
 import com.nrigas.mastercard.requestBuilders.GetAccountRequestBuilder;
 import com.nrigas.mastercard.response.GetAccountResponse;
 import org.junit.Assert;
@@ -30,14 +29,13 @@ public class AccountsTest extends TestCase {
 		HttpResponse getAccountMockResponse = this.mockGetAccountResponse();
 		Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getAccountMockResponse);
 
-		GetAccountRequest getAccountRequest = new GetAccountRequestBuilder()
-				.withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
-				.withMerchant("MerchantId", "MerchantName")
-				.withConsentId("GFiTpF3:EBy5xGqQMatk")
-				.withAccountId("aa:q648383844dhhfHhTV")
-				.withPsu(true, "PostmanRuntime/7.20.1", "127.0.0.1", null)
-				.build();
-		GetAccountResponse getAccountResponse = this.account.get(getAccountRequest);
+		GetAccountRequestBuilder getAccountRequestBuilder = new GetAccountRequestBuilder();
+		getAccountRequestBuilder.addAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf");
+		getAccountRequestBuilder.addMerchant("MerchantId", "MerchantName");
+		getAccountRequestBuilder.addConsentId("GFiTpF3:EBy5xGqQMatk");
+		getAccountRequestBuilder.addAccountId("aa:q648383844dhhfHhTV");
+		getAccountRequestBuilder.addPsu(true, "PostmanRuntime/7.20.1", "127.0.0.1", null);
+		GetAccountResponse getAccountResponse = this.account.get(getAccountRequestBuilder.build());
 
 		Assert.assertNotNull(getAccountResponse.account.resourceId);
 		Assert.assertNotNull(getAccountResponse.account.currency);

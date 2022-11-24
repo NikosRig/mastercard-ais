@@ -2,7 +2,6 @@ package com.nrigas.mastercard.examples;
 
 import com.nrigas.mastercard.MastercardAis;
 import com.nrigas.mastercard.MastercardAisConfig;
-import com.nrigas.mastercard.request.AuthConsentRequest;
 import com.nrigas.mastercard.requestBuilders.AuthConsentRequestBuilder;
 import com.nrigas.mastercard.response.AuthorizeConsentResponse;
 
@@ -18,12 +17,13 @@ public class AuthConsentExample {
 		);
 		MastercardAis mastercardAis = new MastercardAis(config);
 
-		AuthConsentRequest authConsentRequest = new AuthConsentRequestBuilder()
-				.withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
-				.withMerchant("MerchantId", "MerchantName")
-				.withAuthorization("code=UKaccountEsbGdTB2a9MbSdt53serRsv0aUK001&state=c4ebdeb0-fdce-4879-ab84-62fdfaa28b80")
-				.withPsu(true, "PostmanRuntime/7.20.1", "127.0.0.1")
-				.build();
-		AuthorizeConsentResponse authConsentResponse = mastercardAis.consents().authorize(authConsentRequest);
+		AuthConsentRequestBuilder authConsentRequestBuilder = new AuthConsentRequestBuilder();
+		authConsentRequestBuilder.addAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf");
+		authConsentRequestBuilder.addMerchant("MerchantId", "MerchantName");
+		authConsentRequestBuilder.addAuthorization("code=UKaccountEsbGdTB2a9MbSdt53serRsv0aUK001&state=c4ebdeb0-fdce-4879-ab84-62fdfaa28b80");
+		authConsentRequestBuilder.addPsu(true, "PostmanRuntime/7.20.1", "127.0.0.1", "psuTppCustomerId");
+
+		AuthorizeConsentResponse authConsentResponse = mastercardAis.consents()
+				.authorize(authConsentRequestBuilder.build());
 	}
 }

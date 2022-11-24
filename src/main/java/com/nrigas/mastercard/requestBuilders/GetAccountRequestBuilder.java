@@ -16,13 +16,12 @@ public class GetAccountRequestBuilder extends RequestBuilder {
 	}
 
 	@Override
-	public GetAccountRequestBuilder withAspspId(String aspspId) {
+	public void addAspspId(String aspspId) {
 		this.requestInfo.setAspspId(aspspId);
-		return this;
 	}
 
 	@Override
-	public GetAccountRequestBuilder withPsu(
+	public void addPsu(
 			Boolean isLivePsuRequest,
 			String psuAgent,
 			String psuIPAddress,
@@ -32,24 +31,19 @@ public class GetAccountRequestBuilder extends RequestBuilder {
 		this.requestInfo.setPsuIPAddress(psuIPAddress);
 		this.requestInfo.setPsuAgent(psuAgent);
 		this.requestInfo.setLivePsuRequest(isLivePsuRequest);
-
-		return this;
 	}
 
 	@Override
-	public GetAccountRequestBuilder withMerchant(String merchantId, String merchantName) {
+	public void addMerchant(String merchantId, String merchantName) {
 		this.requestInfo.setMerchant(new Merchant(merchantId, merchantName));
-		return this;
 	}
 
-	public GetAccountRequestBuilder withConsentId(String consentId) {
+	public void addConsentId(String consentId) {
 		this.requestInfo.setConsentId(consentId);
-		return this;
 	}
 
-	public GetAccountRequestBuilder withAccountId(String accountId) {
+	public void addAccountId(String accountId) {
 		this.accountId = accountId;
-		return this;
 	}
 
 	public GetAccountRequest build() {

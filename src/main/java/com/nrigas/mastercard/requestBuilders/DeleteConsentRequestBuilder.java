@@ -14,24 +14,20 @@ public class DeleteConsentRequestBuilder extends RequestBuilder {
 	}
 
 	@Override
-	public DeleteConsentRequestBuilder withAspspId(String aspspId) {
+	public void addAspspId(String aspspId) {
 		this.requestInfo.setAspspId(aspspId);
-		return this;
 	}
 
-	public DeleteConsentRequestBuilder withMerchant(String merchantId, String merchantName) {
+	public void addMerchant(String merchantId, String merchantName) {
 		this.requestInfo.setMerchant(new Merchant(merchantId, merchantName));
-		return this;
 	}
 
-	public DeleteConsentRequestBuilder withPsuTppCustomerId(String psuTppCustomerId) {
+	public void addPsuTppCustomerId(String psuTppCustomerId) {
 		this.requestInfo.setPsuTppCustomerId(psuTppCustomerId);
-		return this;
 	}
 
-	public DeleteConsentRequestBuilder withConsentId(String consentId) {
+	public void addConsentId(String consentId) {
 		this.consentId = consentId;
-		return this;
 	}
 
 	public DeleteConsentRequest build() {
