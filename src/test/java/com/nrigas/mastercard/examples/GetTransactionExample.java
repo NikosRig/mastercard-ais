@@ -18,23 +18,19 @@ public class GetTransactionExample {
 		);
 		MastercardAis mastercardAis = new MastercardAis(config);
 
-		try {
-			GetTransactionRequest request = new GetTransactionRequestBuilder()
-					.withConsentId("MatkBJbqtZ8sPNznYtfV:5g")
-					.withMerchant("MerchantId", "MerchantName")
-					.withPsuAgent("PostmanRuntime/7.20.1")
-					.withPsuIPAddress("217.0.0.1")
-					.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
-					.withIsLivePsuRequest(true)
-					.withAspspId("b806ae68-a45b-49d6-b25a-69fdb81dede6")
-					.withAccountId("qqCfw:XwAa:665hs5:r55d")
-					.withTransactionId("7ccs6s5:r55a:4MctP")
-					.build();
+		GetTransactionRequest request = new GetTransactionRequestBuilder()
+				.withConsentId("MatkBJbqtZ8sPNznYtfV:5g")
+				.withMerchant("MerchantId", "MerchantName")
+				.withPsuAgent("PostmanRuntime/7.20.1")
+				.withPsuIPAddress("217.0.0.1")
+				.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+				.withIsLivePsuRequest(true)
+				.withAspspId("b806ae68-a45b-49d6-b25a-69fdb81dede6")
+				.withAccountId("qqCfw:XwAa:665hs5:r55d")
+				.withTransactionId("7ccs6s5:r55a:4MctP")
+				.build();
 
-			mastercardAis.transactions().get(request);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-
+		mastercardAis.transactions().get(request);
+		String x = "2";
 	}
 }

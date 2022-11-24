@@ -1,7 +1,9 @@
 package com.nrigas.mastercard.service;
 
+import com.nrigas.mastercard.Accounts;
 import com.nrigas.mastercard.TestCase;
 import com.nrigas.mastercard.http.MastercardAisClient;
+import com.nrigas.mastercard.request.GetAccountRequest;
 import com.nrigas.mastercard.requestBuilders.GetAccountRequestBuilder;
 import com.nrigas.mastercard.response.GetAccountResponse;
 import org.junit.Assert;
@@ -16,12 +18,12 @@ import static org.mockito.ArgumentMatchers.any;
 public class AccountsTest extends TestCase {
 
 	private MastercardAisClient mastercardAisClient;
-	private Accounts account;
+	private Accounts accounts;
 
 	@Before
 	public void setUp() {
 		this.mastercardAisClient = Mockito.mock(MastercardAisClient.class);
-		this.account = new Accounts(this.mastercardAisClient);
+		this.accounts = new Accounts(this.mastercardAisClient);
 	}
 
 	@Test
@@ -29,28 +31,31 @@ public class AccountsTest extends TestCase {
 		HttpResponse getAccountMockResponse = this.mockGetAccountResponse();
 		Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getAccountMockResponse);
 
-		GetAccountRequestBuilder getAccountRequestBuilder = new GetAccountRequestBuilder();
-		getAccountRequestBuilder.addAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf");
-		getAccountRequestBuilder.addMerchant("MerchantId", "MerchantName");
-		getAccountRequestBuilder.addConsentId("GFiTpF3:EBy5xGqQMatk");
-		getAccountRequestBuilder.addAccountId("aa:q648383844dhhfHhTV");
-		getAccountRequestBuilder.addPsu(true, "PostmanRuntime/7.20.1", "127.0.0.1", null);
-		GetAccountResponse getAccountResponse = this.account.get(getAccountRequestBuilder.build());
+		GetAccountRequest request = new GetAccountRequestBuilder()
+				.withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+				.withMerchant("MerchantId", "MerchantName")
+				.withConsentId("GFiTpF3:EBy5xGqQMatk")
+				.withAccountId("aa:q648383844dhhfHhTV")
+				.withIsLivePsuRequest(true)
+				.withPsuAgent("PostmanRuntime/7.20.1")
+				.withPsuIPAddress("127.0.0.1")
+				.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+				.build();
+		GetAccountResponse response = this.accounts.get(request);
 
-		Assert.assertNotNull(getAccountResponse.account.resourceId);
-		Assert.assertNotNull(getAccountResponse.account.currency);
-		Assert.assertNotNull(getAccountResponse.account.accountHolderType);
-		Assert.assertNotNull(getAccountResponse.account.accountType);
-		Assert.assertNotNull(getAccountResponse.account.nameClient);
-		Assert.assertNotNull(getAccountResponse.account.name);
-		Assert.assertNotNull(getAccountResponse.account.holderName);
-		Assert.assertNotNull(getAccountResponse.account.holderNameAddress);
-		Assert.assertNotNull(getAccountResponse.account.accountNumber);
-		Assert.assertNotNull(getAccountResponse.account.schemeName);
-		Assert.assertNotNull(getAccountResponse.account.auxData);
-		Assert.assertNotNull(getAccountResponse.account.holderNameAddress);
-		Assert.assertNotNull(getAccountResponse.account.accountPsuRelations);
-		Assert.assertNotNull(getAccountResponse.account.holderAddress);
+		Assert.assertNotNull(response.account.resourceId);
+		Assert.assertNotNull(response.account.currency);
+		Assert.assertNotNull(response.account.accountHolderType);
+		Assert.assertNotNull(response.account.accountType);
+		Assert.assertNotNull(response.account.nameClient);
+		Assert.assertNotNull(response.account.name);
+		Assert.assertNotNull(response.account.holderName);
+		Assert.assertNotNull(response.account.holderNameAddress);
+		Assert.assertNotNull(response.account.schemeName);
+		Assert.assertNotNull(response.account.auxData);
+		Assert.assertNotNull(response.account.holderNameAddress);
+		Assert.assertNotNull(response.account.accountPsuRelations);
+		Assert.assertNotNull(response.account.holderAddress);
 	}
 
 	private HttpResponse mockGetAccountResponse() {

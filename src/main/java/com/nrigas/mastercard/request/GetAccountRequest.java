@@ -1,6 +1,6 @@
 package com.nrigas.mastercard.request;
 
-import com.nrigas.mastercard.model.GetAccountRequestInfo;
+import com.nrigas.mastercard.request.requestInfo.GetAccountRequestInfo;
 
 public class GetAccountRequest {
 

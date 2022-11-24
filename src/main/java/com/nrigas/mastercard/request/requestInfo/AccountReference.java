@@ -1,4 +1,6 @@
-package com.nrigas.mastercard.model;
+package com.nrigas.mastercard.request.requestInfo;
+
+import com.nrigas.mastercard.model.AccountNumber;
 
 public class AccountReference {
 
