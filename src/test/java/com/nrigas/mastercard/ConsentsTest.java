@@ -1,7 +1,5 @@
-package com.nrigas.mastercard.service;
+package com.nrigas.mastercard;
 
-import com.nrigas.mastercard.Consents;
-import com.nrigas.mastercard.TestCase;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.model.Consent;
 import com.nrigas.mastercard.request.AuthConsentRequest;

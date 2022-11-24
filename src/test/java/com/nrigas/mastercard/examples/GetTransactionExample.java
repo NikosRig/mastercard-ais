@@ -2,6 +2,7 @@ package com.nrigas.mastercard.examples;
 
 import com.nrigas.mastercard.MastercardAis;
 import com.nrigas.mastercard.MastercardAisConfig;
+import com.nrigas.mastercard.model.Transaction;
 import com.nrigas.mastercard.request.GetTransactionRequest;
 import com.nrigas.mastercard.requestBuilders.GetTransactionRequestBuilder;
 
@@ -20,17 +21,15 @@ public class GetTransactionExample {
 
 		GetTransactionRequest request = new GetTransactionRequestBuilder()
 				.withConsentId("MatkBJbqtZ8sPNznYtfV:5g")
+				.withAspspId("b806ae68-a45b-49d6-b25a-69fdb81dede6")
+				.withIsLivePsuRequest(false)
 				.withMerchant("MerchantId", "MerchantName")
 				.withPsuAgent("PostmanRuntime/7.20.1")
-				.withPsuIPAddress("217.0.0.1")
+				.withPsuIPAddress("192.168.0.1")
 				.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
-				.withIsLivePsuRequest(true)
-				.withAspspId("b806ae68-a45b-49d6-b25a-69fdb81dede6")
-				.withAccountId("qqCfw:XwAa:665hs5:r55d")
+				.withAccountId("qqCfw:XwAa:665hs5:r55dM")
 				.withTransactionId("7ccs6s5:r55a:4MctP")
 				.build();
-
-		mastercardAis.transactions().get(request);
-		String x = "2";
+		Transaction transaction = mastercardAis.transactions().get(request);
 	}
 }
