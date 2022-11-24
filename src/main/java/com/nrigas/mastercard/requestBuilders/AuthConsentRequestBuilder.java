@@ -1,47 +1,52 @@
 package com.nrigas.mastercard.requestBuilders;
 
 import com.nrigas.mastercard.model.Merchant;
-import com.nrigas.mastercard.service.Consent.request.AuthConsentRequest;
-
-import java.util.Optional;
+import com.nrigas.mastercard.model.RequestInfo;
+import com.nrigas.mastercard.request.AuthConsentRequest;
 
 public class AuthConsentRequestBuilder extends RequestBuilder {
 
-	private Merchant merchant;
-	private String authCode;
+	private final RequestInfo requestInfo;
+	private String authorization;
+
+	public AuthConsentRequestBuilder() {
+		this.requestInfo = new RequestInfo();
+	}
 
 	public AuthConsentRequestBuilder withPsu(
 			Boolean isLivePsuRequest,
 			String psuAgent,
-			String psuIpAddress
+			String psuIPAddress
 	) {
-		super.withPsu(isLivePsuRequest, psuAgent, psuIpAddress, null);
+		this.requestInfo.setPsuTppCustomerId(psuTppCustomerId);
+		this.requestInfo.setPsuIPAddress(psuIPAddress);
+		this.requestInfo.setPsuAgent(psuAgent);
+		this.requestInfo.setLivePsuRequest(isLivePsuRequest);
+
 		return this;
 	}
 
 	@Override
-	public AuthConsentRequestBuilder withAspsId(String aspsId) {
-		super.withAspsId(aspsId);
+	public AuthConsentRequestBuilder withAspspId(String aspspId) {
+		this.requestInfo.setAspspId(aspspId);
 		return this;
 	}
 
 	@Override
 	public AuthConsentRequestBuilder withMerchant(String merchantId, String merchantName) {
-		super.withMerchant(merchantId, merchantName);
+		this.requestInfo.setMerchant(new Merchant(merchantId, merchantName));
 		return this;
 	}
 
-	public AuthConsentRequestBuilder withAuthCode(String authCode) {
-		this.authCode = authCode;
+	public AuthConsentRequestBuilder withAuthorization(String authorization) {
+		this.authorization = authorization;
 		return this;
 	}
 
 	public AuthConsentRequest build() {
 		return new AuthConsentRequest(
-				this.aspsId,
-				this.psu,
-				this.authCode,
-				Optional.ofNullable(this.merchant)
+				this.requestInfo,
+				this.authorization
 		);
 	}
 }

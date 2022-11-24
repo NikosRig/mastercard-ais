@@ -9,7 +9,6 @@ import java.util.UUID;
 public class GetAccountRequestBuilder extends RequestBuilder {
 
 	private final GetAccountRequestInfo requestInfo;
-	private String consentId;
 	private String accountId;
 
 	public GetAccountRequestBuilder() {

@@ -1,5 +1,7 @@
 package com.nrigas.mastercard.model;
 
+import java.util.UUID;
+
 public class RequestInfo {
 
 	public String xRequestId;
@@ -9,6 +11,10 @@ public class RequestInfo {
 	public String psuTppCustomerId;
 	public Merchant merchant;
 	public Boolean isLivePsuRequest;
+
+	public RequestInfo() {
+		this.xRequestId = UUID.randomUUID().toString();
+	}
 
 	public void setPsuIPAddress(String psuIPAddress) {
 		this.psuIPAddress = psuIPAddress;

@@ -2,90 +2,57 @@ package com.nrigas.mastercard.service.Consent;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonPrimitive;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.model.Consent;
-import com.nrigas.mastercard.model.ConsentAccount;
-import com.nrigas.mastercard.model.ConsentPermission;
-import com.nrigas.mastercard.service.Consent.request.AuthConsentRequest;
-import com.nrigas.mastercard.service.Consent.request.ConsentRequest;
-import com.nrigas.mastercard.service.Consent.request.DeleteConsentRequest;
+import com.nrigas.mastercard.request.AuthConsentRequest;
+import com.nrigas.mastercard.request.DeleteConsentRequest;
+import com.nrigas.mastercard.request.GetConsentRequest;
 import com.nrigas.mastercard.service.Consent.response.AuthorizeConsentResponse;
 import com.nrigas.mastercard.service.MastercardAisService;
 import org.json.JSONObject;
 
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import java.net.http.HttpResponse;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class Consents extends MastercardAisService {
 
-    private final Gson gsonBuilder;
+    private final Gson gson;
 
     public Consents(MastercardAisClient client) {
         super(client);
-        this.gsonBuilder = new GsonBuilder().create();
+        this.gson = new GsonBuilder().create();
     }
 
     public AuthorizeConsentResponse authorize(AuthConsentRequest request) throws Exception {
 
-        JsonObjectBuilder requestInfoBuilder = Json.createObjectBuilder()
-                .add("xRequestId", UUID.randomUUID().toString())
-                .add("aspspId", request.aspspId);
-
-        this.addPsu(request.psu, requestInfoBuilder);
-        this.addMerchant(request.merchant, requestInfoBuilder);
-
-        JsonObjectBuilder payload = Json.createObjectBuilder()
-                .add("requestInfo", requestInfoBuilder)
-                .add("authorization", request.authCode);
+        com.google.gson.JsonObject payload = new com.google.gson.JsonObject();
+        payload.add("requestInfo", this.gson.toJsonTree(request.requestInfo));
+        payload.add("authorization", new JsonPrimitive(request.authorization));
 
         HttpResponse<String> response = this.client.postJson(
                 "/openbanking/connect/api/accounts/consents/authorizations",
-                payload.build().toString()
+                payload.toString()
         );
-        JSONObject responsePayload = new JSONObject(response.body());
 
-        return new AuthorizeConsentResponse(
-                responsePayload.getString("consentId"),
-                responsePayload.getString("consentRequestId"),
-                responsePayload.getJSONObject("originalRequestInfo").getString("xRequestId")
-        );
+        return this.gson.fromJson(response.body(), AuthorizeConsentResponse.class);
     }
 
-    public Consent get(ConsentRequest request) throws Exception {
+    public Consent get(GetConsentRequest request) throws Exception {
 
-        JsonObjectBuilder requestInfoBuilder = Json.createObjectBuilder()
-                .add("xRequestId", UUID.randomUUID().toString())
-                .add("tppRedirectURI", request.tppRedirectURI)
-                .add("aspspId", request.aspspId);
-
-        JsonObjectBuilder payload = Json.createObjectBuilder();
-
-        this.addPsu(request.psu, requestInfoBuilder);
-        this.addMerchant(request.merchant, requestInfoBuilder);
-        this.addAccounts(request.consentAccountsList, payload);
-        this.addPermissions(request.permissions, payload);
-
-        if (request.credentials != null) {
-            JsonObjectBuilder credentials = Json.createObjectBuilder().add("iban", request.credentials.getIban());
-            requestInfoBuilder.add("credentials", credentials);
-        }
-        payload.add("requestInfo", requestInfoBuilder.build());
+        com.google.gson.JsonObject payload = new com.google.gson.JsonObject();
+        payload.add("requestInfo", this.gson.toJsonTree(request.requestInfo));
+        payload.add("permissions", this.gson.toJsonTree(request.permissions));
+        payload.add("accounts", this.gson.toJsonTree(request.accounts));
 
         if (request.validUntilDateTime != null) {
             String validUntilDateTime = request.validUntilDateTime.format(DateTimeFormatter.ISO_DATE_TIME);
-            payload.add("validUntilDateTime", validUntilDateTime);
+            payload.add("validUntilDateTime", new JsonPrimitive(validUntilDateTime));
         }
 
         HttpResponse<String> response = this.client.postJson(
                 "/openbanking/connect/api/accounts/consents",
-                payload.build().toString()
+                payload.toString()
         );
         JSONObject responsePayload = new JSONObject(response.body());
         return new Consent(
@@ -96,51 +63,9 @@ public class Consents extends MastercardAisService {
     }
 
     public void delete(DeleteConsentRequest request) throws Exception {
-
-        JsonObjectBuilder requestInfoBuilder = Json.createObjectBuilder()
-                .add("xRequestId", UUID.randomUUID().toString())
-                .add("aspspId", request.aspspId)
-                .add("psuTppCustomerId", request.psuTppCustomerId);
-        this.addMerchant(request.merchant, requestInfoBuilder);
-
-        JsonObject payload = Json.createObjectBuilder()
-                .add("consentId", request.consentId)
-                .add("requestInfo", requestInfoBuilder)
-                .build();
-
-        HttpResponse<String> response = this.client.postJson(
+        this.client.postJson(
                 "/openbanking/connect/api/accounts/consents/delete",
-                payload.toString()
+                this.gson.toJson(request)
         );
-    }
-
-    private void addPermissions(List<ConsentPermission> permissionsList, JsonObjectBuilder payload) {
-
-        JsonArrayBuilder permissions = Json.createArrayBuilder();
-        permissionsList.forEach( permission -> {
-            permissions.add(permission.toString());
-        });
-        payload.add("permissions", permissions);
-    }
-
-    private void addAccounts(ArrayList<ConsentAccount> consentAccountList, JsonObjectBuilder payload) {
-
-        JsonArrayBuilder accounts = Json.createArrayBuilder();
-
-        consentAccountList.forEach( account -> {
-            JsonObjectBuilder accountNumber = Json.createObjectBuilder()
-                    .add("identification", account.getId())
-                    .add("schemeName", "IBAN");
-
-            JsonObjectBuilder accountReference = Json.createObjectBuilder()
-                    .add("currency", account.getCurrency())
-                    .add("accountNumber", accountNumber);
-
-            JsonObjectBuilder accountObj = Json.createObjectBuilder()
-                    .add("accountReference", accountReference);
-
-            accounts.add(accountObj);
-        });
-        payload.add("accounts", accounts);
     }
 }

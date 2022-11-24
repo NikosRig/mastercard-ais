@@ -1,62 +1,63 @@
 package com.nrigas.mastercard.requestBuilders;
 
-import com.nrigas.mastercard.model.ConsentAccount;
-import com.nrigas.mastercard.model.ConsentPermission;
-import com.nrigas.mastercard.model.Credentials;
-import com.nrigas.mastercard.service.Consent.request.ConsentRequest;
+import com.nrigas.mastercard.model.*;
+import com.nrigas.mastercard.request.GetConsentRequest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class ConsentRequestBuilder extends RequestBuilder {
 
-	private final ArrayList<ConsentPermission> consentPermissions;
+	private final GetConsentRequestInfo requestInfo;
+	private final ArrayList<ConsentPermission> permissions;
 	private final ArrayList<ConsentAccount> consentAccounts;
-	private String tppRedirectUri;
-	private Credentials credentials = null;
 	private LocalDateTime validUntilDateTime = null;
 
 	public ConsentRequestBuilder() {
-		this.consentPermissions = new ArrayList<ConsentPermission>();
+		this.permissions = new ArrayList<ConsentPermission>();
 		this.consentAccounts = new ArrayList<ConsentAccount>();
+		this.requestInfo = new GetConsentRequestInfo();
 	}
 
 	@Override
 	public ConsentRequestBuilder withPsu(
 			Boolean isLivePsuRequest,
 			String psuAgent,
-			String psuIpAddress,
+			String psuIPAddress,
 			String psuTppCustomerId
 	) {
-		super.withPsu(isLivePsuRequest, psuAgent, psuIpAddress, psuTppCustomerId);
+		this.requestInfo.setPsuTppCustomerId(psuTppCustomerId);
+		this.requestInfo.setPsuIPAddress(psuIPAddress);
+		this.requestInfo.setPsuAgent(psuAgent);
+		this.requestInfo.setLivePsuRequest(isLivePsuRequest);
+
 		return this;
 	}
 
 	@Override
 	public ConsentRequestBuilder withMerchant(String merchantId, String merchantName) {
-		super.withMerchant(merchantId, merchantName);
+		this.requestInfo.setMerchant(new Merchant(merchantId, merchantName));
 		return this;
 	}
 
 	@Override
-	public ConsentRequestBuilder withAspsId(String aspsId) {
-		super.withAspsId(aspsId);
+	public ConsentRequestBuilder withAspspId(String aspspId) {
+		this.requestInfo.setAspspId(aspspId);
 		return this;
 	}
 
-	public ConsentRequestBuilder withTppRedirectUri(String tppRedirectUri) {
-		this.tppRedirectUri = tppRedirectUri;
+	public ConsentRequestBuilder withTppRedirectURI(String tppRedirectURI) {
+		this.requestInfo.setTppRedirectURI(tppRedirectURI);
 		return this;
 	}
 
 	public ConsentRequestBuilder addConsentPermission(ConsentPermission consentPermission) {
-		this.consentPermissions.add(consentPermission);
+		this.permissions.add(consentPermission);
 		return this;
 	}
 
 	public ConsentRequestBuilder withCredentials(String iban) {
-		this.credentials = new Credentials(iban);
+		this.requestInfo.setCredentials(new Credentials(iban));
 		return this;
 	}
 
@@ -65,23 +66,21 @@ public class ConsentRequestBuilder extends RequestBuilder {
 		return this;
 	}
 
-	public ConsentRequestBuilder addConsentAccount(String id, String currency) {
-		ConsentAccount consentAccount = new ConsentAccount(id, currency);
-		this.consentAccounts.add(consentAccount);
+	public ConsentRequestBuilder addAccount(String identification, String currency, String schemeName) {
+		AccountReference accountReference = new AccountReference(
+				new AccountNumber(identification, schemeName),
+				currency
+		);
+		this.consentAccounts.add(new ConsentAccount(accountReference));
 		return this;
 	}
 
-	public ConsentRequest build() {
-
-		return new ConsentRequest(
-				this.aspsId,
-				this.tppRedirectUri,
-				this.consentPermissions,
-				this.consentAccounts,
-				this.psu,
-				Optional.ofNullable(this.merchant),
-				Optional.ofNullable(this.credentials),
-				Optional.ofNullable(this.validUntilDateTime)
+	public GetConsentRequest build() {
+		return new GetConsentRequest(
+				this.requestInfo,
+				this.validUntilDateTime,
+				this.permissions,
+				this.consentAccounts
 		);
 	}
 }

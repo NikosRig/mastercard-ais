@@ -1,29 +1,31 @@
 package com.nrigas.mastercard.requestBuilders;
 
 import com.nrigas.mastercard.model.Merchant;
-import com.nrigas.mastercard.service.Consent.request.DeleteConsentRequest;
-
-import java.util.Optional;
+import com.nrigas.mastercard.model.RequestInfo;
+import com.nrigas.mastercard.request.DeleteConsentRequest;
 
 public class DeleteConsentRequestBuilder extends RequestBuilder {
 
-	private Merchant merchant;
-	private String psuTppCustomerId;
+	private final RequestInfo requestInfo;
 	private String consentId;
 
+	public DeleteConsentRequestBuilder() {
+		this.requestInfo = new RequestInfo();
+	}
+
 	@Override
-	public DeleteConsentRequestBuilder withAspsId(String aspsId) {
-		super.withAspsId(aspsId);
+	public DeleteConsentRequestBuilder withAspspId(String aspspId) {
+		this.requestInfo.setAspspId(aspspId);
 		return this;
 	}
 
 	public DeleteConsentRequestBuilder withMerchant(String merchantId, String merchantName) {
-		this.merchant = new Merchant(merchantId, merchantName);
+		this.requestInfo.setMerchant(new Merchant(merchantId, merchantName));
 		return this;
 	}
 
 	public DeleteConsentRequestBuilder withPsuTppCustomerId(String psuTppCustomerId) {
-		this.psuTppCustomerId = psuTppCustomerId;
+		this.requestInfo.setPsuTppCustomerId(psuTppCustomerId);
 		return this;
 	}
 
@@ -33,11 +35,6 @@ public class DeleteConsentRequestBuilder extends RequestBuilder {
 	}
 
 	public DeleteConsentRequest build() {
-		return new DeleteConsentRequest(
-				this.aspsId,
-				this.psuTppCustomerId,
-				this.consentId,
-				Optional.ofNullable(this.merchant)
-		);
+		return new DeleteConsentRequest(this.requestInfo, this.consentId);
 	}
 }

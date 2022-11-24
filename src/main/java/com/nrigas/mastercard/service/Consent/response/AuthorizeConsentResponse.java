@@ -1,18 +1,20 @@
 package com.nrigas.mastercard.service.Consent.response;
 
+import com.nrigas.mastercard.model.OriginalRequestInfo;
+
 public class AuthorizeConsentResponse {
 
 	public final String consentId;
 	public final String consentRequestId;
-	public final String xRequestId;
+	public final OriginalRequestInfo originalRequestInfo;
 
 	public AuthorizeConsentResponse(
 			String consentId,
 			String consentRequestId,
-			String xRequestId
+			OriginalRequestInfo originalRequestInfo
 	) {
 		this.consentId = consentId;
 		this.consentRequestId = consentRequestId;
-		this.xRequestId = xRequestId;
+		this.originalRequestInfo = originalRequestInfo;
 	}
 }
