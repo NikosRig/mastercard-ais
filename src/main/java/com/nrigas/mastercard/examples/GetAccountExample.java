@@ -2,11 +2,11 @@ package com.nrigas.mastercard.examples;
 
 import com.nrigas.mastercard.MastercardAis;
 import com.nrigas.mastercard.MastercardAisConfig;
+import com.nrigas.mastercard.model.Account;
 import com.nrigas.mastercard.request.GetAccountRequest;
 import com.nrigas.mastercard.requestBuilders.GetAccountRequestBuilder;
-import com.nrigas.mastercard.response.GetAccountResponse;
 
-public class AccountsExample {
+public class GetAccountExample {
 
 	public static void main(String[] args) throws Exception {
 
@@ -29,6 +29,6 @@ public class AccountsExample {
 				.withPsuIPAddress("127.0.0.1")
 				.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
 				.build();
-		GetAccountResponse response = mastercardAis.accounts().get(request);
+		Account account = mastercardAis.accounts().get(request);
 	}
 }

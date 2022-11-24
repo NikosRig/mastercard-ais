@@ -5,8 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.nrigas.mastercard.http.MastercardAisClient;
+import com.nrigas.mastercard.model.Account;
 import com.nrigas.mastercard.request.GetAccountRequest;
-import com.nrigas.mastercard.response.GetAccountResponse;
+import org.json.JSONObject;
 
 import java.net.http.HttpResponse;
 
@@ -20,7 +21,7 @@ public class Accounts {
 		this.gson = new GsonBuilder().create();
 	}
 
-	public GetAccountResponse get(GetAccountRequest request) throws Exception {
+	public Account get(GetAccountRequest request) throws Exception {
 
 		JsonObject payload = new JsonObject();
 		payload.add("accountId", new JsonPrimitive(request.accountId));
@@ -30,8 +31,10 @@ public class Accounts {
 				"/openbanking/connect/api/accounts/account",
 				payload.toString()
 		);
+		JSONObject responsePayload = new JSONObject(response.body());
+		String account = responsePayload.getJSONObject("account").toString();
 
 		return new GsonBuilder().create()
-				.fromJson(response.body(), GetAccountResponse.class);
+				.fromJson(account, Account.class);
 	}
 }

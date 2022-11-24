@@ -1,9 +1,9 @@
 package com.nrigas.mastercard;
 
 import com.nrigas.mastercard.http.MastercardAisClient;
+import com.nrigas.mastercard.model.Account;
 import com.nrigas.mastercard.request.GetAccountRequest;
 import com.nrigas.mastercard.requestBuilders.GetAccountRequestBuilder;
-import com.nrigas.mastercard.response.GetAccountResponse;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,21 +39,21 @@ public class AccountsTest extends TestCase {
 				.withPsuIPAddress("127.0.0.1")
 				.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
 				.build();
-		GetAccountResponse response = this.accounts.get(request);
+		Account account = this.accounts.get(request);
 
-		Assert.assertNotNull(response.account.resourceId);
-		Assert.assertNotNull(response.account.currency);
-		Assert.assertNotNull(response.account.accountHolderType);
-		Assert.assertNotNull(response.account.accountType);
-		Assert.assertNotNull(response.account.nameClient);
-		Assert.assertNotNull(response.account.name);
-		Assert.assertNotNull(response.account.holderName);
-		Assert.assertNotNull(response.account.holderNameAddress);
-		Assert.assertNotNull(response.account.schemeName);
-		Assert.assertNotNull(response.account.auxData);
-		Assert.assertNotNull(response.account.holderNameAddress);
-		Assert.assertNotNull(response.account.accountPsuRelations);
-		Assert.assertNotNull(response.account.holderAddress);
+		Assert.assertNotNull(account.resourceId);
+		Assert.assertNotNull(account.currency);
+		Assert.assertNotNull(account.accountHolderType);
+		Assert.assertNotNull(account.accountType);
+		Assert.assertNotNull(account.nameClient);
+		Assert.assertNotNull(account.name);
+		Assert.assertNotNull(account.holderName);
+		Assert.assertNotNull(account.holderNameAddress);
+		Assert.assertNotNull(account.schemeName);
+		Assert.assertNotNull(account.auxData);
+		Assert.assertNotNull(account.holderNameAddress);
+		Assert.assertNotNull(account.accountPsuRelations);
+		Assert.assertNotNull(account.holderAddress);
 	}
 
 	private HttpResponse mockGetAccountResponse() {

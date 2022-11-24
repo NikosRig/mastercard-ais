@@ -78,6 +78,7 @@ public class Consents {
                 "/openbanking/connect/api/accounts/consents/raw",
                 this.gson.toJson(request)
         );
+
         return this.gson.fromJson(response.body(), RawConsent.class);
     }
 }
