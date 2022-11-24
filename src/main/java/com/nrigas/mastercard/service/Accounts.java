@@ -1,4 +1,4 @@
-package com.nrigas.mastercard.service.Account;
+package com.nrigas.mastercard.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -6,16 +6,15 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.request.GetAccountRequest;
-import com.nrigas.mastercard.service.Account.response.GetAccountResponse;
-import com.nrigas.mastercard.service.MastercardAisService;
+import com.nrigas.mastercard.response.GetAccountResponse;
 
 import java.net.http.HttpResponse;
 
-public class Account extends MastercardAisService {
+public class Accounts extends MastercardAisService {
 
 	private final Gson gson;
 
-	public Account(MastercardAisClient client) {
+	public Accounts(MastercardAisClient client) {
 		super(client);
 		this.gson = new GsonBuilder().create();
 	}

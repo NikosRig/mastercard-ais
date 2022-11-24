@@ -1,7 +1,5 @@
 package com.nrigas.mastercard.model;
 
-import com.nrigas.mastercard.service.Account.response.HolderAddress;
-
 public class Account {
 
 	public String resourceId;

@@ -4,7 +4,7 @@ import com.nrigas.mastercard.MastercardAis;
 import com.nrigas.mastercard.MastercardAisConfig;
 import com.nrigas.mastercard.request.AuthConsentRequest;
 import com.nrigas.mastercard.requestBuilders.AuthConsentRequestBuilder;
-import com.nrigas.mastercard.service.Consent.response.AuthorizeConsentResponse;
+import com.nrigas.mastercard.response.AuthorizeConsentResponse;
 
 public class AuthConsentExample {
 

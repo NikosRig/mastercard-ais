@@ -6,21 +6,21 @@ import com.nrigas.mastercard.request.GetConsentRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class ConsentRequestBuilder extends RequestBuilder {
+public class GetConsentRequestBuilder extends RequestBuilder {
 
 	private final GetConsentRequestInfo requestInfo;
 	private final ArrayList<ConsentPermission> permissions;
 	private final ArrayList<ConsentAccount> consentAccounts;
 	private LocalDateTime validUntilDateTime = null;
 
-	public ConsentRequestBuilder() {
+	public GetConsentRequestBuilder() {
 		this.permissions = new ArrayList<ConsentPermission>();
 		this.consentAccounts = new ArrayList<ConsentAccount>();
 		this.requestInfo = new GetConsentRequestInfo();
 	}
 
 	@Override
-	public ConsentRequestBuilder withPsu(
+	public GetConsentRequestBuilder withPsu(
 			Boolean isLivePsuRequest,
 			String psuAgent,
 			String psuIPAddress,
@@ -35,38 +35,38 @@ public class ConsentRequestBuilder extends RequestBuilder {
 	}
 
 	@Override
-	public ConsentRequestBuilder withMerchant(String merchantId, String merchantName) {
+	public GetConsentRequestBuilder withMerchant(String merchantId, String merchantName) {
 		this.requestInfo.setMerchant(new Merchant(merchantId, merchantName));
 		return this;
 	}
 
 	@Override
-	public ConsentRequestBuilder withAspspId(String aspspId) {
+	public GetConsentRequestBuilder withAspspId(String aspspId) {
 		this.requestInfo.setAspspId(aspspId);
 		return this;
 	}
 
-	public ConsentRequestBuilder withTppRedirectURI(String tppRedirectURI) {
+	public GetConsentRequestBuilder withTppRedirectURI(String tppRedirectURI) {
 		this.requestInfo.setTppRedirectURI(tppRedirectURI);
 		return this;
 	}
 
-	public ConsentRequestBuilder addConsentPermission(ConsentPermission consentPermission) {
+	public GetConsentRequestBuilder addConsentPermission(ConsentPermission consentPermission) {
 		this.permissions.add(consentPermission);
 		return this;
 	}
 
-	public ConsentRequestBuilder withCredentials(String iban) {
+	public GetConsentRequestBuilder withCredentials(String iban) {
 		this.requestInfo.setCredentials(new Credentials(iban));
 		return this;
 	}
 
-	public ConsentRequestBuilder withValidUntilDateTime(LocalDateTime validUntilDateTime) {
+	public GetConsentRequestBuilder withValidUntilDateTime(LocalDateTime validUntilDateTime) {
 		this.validUntilDateTime = validUntilDateTime;
 		return this;
 	}
 
-	public ConsentRequestBuilder addAccount(String identification, String currency, String schemeName) {
+	public GetConsentRequestBuilder addAccount(String identification, String currency, String schemeName) {
 		AccountReference accountReference = new AccountReference(
 				new AccountNumber(identification, schemeName),
 				currency

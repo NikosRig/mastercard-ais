@@ -4,7 +4,7 @@ import com.nrigas.mastercard.MastercardAis;
 import com.nrigas.mastercard.MastercardAisConfig;
 import com.nrigas.mastercard.request.GetAccountRequest;
 import com.nrigas.mastercard.requestBuilders.GetAccountRequestBuilder;
-import com.nrigas.mastercard.service.Account.response.GetAccountResponse;
+import com.nrigas.mastercard.response.GetAccountResponse;
 
 public class AccountsExample {
 
@@ -27,7 +27,7 @@ public class AccountsExample {
 					.withAccountId("aa:q648383844dhhfHhTV")
 					.withPsu(true, "PostmanRuntime/7.20.1", "127.0.0.1", null)
 					.build();
-			GetAccountResponse response = mastercardAis.account().get(request);
+			GetAccountResponse response = mastercardAis.accounts().get(request);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

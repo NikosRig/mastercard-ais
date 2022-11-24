@@ -2,8 +2,8 @@ package com.nrigas.mastercard;
 
 import com.nrigas.mastercard.http.MastercardAisAuthUtil;
 import com.nrigas.mastercard.http.MastercardAisClient;
-import com.nrigas.mastercard.service.Account.Account;
-import com.nrigas.mastercard.service.Consent.Consents;
+import com.nrigas.mastercard.service.Accounts;
+import com.nrigas.mastercard.service.Consents;
 
 import java.net.http.HttpClient;
 
@@ -29,7 +29,7 @@ public class MastercardAis {
         return new Consents(this.mastercardClient);
     }
 
-    public Account account() {
-        return new Account(this.mastercardClient);
+    public Accounts accounts() {
+        return new Accounts(this.mastercardClient);
     }
 }

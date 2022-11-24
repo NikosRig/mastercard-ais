@@ -8,8 +8,8 @@ import com.nrigas.mastercard.model.ConsentPermission;
 import com.nrigas.mastercard.request.AuthConsentRequest;
 import com.nrigas.mastercard.request.GetConsentRequest;
 import com.nrigas.mastercard.requestBuilders.AuthConsentRequestBuilder;
-import com.nrigas.mastercard.requestBuilders.ConsentRequestBuilder;
-import com.nrigas.mastercard.service.Consent.response.AuthorizeConsentResponse;
+import com.nrigas.mastercard.requestBuilders.GetConsentRequestBuilder;
+import com.nrigas.mastercard.response.AuthorizeConsentResponse;
 
 public class ConsentsExample extends TestCase {
 
@@ -24,7 +24,7 @@ public class ConsentsExample extends TestCase {
 		);
 		MastercardAis mastercardAis = new MastercardAis(config);
 
-		GetConsentRequest consentRequest = new ConsentRequestBuilder()
+		GetConsentRequest consentRequest = new GetConsentRequestBuilder()
 				.withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
 				.withTppRedirectURI("https://tpp-ob.com/callback")
 				.withMerchant("MerchantId", "MerchantName")

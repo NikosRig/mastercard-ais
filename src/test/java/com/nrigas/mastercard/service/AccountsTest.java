@@ -1,10 +1,10 @@
-package com.nrigas.mastercard.service.Account;
+package com.nrigas.mastercard.service;
 
 import com.nrigas.mastercard.TestCase;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.request.GetAccountRequest;
 import com.nrigas.mastercard.requestBuilders.GetAccountRequestBuilder;
-import com.nrigas.mastercard.service.Account.response.GetAccountResponse;
+import com.nrigas.mastercard.response.GetAccountResponse;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,15 +14,15 @@ import java.net.http.HttpResponse;
 
 import static org.mockito.ArgumentMatchers.any;
 
-public class AccountTest extends TestCase {
+public class AccountsTest extends TestCase {
 
 	private MastercardAisClient mastercardAisClient;
-	private Account account;
+	private Accounts account;
 
 	@Before
 	public void setUp() {
 		this.mastercardAisClient = Mockito.mock(MastercardAisClient.class);
-		this.account = new Account(this.mastercardAisClient);
+		this.account = new Accounts(this.mastercardAisClient);
 	}
 
 	@Test

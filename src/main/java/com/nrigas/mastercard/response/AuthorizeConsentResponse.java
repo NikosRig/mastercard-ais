@@ -1,4 +1,4 @@
-package com.nrigas.mastercard.service.Consent.response;
+package com.nrigas.mastercard.response;
 
 import com.nrigas.mastercard.model.OriginalRequestInfo;
 

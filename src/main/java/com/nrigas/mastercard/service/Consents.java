@@ -1,4 +1,4 @@
-package com.nrigas.mastercard.service.Consent;
+package com.nrigas.mastercard.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -8,8 +8,7 @@ import com.nrigas.mastercard.model.Consent;
 import com.nrigas.mastercard.request.AuthConsentRequest;
 import com.nrigas.mastercard.request.DeleteConsentRequest;
 import com.nrigas.mastercard.request.GetConsentRequest;
-import com.nrigas.mastercard.service.Consent.response.AuthorizeConsentResponse;
-import com.nrigas.mastercard.service.MastercardAisService;
+import com.nrigas.mastercard.response.AuthorizeConsentResponse;
 import org.json.JSONObject;
 
 import java.net.http.HttpResponse;

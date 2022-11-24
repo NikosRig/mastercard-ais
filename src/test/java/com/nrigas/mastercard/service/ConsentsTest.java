@@ -1,4 +1,4 @@
-package com.nrigas.mastercard.service.Consent;
+package com.nrigas.mastercard.service;
 
 import com.nrigas.mastercard.TestCase;
 import com.nrigas.mastercard.http.MastercardAisClient;
@@ -6,7 +6,7 @@ import com.nrigas.mastercard.model.Consent;
 import com.nrigas.mastercard.request.AuthConsentRequest;
 import com.nrigas.mastercard.request.GetConsentRequest;
 import com.nrigas.mastercard.requestBuilders.AuthConsentRequestBuilder;
-import com.nrigas.mastercard.requestBuilders.ConsentRequestBuilder;
+import com.nrigas.mastercard.requestBuilders.GetConsentRequestBuilder;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,7 +33,7 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentPsuAgentIsOptional() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new ConsentRequestBuilder()
+        GetConsentRequest request = new GetConsentRequestBuilder()
                 .withAspspId("aspspId")
                 .withTppRedirectURI("tppRedirectURI")
                 .withPsu(true, null, "127.0.0.1", "psuTppCustomerId")
@@ -47,7 +47,7 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentPsuAgentWillBePassed() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new ConsentRequestBuilder()
+        GetConsentRequest request = new GetConsentRequestBuilder()
                 .withAspspId("aspspId")
                 .withTppRedirectURI("tppRedirectURI")
                 .withPsu(true, "agent", null, null)
@@ -61,7 +61,7 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentPsuTppCustomerIsOptional() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new ConsentRequestBuilder()
+        GetConsentRequest request = new GetConsentRequestBuilder()
                 .withAspspId("aspspId")
                 .withTppRedirectURI("tppRedirectURI")
                 .withPsu(true, null, null, null)
@@ -75,7 +75,7 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentPsuTppCustomerWillBePassed() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new ConsentRequestBuilder()
+        GetConsentRequest request = new GetConsentRequestBuilder()
                 .withAspspId("aspspId")
                 .withTppRedirectURI("tppRedirectURI")
                 .withPsu(true, null, null, "psuTppCustomerId")
@@ -89,7 +89,7 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsent() throws Exception {
 
         this.mockGetConsentResponse();
-        GetConsentRequest request = new ConsentRequestBuilder()
+        GetConsentRequest request = new GetConsentRequestBuilder()
                 .withAspspId("aspspId")
                 .withTppRedirectURI("tppRedirectURI")
                 .withPsu(true, null, null, null)
@@ -106,7 +106,7 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentMerchantWillBePassed() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new ConsentRequestBuilder()
+        GetConsentRequest request = new GetConsentRequestBuilder()
                 .withAspspId("aspspId")
                 .withTppRedirectURI("tppRedirectURI")
                 .withPsu(true, null, null, null)
@@ -121,7 +121,7 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentMerchantIsOptional() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new ConsentRequestBuilder()
+        GetConsentRequest request = new GetConsentRequestBuilder()
                 .withAspspId("aspspId")
                 .withTppRedirectURI("tppRedirectURI")
                 .withPsu(true, null, null, null)
@@ -135,7 +135,7 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentPsuIpAddressWillBePassed() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new ConsentRequestBuilder()
+        GetConsentRequest request = new GetConsentRequestBuilder()
                 .withAspspId("aspspId")
                 .withTppRedirectURI("tppRedirectURI")
                 .withPsu(true, null, "127.0.0.1", null)
@@ -149,7 +149,7 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentPsuIpAddressIsOptional() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new ConsentRequestBuilder()
+        GetConsentRequest request = new GetConsentRequestBuilder()
                 .withAspspId("aspspId")
                 .withTppRedirectURI("tppRedirectURI")
                 .withPsu(true, null, null, null)
@@ -163,7 +163,7 @@ public class ConsentsTest extends TestCase {
     public void testVerifyGetConsentMultipleAccountsCanBeAdded() throws Exception {
         this.mockGetConsentResponse();
 
-        GetConsentRequest request = new ConsentRequestBuilder()
+        GetConsentRequest request = new GetConsentRequestBuilder()
                 .withAspspId("aspspId")
                 .withTppRedirectURI("tppRedirectURI")
                 .withPsu(true, null, "127.0.0.1", null)

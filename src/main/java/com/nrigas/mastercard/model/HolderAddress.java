@@ -1,4 +1,4 @@
-package com.nrigas.mastercard.service.Account.response;
+package com.nrigas.mastercard.model;
 
 public class HolderAddress {
 
