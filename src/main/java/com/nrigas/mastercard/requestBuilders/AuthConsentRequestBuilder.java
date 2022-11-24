@@ -38,11 +38,6 @@ public class AuthConsentRequestBuilder {
 		return this;
 	};
 
-	public AuthConsentRequestBuilder withPsuTppCustomerId(String psuTppCustomerId) {
-		this.requestInfo.psuTppCustomerId = psuTppCustomerId;
-		return this;
-	};
-
 	public AuthConsentRequestBuilder withAuthorization(String authorization) {
 		this.authorization = authorization;
 		return this;

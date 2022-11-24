@@ -1,7 +1,8 @@
-package com.nrigas.mastercard.service;
+package com.nrigas.mastercard;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.model.Consent;
@@ -39,7 +40,7 @@ public class Consents extends MastercardAisService {
 
     public Consent get(GetConsentRequest request) throws Exception {
 
-        com.google.gson.JsonObject payload = new com.google.gson.JsonObject();
+        JsonObject payload = new JsonObject();
         payload.add("requestInfo", this.gson.toJsonTree(request.requestInfo));
         payload.add("permissions", this.gson.toJsonTree(request.permissions));
         payload.add("accounts", this.gson.toJsonTree(request.accounts));
@@ -54,6 +55,7 @@ public class Consents extends MastercardAisService {
                 payload.toString()
         );
         JSONObject responsePayload = new JSONObject(response.body());
+
         return new Consent(
                 responsePayload.getString("consentRequestId"),
                 responsePayload.getJSONObject("_links").getString("scaRedirect"),
