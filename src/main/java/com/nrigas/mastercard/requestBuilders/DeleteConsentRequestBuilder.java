@@ -1,22 +1,13 @@
 package com.nrigas.mastercard.requestBuilders;
 
 import com.nrigas.mastercard.model.Merchant;
-import com.nrigas.mastercard.model.RequestInfo;
+import com.nrigas.mastercard.model.RequestInfoImpl;
 import com.nrigas.mastercard.request.DeleteConsentRequest;
 
 public class DeleteConsentRequestBuilder extends RequestBuilder {
 
-	private final RequestInfo requestInfo;
+	protected RequestInfoImpl requestInfo;
 	private String consentId;
-
-	public DeleteConsentRequestBuilder() {
-		this.requestInfo = new RequestInfo();
-	}
-
-	@Override
-	public void addAspspId(String aspspId) {
-		this.requestInfo.setAspspId(aspspId);
-	}
 
 	public void addMerchant(String merchantId, String merchantName) {
 		this.requestInfo.setMerchant(new Merchant(merchantId, merchantName));

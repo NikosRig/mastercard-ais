@@ -1,6 +1,7 @@
 package com.nrigas.mastercard.requestBuilders;
 
 import com.nrigas.mastercard.model.Merchant;
+import com.nrigas.mastercard.model.RequestInfo;
 
 abstract public class RequestBuilder {
 
@@ -10,24 +11,25 @@ abstract public class RequestBuilder {
 	protected String psuAgent;
 	protected String psuIpAddress;
 	protected String psuTppCustomerId;
+	protected RequestInfo requestInfo;
 
-	protected void addPsu(
+	public void addPsu(
 			Boolean isLivePsuRequest,
 			String psuAgent,
-			String psuIpAddress,
+			String psuIPAddress,
 			String psuTppCustomerId
 	) {
-		this.isLivePsuRequest = isLivePsuRequest;
-		this.psuAgent = psuAgent;
-		this.psuIpAddress = psuIpAddress;
-		this.psuTppCustomerId = psuTppCustomerId;
+		this.requestInfo.setPsuTppCustomerId(psuTppCustomerId);
+		this.requestInfo.setPsuIPAddress(psuIPAddress);
+		this.requestInfo.setPsuAgent(psuAgent);
+		this.requestInfo.setLivePsuRequest(isLivePsuRequest);
 	};
 
-	protected void addMerchant(String merchantId, String merchantName) {
-		this.merchant = new Merchant(merchantId, merchantName);
+	public void addMerchant(String merchantId, String merchantName) {
+		this.requestInfo.setMerchant(new Merchant(merchantId, merchantName));
 	}
 
-	protected void addAspspId(String aspspId) {
-		this.aspspId = aspspId;
+	public void addAspspId(String aspspId) {
+		this.requestInfo.setAspspId(aspspId);
 	}
 }

@@ -8,12 +8,8 @@ import java.util.UUID;
 
 public class GetAccountRequestBuilder extends RequestBuilder {
 
-	private final GetAccountRequestInfo requestInfo;
+	protected GetAccountRequestInfo requestInfo;
 	private String accountId;
-
-	public GetAccountRequestBuilder() {
-		this.requestInfo = new GetAccountRequestInfo();
-	}
 
 	@Override
 	public void addAspspId(String aspspId) {

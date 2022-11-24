@@ -1,6 +1,6 @@
 package com.nrigas.mastercard.model;
 
-public class GetConsentRequestInfo extends RequestInfo {
+public class GetConsentRequestInfo extends RequestInfoImpl {
 
 	public String tppRedirectURI;
 	public Credentials credentials;

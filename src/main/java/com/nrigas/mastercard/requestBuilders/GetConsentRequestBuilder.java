@@ -8,38 +8,15 @@ import java.util.ArrayList;
 
 public class GetConsentRequestBuilder extends RequestBuilder {
 
-	private final GetConsentRequestInfo requestInfo;
+	private GetConsentRequestInfo requestInfo = new GetConsentRequestInfo();
 	private final ArrayList<ConsentPermission> permissions;
 	private final ArrayList<ConsentAccount> consentAccounts;
 	private LocalDateTime validUntilDateTime = null;
 
 	public GetConsentRequestBuilder() {
+		super();
 		this.permissions = new ArrayList<ConsentPermission>();
 		this.consentAccounts = new ArrayList<ConsentAccount>();
-		this.requestInfo = new GetConsentRequestInfo();
-	}
-
-	@Override
-	public void addPsu(
-			Boolean isLivePsuRequest,
-			String psuAgent,
-			String psuIPAddress,
-			String psuTppCustomerId
-	) {
-		this.requestInfo.setPsuTppCustomerId(psuTppCustomerId);
-		this.requestInfo.setPsuIPAddress(psuIPAddress);
-		this.requestInfo.setPsuAgent(psuAgent);
-		this.requestInfo.setLivePsuRequest(isLivePsuRequest);
-	}
-
-	@Override
-	public void addMerchant(String merchantId, String merchantName) {
-		this.requestInfo.setMerchant(new Merchant(merchantId, merchantName));
-	}
-
-	@Override
-	public void addAspspId(String aspspId) {
-		this.requestInfo.setAspspId(aspspId);
 	}
 
 	public void addTppRedirectURI(String tppRedirectURI) {

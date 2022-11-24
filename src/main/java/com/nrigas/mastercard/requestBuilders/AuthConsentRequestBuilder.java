@@ -1,17 +1,13 @@
 package com.nrigas.mastercard.requestBuilders;
 
 import com.nrigas.mastercard.model.Merchant;
-import com.nrigas.mastercard.model.RequestInfo;
+import com.nrigas.mastercard.model.RequestInfoImpl;
 import com.nrigas.mastercard.request.AuthConsentRequest;
 
 public class AuthConsentRequestBuilder extends RequestBuilder {
 
-	private final RequestInfo requestInfo;
+	protected RequestInfoImpl requestInfo;
 	private String authorization;
-
-	public AuthConsentRequestBuilder() {
-		this.requestInfo = new RequestInfo();
-	}
 
 	public void addPsu(
 			Boolean isLivePsuRequest,

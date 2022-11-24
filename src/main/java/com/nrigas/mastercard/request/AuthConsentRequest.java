@@ -1,13 +1,13 @@
 package com.nrigas.mastercard.request;
 
-import com.nrigas.mastercard.model.RequestInfo;
+import com.nrigas.mastercard.model.RequestInfoImpl;
 
 public class AuthConsentRequest {
 
-	public final RequestInfo requestInfo;
+	public final RequestInfoImpl requestInfo;
 	public final String authorization;
 
-	public AuthConsentRequest(RequestInfo requestInfo, String authorization) {
+	public AuthConsentRequest(RequestInfoImpl requestInfo, String authorization) {
 		this.requestInfo = requestInfo;
 		this.authorization = authorization;
 	}
