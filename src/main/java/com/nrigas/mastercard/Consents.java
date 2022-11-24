@@ -15,12 +15,13 @@ import org.json.JSONObject;
 import java.net.http.HttpResponse;
 import java.time.format.DateTimeFormatter;
 
-public class Consents extends MastercardAisService {
+public class Consents {
 
     private final Gson gson;
+    private final MastercardAisClient client;
 
     public Consents(MastercardAisClient client) {
-        super(client);
+        this.client = client;
         this.gson = new GsonBuilder().create();
     }
 

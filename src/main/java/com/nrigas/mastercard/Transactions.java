@@ -10,12 +10,13 @@ import com.nrigas.mastercard.request.GetTransactionRequest;
 
 import java.net.http.HttpResponse;
 
-public class Transactions extends MastercardAisService {
+public class Transactions {
 
 	private final Gson gson;
+	private final MastercardAisClient client;
 
 	public Transactions(MastercardAisClient client) {
-		super(client);
+		this.client = client;
 		this.gson = new GsonBuilder().create();
 	}
 

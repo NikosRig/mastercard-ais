@@ -10,12 +10,13 @@ import com.nrigas.mastercard.response.GetAccountResponse;
 
 import java.net.http.HttpResponse;
 
-public class Accounts extends MastercardAisService {
+public class Accounts {
 
 	private final Gson gson;
+	private final MastercardAisClient client;
 
 	public Accounts(MastercardAisClient client) {
-		super(client);
+		this.client = client;
 		this.gson = new GsonBuilder().create();
 	}
 
