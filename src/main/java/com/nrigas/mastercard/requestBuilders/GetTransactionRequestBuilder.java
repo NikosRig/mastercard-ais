@@ -14,6 +14,7 @@ public class GetTransactionRequestBuilder {
 	public GetTransactionRequestBuilder() {
 		this.requestInfo = new TransactionRequestInfo();
 	}
+
 	public GetTransactionRequestBuilder withConsentId(String consentId) {
 		this.requestInfo.consentId = consentId;
 		return this;
