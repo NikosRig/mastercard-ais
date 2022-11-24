@@ -6,9 +6,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.model.Consent;
+import com.nrigas.mastercard.model.RawConsent;
 import com.nrigas.mastercard.request.AuthConsentRequest;
 import com.nrigas.mastercard.request.DeleteConsentRequest;
 import com.nrigas.mastercard.request.GetConsentRequest;
+import com.nrigas.mastercard.request.GetRawConsentRequest;
 import com.nrigas.mastercard.response.AuthorizeConsentResponse;
 import org.json.JSONObject;
 
@@ -69,5 +71,13 @@ public class Consents {
                 "/openbanking/connect/api/accounts/consents/delete",
                 this.gson.toJson(request)
         );
+    }
+
+    public RawConsent getRaw(GetRawConsentRequest request) throws Exception {
+        HttpResponse<String> response = this.client.postJson(
+                "/openbanking/connect/api/accounts/consents/raw",
+                this.gson.toJson(request)
+        );
+        return this.gson.fromJson(response.body(), RawConsent.class);
     }
 }
