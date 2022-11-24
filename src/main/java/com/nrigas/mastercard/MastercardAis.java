@@ -25,7 +25,7 @@ public class MastercardAis {
         );
     }
 
-    public Consents consent() {
+    public Consents consents() {
         return new Consents(this.mastercardClient);
     }
 

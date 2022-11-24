@@ -1,18 +1,10 @@
 package com.nrigas.mastercard.service.Account.response;
 
+import com.nrigas.mastercard.model.Account;
+import com.nrigas.mastercard.model.OriginalRequestInfo;
+
 public class GetAccountResponse {
 
-	public String resourceId;
-	public String currency;
-	public String accountHolderType;
-	public String accountType;
-	public String nameClient;
-	public String name;
-	public String holderName;
-	public String accountNumber;
-	public String schemeName;
-	public String auxData;
-	public String[] holderNameAddress;
-	public Object[] accountPsuRelations;
-	public HolderAddress holderAddress;
+	public Account account;
+	public OriginalRequestInfo originalRequestInfo;
 }

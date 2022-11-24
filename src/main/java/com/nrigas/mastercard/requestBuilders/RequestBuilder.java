@@ -3,13 +3,15 @@ package com.nrigas.mastercard.requestBuilders;
 import com.nrigas.mastercard.model.Merchant;
 import com.nrigas.mastercard.model.Psu;
 
-import java.util.Optional;
-
 abstract public class RequestBuilder {
 
 	protected Psu psu;
 	protected String aspsId;
 	protected Merchant merchant;
+	protected Boolean isLivePsuRequest;
+	protected String psuAgent;
+	protected String psuIpAddress;
+	protected String psuTppCustomerId;
 
 	protected RequestBuilder withPsu(
 			Boolean isLivePsuRequest,
@@ -17,12 +19,11 @@ abstract public class RequestBuilder {
 			String psuIpAddress,
 			String psuTppCustomerId
 	) {
-		this.psu = new Psu(
-				isLivePsuRequest,
-				Optional.ofNullable(psuIpAddress),
-				Optional.ofNullable(psuAgent),
-				Optional.ofNullable(psuTppCustomerId)
-		);
+		this.isLivePsuRequest = isLivePsuRequest;
+		this.psuAgent = psuAgent;
+		this.psuIpAddress = psuIpAddress;
+		this.psuTppCustomerId = psuTppCustomerId;
+
 		return this;
 	};
 
@@ -31,7 +32,7 @@ abstract public class RequestBuilder {
 		return this;
 	}
 
-	protected RequestBuilder withAspsId(String aspsId) {
+	protected RequestBuilder withAspspId(String aspsId) {
 		this.aspsId = aspsId;
 		return this;
 	}

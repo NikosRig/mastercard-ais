@@ -1,17 +1,24 @@
 package com.nrigas.mastercard.requestBuilders;
 
-import com.nrigas.mastercard.service.Account.request.GetAccountRequest;
+import com.nrigas.mastercard.model.GetAccountRequestInfo;
+import com.nrigas.mastercard.model.Merchant;
+import com.nrigas.mastercard.request.GetAccountRequest;
 
-import java.util.Optional;
+import java.util.UUID;
 
 public class GetAccountRequestBuilder extends RequestBuilder {
 
+	private final GetAccountRequestInfo requestInfo;
 	private String consentId;
 	private String accountId;
 
+	public GetAccountRequestBuilder() {
+		this.requestInfo = new GetAccountRequestInfo();
+	}
+
 	@Override
-	public GetAccountRequestBuilder withAspsId(String aspsId) {
-		super.withAspsId(aspsId);
+	public GetAccountRequestBuilder withAspspId(String aspspId) {
+		this.requestInfo.setAspspId(aspspId);
 		return this;
 	}
 
@@ -19,21 +26,25 @@ public class GetAccountRequestBuilder extends RequestBuilder {
 	public GetAccountRequestBuilder withPsu(
 			Boolean isLivePsuRequest,
 			String psuAgent,
-			String psuIpAddress,
+			String psuIPAddress,
 			String psuTppCustomerId
 	) {
-		super.withPsu(isLivePsuRequest, psuAgent, psuIpAddress, psuTppCustomerId);
+		this.requestInfo.setPsuTppCustomerId(psuTppCustomerId);
+		this.requestInfo.setPsuIPAddress(psuIPAddress);
+		this.requestInfo.setPsuAgent(psuAgent);
+		this.requestInfo.setLivePsuRequest(isLivePsuRequest);
+
 		return this;
 	}
 
 	@Override
 	public GetAccountRequestBuilder withMerchant(String merchantId, String merchantName) {
-		super.withMerchant(merchantId, merchantName);
+		this.requestInfo.setMerchant(new Merchant(merchantId, merchantName));
 		return this;
 	}
 
 	public GetAccountRequestBuilder withConsentId(String consentId) {
-		this.consentId = consentId;
+		this.requestInfo.setConsentId(consentId);
 		return this;
 	}
 
@@ -43,12 +54,7 @@ public class GetAccountRequestBuilder extends RequestBuilder {
 	}
 
 	public GetAccountRequest build() {
-		return new GetAccountRequest(
-				this.aspsId,
-				this.psu,
-				this.consentId,
-				this.accountId,
-				Optional.ofNullable(this.merchant)
-		);
+		this.requestInfo.setxRequestId(UUID.randomUUID().toString());
+		return new GetAccountRequest(requestInfo, this.accountId);
 	}
 }
