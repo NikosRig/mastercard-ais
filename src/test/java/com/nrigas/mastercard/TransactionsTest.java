@@ -128,6 +128,47 @@ public class TransactionsTest extends TestCase {
 		Assert.assertNotNull(transactionList.transactions);
 	}
 
+	@Test
+	public void testListShouldHasRequestParams() throws Exception {
+		this.mockListResponse();
+
+		ListTransactionsRequest request = new ListTransactionsRequestBuilder()
+				.withAccountId("aa:q648383844dhhfHhTV")
+				.withConsentId("GFiTpF3:EBy5xGqQMatk")
+				.withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+				.withIsLivePsuRequest(true)
+				.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+				.withPsuIPAddress("127.0.0.1")
+				.withPsuAgent("PostmanRuntime/7.20.1")
+				.withMerchant("MerchantId", "MerchantName")
+				.withBookingDateFrom("2018-11-21")
+				.withBookingTo("2018-11-23")
+				.withLimit(20)
+				.withOffset("ofset4prev$earch12345")
+				.build();
+		this.transactions.list(request);
+
+		this.assertRequestInfoHas("xRequestId");
+		this.assertRequestInfoHas("consentId");
+		this.assertRequestInfoHas("aspspId");
+		this.assertRequestInfoHas("isLivePsuRequest");
+		this.assertRequestInfoHas("psuTppCustomerId");
+		this.assertRequestInfoHas("psuIPAddress");
+		this.assertRequestInfoHas("psuAgent");
+		this.assertRequestInfoHas("merchant");
+		this.assertRequestHas("accountId");
+		this.assertRequestHas("limit");
+		this.assertRequestHas("offset");
+		this.assertRequestHas("bookingDateFrom");
+		this.assertRequestHas("bookingDateTo");
+	}
+
+	private void assertRequestHas(String key) throws Exception {
+		Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
+			return new JSONObject(jsonBody).has(key);
+		}));
+	}
+
 	private void assertRequestInfoHas(String key) throws Exception {
 		Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
 			JSONObject requestInfo = new JSONObject(jsonBody).getJSONObject("requestInfo");
