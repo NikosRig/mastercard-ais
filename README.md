@@ -280,3 +280,38 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 
 
 
+|  Account	                   	 			| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `resourceId`             					| Account reference identification							|
+| `currency`             					| Currency code										|
+| `accountHolderType`             				| Specifies the type of account								|
+| `accountType`             					| Specifies the sub type of account							|
+| `nameClient`             					| Accounts name client									|
+| `name`             						| Account name										|
+| `holderName`             					| Holder name										|
+| `accountNumber`             					| Account number									|
+| `schemeName`             					| List of Account Models								|
+| `auxData`             					| List of Account Models								|
+| `accountPsuRelations`             				| Description of relations between PSU and an Account					|
+| `balances`             					| List of Account Models								|
+| `holderAddress`             					| 											|
+| `holderNameAddress`             				| 											|
+
+
+#### Example
+
+```bash
+	GetAccountRequest request = new GetAccountRequestBuilder()
+			.withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+			.withMerchant("MerchantId", "MerchantName")
+			.withConsentId("GFiTpF3:EBy5xGqQMatk")
+			.withAccountId("aa:q648383844dhhfHhTV")
+			.withIsLivePsuRequest(true)
+			.withPsuAgent("PostmanRuntime/7.20.1")
+			.withPsuIPAddress("127.0.0.1")
+			.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+			.build();
+	Account account = mastercardAis.accounts().get(request);
+```
+
+<br/>
