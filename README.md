@@ -41,14 +41,12 @@
   * [Transactions](#transactions)
     * [Get Account Transaction Details](#get-account-transaction-details)
     * [Get Account Transactions](#get-account-transactions)
+  * [ASPSPs](#aspsps)
+    * [Get List of Available ASPSPs](#get-list-of-available-aspsps)
 
 	
 <br/>
 
-<!-- Features -->
-### :rocket: Features
-
-- Get List of Available ASPSPs
 
 
 <br/>
@@ -575,3 +573,64 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 
 ```
 <br/>
+
+
+### ASPSPs
+
+#### Get List of Available ASPSPs
+
+
+
+|  Request Options	                   	 		| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `withId(String)`             				| (Optional) Filter by internal id of ASPSP                  			           	|
+| `withName(String)`         				| (Optional) Filter by name of ASPSP                  		   				|
+| `withCountry(Boolean)`     				| (Optional) Filter by country code		   						| 
+| `withLimit(String)`         				| (Optional) Number of rows per page								|
+| `addAdditionalData(String)`  				| (Optional) AdditionalData Model        							|
+| `withOffset(String)`         				| (Optional) Pagination offset, the value returned from the previous request 			| 
+
+|  AdditionalData                   	 			| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `capabilities`             					| 											|
+| `logo`             						| 											|
+| `health`             						| 											|
+| `credentials`             					| 											|
+
+
+|  AspspList                   	 				| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `offset`             						| Pagination offset									|
+| `aspsps`             						| Aspsp Model										|
+
+
+|  AspspList                   	 				| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `id`             						| Pagination offset									|
+| `name`             						| Name of the ASPSP									|
+| `profile`             					| ASPSP profile										|
+| `country`             					| Country code										|
+| `capabilities`             					| AspspCapabilities Model								|
+| `logo`             						| AspspLogo Model									|
+| `health`             						| AspspHealth Model									|
+| `credentialFields`             				| List of AspspCredentialField Models							|
+| `offset`             						| Offset used in the next request to get next page					|
+
+
+
+#### Example
+
+```bash
+	ListAspspsRequest request = new ListAspspsRequestBuilder()
+			.withId("018d02c8-9be6-4363-9f3a-9009b2c89768")
+			.withName("Apollo Bank")
+			.withCountry("GB")
+			.withLimit(20)
+			.addAdditionalData(AdditionalData.capabilities)
+			.addAdditionalData(AdditionalData.credentials)
+			.addAdditionalData(AdditionalData.health)
+			.addAdditionalData(AdditionalData.logo)
+			.build();
+	AspspList aspspList = mastercardAis.aspsps().list(request);
+
+```
