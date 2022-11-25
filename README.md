@@ -634,3 +634,10 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 	AspspList aspspList = mastercardAis.aspsps().list(request);
 
 ```
+
+
+
+#### :handshake: Contact
+
+Nikos Rigas - nikosrigas95@gmail.com
+
