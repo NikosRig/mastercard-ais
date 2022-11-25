@@ -1,6 +1,5 @@
 package com.nrigas.mastercard;
 
-import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.model.Transaction;
 import com.nrigas.mastercard.model.TransactionList;
 import com.nrigas.mastercard.request.GetTransactionRequest;
@@ -20,12 +19,11 @@ import static org.mockito.ArgumentMatchers.argThat;
 
 public class TransactionsTest extends TestCase {
 
-	private MastercardAisClient mastercardAisClient;
 	private Transactions transactions;
 
 	@Before
 	public void setUp() {
-		this.mastercardAisClient = Mockito.mock(MastercardAisClient.class);
+		super.setUp();
 		this.transactions = new Transactions(this.mastercardAisClient);
 	}
 
@@ -166,13 +164,6 @@ public class TransactionsTest extends TestCase {
 	private void assertRequestHas(String key) throws Exception {
 		Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
 			return new JSONObject(jsonBody).has(key);
-		}));
-	}
-
-	private void assertRequestInfoHas(String key) throws Exception {
-		Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
-			JSONObject requestInfo = new JSONObject(jsonBody).getJSONObject("requestInfo");
-			return requestInfo.has(key);
 		}));
 	}
 

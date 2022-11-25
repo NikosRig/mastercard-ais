@@ -16,8 +16,4 @@ public class RequestInfo {
 	public RequestInfo() {
 		this.xRequestId = UUID.randomUUID().toString();
 	}
-
-	public void setxRequestId(String xRequestId) {
-		this.xRequestId = xRequestId;
-	}
 }

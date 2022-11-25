@@ -2,17 +2,17 @@ package com.nrigas.mastercard.requestBuilders;
 
 import com.nrigas.mastercard.request.GetTransactionRequest;
 import com.nrigas.mastercard.request.requestInfo.Merchant;
-import com.nrigas.mastercard.request.requestInfo.TransactionRequestInfo;
+import com.nrigas.mastercard.request.requestInfo.RequestInfo;
 
 public class GetTransactionRequestBuilder {
 
 	public String consentId;
-	public TransactionRequestInfo requestInfo;
+	public RequestInfo requestInfo;
 	public String accountId;
 	public String transactionId;
 
 	public GetTransactionRequestBuilder() {
-		this.requestInfo = new TransactionRequestInfo();
+		this.requestInfo = new RequestInfo();
 	}
 
 	public GetTransactionRequestBuilder withConsentId(String consentId) {

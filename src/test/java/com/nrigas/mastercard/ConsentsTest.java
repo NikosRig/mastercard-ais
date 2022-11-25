@@ -1,6 +1,5 @@
 package com.nrigas.mastercard;
 
-import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.model.Consent;
 import com.nrigas.mastercard.request.AuthConsentRequest;
 import com.nrigas.mastercard.request.GetConsentRequest;
@@ -21,11 +20,10 @@ import static org.mockito.ArgumentMatchers.argThat;
 public class ConsentsTest extends TestCase {
 
     private Consents consents;
-    private MastercardAisClient mastercardAisClient;
 
     @Before
     public void setUp() {
-        this.mastercardAisClient = Mockito.mock(MastercardAisClient.class);
+        super.setUp();
         this.consents = new Consents(this.mastercardAisClient);
     }
 
@@ -180,13 +178,6 @@ public class ConsentsTest extends TestCase {
         this.consents.authorize(request);
 
         this.assertRequestInfoNotHas("psuIPAddress");
-    }
-
-    private void assertRequestInfoHas(String key) throws Exception {
-        Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
-            JSONObject requestInfo = new JSONObject(jsonBody).getJSONObject("requestInfo");
-            return requestInfo.has(key);
-        }));
     }
 
     private void assertRequestInfoNotHas(String key) throws Exception {

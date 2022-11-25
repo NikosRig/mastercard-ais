@@ -2,12 +2,31 @@ package com.nrigas.mastercard;
 
 import com.nrigas.mastercard.http.MastercardAisAuthUtil;
 import com.nrigas.mastercard.http.MastercardAisClient;
+import org.json.JSONObject;
+import org.junit.Before;
 import org.mockito.Mockito;
 
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
+
 public class TestCase {
+
+    protected MastercardAisClient mastercardAisClient;
+
+    @Before
+    public void setUp() {
+        this.mastercardAisClient = Mockito.mock(MastercardAisClient.class);
+    }
+
+    public void assertRequestInfoHas(String key) throws Exception {
+        Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
+            JSONObject requestInfo = new JSONObject(jsonBody).getJSONObject("requestInfo");
+            return requestInfo.has(key);
+        }));
+    }
 
     protected HttpResponse mockHttpResponse(String responseBody, Integer statusCode) {
         HttpResponse httpResponse = Mockito.mock(HttpResponse.class);
