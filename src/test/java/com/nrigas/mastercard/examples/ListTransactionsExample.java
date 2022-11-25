@@ -30,7 +30,6 @@ public class ListTransactionsExample {
 				.withBookingDateFrom("2018-09-23")
 				.withBookingTo("2018-11-21")
 				.build();
-
 			TransactionList transactionList = mastercardAis.transactions().list(request);
 		}
 }

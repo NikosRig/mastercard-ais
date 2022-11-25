@@ -6,6 +6,8 @@ import com.nrigas.mastercard.request.GetConsentRequest;
 import com.nrigas.mastercard.request.requestInfo.ConsentPermission;
 import com.nrigas.mastercard.requestBuilders.GetConsentRequestBuilder;
 
+import java.time.LocalDateTime;
+
 public class ConsentsExample {
 
 	public static void main(String[] args) throws Exception {
@@ -28,6 +30,8 @@ public class ConsentsExample {
 				.addConsentPermission(ConsentPermission.allPSD2)
 				.addAccount("ACCNUMBR1234567", "EUR", "IBAN")
 				.withTppRedirectURI("https://tpp-ob.com/callback")
+				.withValidUntilDateTime(LocalDateTime.now())
+				.withCredentials("DE357543513")
 				.build();
 		Consent consent = mastercardAis.consents().get(request);
 	}
