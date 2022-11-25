@@ -161,12 +161,6 @@ public class TransactionsTest extends TestCase {
 		this.assertRequestHas("bookingDateTo");
 	}
 
-	private void assertRequestHas(String key) throws Exception {
-		Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
-			return new JSONObject(jsonBody).has(key);
-		}));
-	}
-
 	private void assertRequestInfoNotHas(String key) throws Exception {
 		Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
 			JSONObject requestInfo = new JSONObject(jsonBody).getJSONObject("requestInfo");

@@ -28,6 +28,12 @@ public class TestCase {
         }));
     }
 
+    public void assertRequestHas(String key) throws Exception {
+        Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
+            return new JSONObject(jsonBody).has(key);
+        }));
+    }
+
     protected HttpResponse mockHttpResponse(String responseBody, Integer statusCode) {
         HttpResponse httpResponse = Mockito.mock(HttpResponse.class);
         Mockito.when(httpResponse.statusCode()).thenReturn(statusCode);
