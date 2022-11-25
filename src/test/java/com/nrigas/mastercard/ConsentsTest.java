@@ -3,10 +3,12 @@ package com.nrigas.mastercard;
 import com.nrigas.mastercard.model.Consent;
 import com.nrigas.mastercard.model.RawConsent;
 import com.nrigas.mastercard.request.AuthConsentRequest;
+import com.nrigas.mastercard.request.DeleteConsentRequest;
 import com.nrigas.mastercard.request.GetConsentRequest;
 import com.nrigas.mastercard.request.GetRawConsentRequest;
 import com.nrigas.mastercard.request.requestInfo.ConsentPermission;
 import com.nrigas.mastercard.requestBuilders.AuthConsentRequestBuilder;
+import com.nrigas.mastercard.requestBuilders.DeleteConsentRequestBuilder;
 import com.nrigas.mastercard.requestBuilders.GetConsentRequestBuilder;
 import com.nrigas.mastercard.requestBuilders.GetRawConsentRequestBuilder;
 import org.json.JSONObject;
@@ -218,6 +220,25 @@ public class ConsentsTest extends TestCase {
 
         Assert.assertNotNull(rawConsent.rawConsent);
         Assert.assertNotNull(rawConsent.originalRequestInfo);
+    }
+
+    @Test
+    public void testDeleteConsentRequestParams() throws Exception {
+        this.mockRawConsentResponse();
+
+        DeleteConsentRequest request = new DeleteConsentRequestBuilder()
+                .withConsentId("GFiTpF3:EBy5xGqQMatk")
+                .withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478c")
+                .withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+                .withMerchant("MerchantId", "MerchantName")
+                .build();
+        this.consents.delete(request);
+
+        this.assertRequestInfoHas("xRequestId");
+        this.assertRequestInfoHas("aspspId");
+        this.assertRequestInfoHas("psuTppCustomerId");
+        this.assertRequestInfoHas("merchant");
+        this.assertRequestHas("consentId");
     }
 
     private HttpResponse mockFormatErrorResponse() {
