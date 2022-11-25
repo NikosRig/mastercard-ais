@@ -35,6 +35,7 @@ public class AspspsTest extends TestCase {
 
 	@Test
 	public void testListShouldAddParams() throws Exception {
+		this.mockListResponse();
 		ListAspspsRequest request = new ListAspspsRequestBuilder()
 				.withId("123e4567-e89b-12d3-a456-426655440000")
 				.withName("Wood bank")

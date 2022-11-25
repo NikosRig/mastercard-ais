@@ -86,7 +86,6 @@ public class TransactionsTest extends TestCase {
 		Assert.assertNotNull(transaction.senderBankCode);
 		Assert.assertNotNull(transaction.senderBankCountryCode);
 		Assert.assertNotNull(transaction.transactionType);
-		Assert.assertNotNull(transaction.auxData);
 		Assert.assertNotNull(transaction.postTransactionBalance);
 		Assert.assertNotNull(transaction.mcc);
 		Assert.assertNotNull(transaction.rejectionReason);

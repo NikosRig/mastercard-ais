@@ -1,11 +1,14 @@
 package com.nrigas.mastercard;
 
 import com.nrigas.mastercard.model.Consent;
+import com.nrigas.mastercard.model.RawConsent;
 import com.nrigas.mastercard.request.AuthConsentRequest;
 import com.nrigas.mastercard.request.GetConsentRequest;
+import com.nrigas.mastercard.request.GetRawConsentRequest;
 import com.nrigas.mastercard.request.requestInfo.ConsentPermission;
 import com.nrigas.mastercard.requestBuilders.AuthConsentRequestBuilder;
 import com.nrigas.mastercard.requestBuilders.GetConsentRequestBuilder;
+import com.nrigas.mastercard.requestBuilders.GetRawConsentRequestBuilder;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
@@ -154,7 +157,7 @@ public class ConsentsTest extends TestCase {
     }
 
     @Test
-    public void authConsentShouldAddPsuIpAddressWhenExists() throws Exception {
+    public void testAuthConsentShouldAddPsuIpAddressWhenExists() throws Exception {
         HttpResponse authConsentResponse = this.mockAuthConsentResponse();
         Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(authConsentResponse);
 
@@ -168,7 +171,7 @@ public class ConsentsTest extends TestCase {
     }
 
     @Test
-    public void authConsentShouldNotAddPsuIpAddressWhenNotExists() throws Exception {
+    public void testAuthConsentShouldNotAddPsuIpAddressWhenNotExists() throws Exception {
         HttpResponse authConsentResponse = this.mockAuthConsentResponse();
         Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(authConsentResponse);
 
@@ -180,6 +183,43 @@ public class ConsentsTest extends TestCase {
         this.assertRequestInfoNotHas("psuIPAddress");
     }
 
+    @Test
+    public void testGetRawConsentRequestParams() throws Exception {
+        this.mockRawConsentResponse();
+
+        GetRawConsentRequest request = new GetRawConsentRequestBuilder()
+                .withConsentId("GFiTpF3:EBy5xGqQMatk")
+                .withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478c")
+                .withIsLivePsuRequest(true)
+                .withPsuIPAddress("192.168.0.1")
+                .withPsuAgent("PostmanRuntime/7.20.1")
+                .withMerchant("MerchantId", "MerchantName")
+                .build();
+        this.consents.getRaw(request);
+
+        this.assertRequestInfoHas("xRequestId");
+        this.assertRequestInfoHas("aspspId");
+        this.assertRequestInfoHas("consentId");
+        this.assertRequestInfoHas("isLivePsuRequest");
+        this.assertRequestInfoHas("psuIPAddress");
+        this.assertRequestInfoHas("psuAgent");
+        this.assertRequestInfoHas("merchant");
+    }
+
+    @Test
+    public void testGetRawConsentShouldParseResponse() throws Exception {
+        this.mockRawConsentResponse();
+
+        GetRawConsentRequest request = new GetRawConsentRequestBuilder()
+                .withConsentId("GFiTpF3:EBy5xGqQMatk")
+                .withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478c")
+                .build();
+        RawConsent rawConsent = this.consents.getRaw(request);
+
+        Assert.assertNotNull(rawConsent.rawConsent);
+        Assert.assertNotNull(rawConsent.originalRequestInfo);
+    }
+
     private HttpResponse mockFormatErrorResponse() {
         String responseBody = "{\"Errors\":{\"Error\":[{\"Source\":\"OBC\",\"ReasonCode\":\"FORMAT_ERROR\",\"Description\":\"[Path '/requestInfo/merchant'] Object instance has properties which are not allowed by the schema: [\\\"merchantName\\\"]\",\"Details\":\"path[0]=/requestInfo/merchant\"},{\"Source\":\"OBC\",\"ReasonCode\":\"FORMAT_ERROR\",\"Description\":\"[Path '/requestInfo/merchant'] Object has missing required properties ([\\\"name\\\"])\",\"Details\":\"path[0]=/requestInfo/merchant\"}]}}";
         return this.mockHttpResponse(responseBody, 400);
@@ -187,6 +227,12 @@ public class ConsentsTest extends TestCase {
 
     private void mockGetConsentResponse() throws Exception {
         String responseBody = "{\"originalRequestInfo\":{\"xRequestId\":\"e4dfcca5\"},\"aspspSCAApproach\":\"REDIRECT\",\"consentRequestId\":\"12345\",\"_links\":{\"scaRedirect\":\"https://openbanking.mastercard.eu/sandbox/mock/index.html?state=0418ae31-2e1e-49e3-a258-2c52c252a975&request=eyJjb25zZW50UmVxdWVzdElkIjoiMTIzNDUiLCJ0cHBSZWRpcmVjdFVSSSI6Imh0dHBzOi8vdHBwLW9iLmNvbS9jYWxsYmFjayJ9\"}}";
+        HttpResponse response = this.mockHttpResponse(responseBody, 200);
+        Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(response);
+    }
+
+    private void mockRawConsentResponse() throws Exception {
+        String responseBody = "{\"originalRequestInfo\":{\"xRequestId\":\"444e4567-e55b-12d3-a456-426655448888\"},\"rawConsent\":\"ewogIHNjb3BlOiBhY2NvdW50cywKICB0b2tlbl90eXBlOiBCZWFyZXIsCiAgYWNjZXNzX3Rva2VuOiBXMzRpVFhlVFZVZGtpRFpvVDlXVFVUMFE1eW5Hdk1uc3NXbUZ5bmMwVGlzY0ZlbEpiTWM0WmhTaXBHalRtNUd3dzVGSWs2TVVqeE9VeVV3TVp3UU1pSXlMMDNBZmpiU2RHekdWNGlpVHlpNmkwa3pkT05HMk1DaXd4WVVTYjNRaWt5OTRNT1dJc05SVG1GT0pYYnVjNU5paWkyMDAyWTJwVnk0VzVPajVKY1pZVzJSWVVNMjJZaU4ya1pZSlpVdGx0amJjM1hKV0FJbHZPV2lsSmJJbFljYko5TXRXT0lGMkFCWlZDalZjMFVJbiwKICByZWZyZXNoX3Rva2VuOiBDTzM0V01tV0c1TWl2V1NVWjAzT2M1cGVGYzVKbk1VVHdsTWlDYVlaYkc1azlGeUFRNElCOVdVWUxrYk9HU2N5VjB0VGMyMzNzazJ3MmZzNHlaWVpKMm5zd21pdHhpemNWaU1Oak5ZNkpqQXZSVVVKeTZieU9zSjBsSXVoVEcyV2RNaURsZGlWWjJrMFhaU2p3STR5TlZsVVdpalJqRlFPOXQ1TUl6eWNpNG41YnBZMlRKajAyRmJNTVhVWDNJYmlObVRZWW53VFdPR21PVFRJYmlHZWlvUXhqWldWSWMwMmlXQVVraUpDT2xjaSwKICBleHBpcmVzX2luOiAzNjAwCn0K\"}";
         HttpResponse response = this.mockHttpResponse(responseBody, 200);
         Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(response);
     }
