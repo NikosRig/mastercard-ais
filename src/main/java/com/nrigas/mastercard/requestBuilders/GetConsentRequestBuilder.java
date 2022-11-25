@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class GetConsentRequestBuilder {
 
-	private final GetConsentRequestInfo requestInfo;
-	private final ArrayList<ConsentPermission> permissions;
-	private final ArrayList<ConsentAccount> consentAccounts;
-	private LocalDateTime validUntilDateTime = null;
+	public final GetConsentRequestInfo requestInfo;
+	public final ArrayList<ConsentPermission> permissions;
+	public final ArrayList<ConsentAccount> consentAccounts;
+	public LocalDateTime validUntilDateTime = null;
 
 	public GetConsentRequestBuilder() {
 		this.requestInfo = new GetConsentRequestInfo();
@@ -80,11 +80,6 @@ public class GetConsentRequestBuilder {
 	}
 
 	public GetConsentRequest build() {
-		return new GetConsentRequest(
-				this.requestInfo,
-				this.validUntilDateTime,
-				this.permissions,
-				this.consentAccounts
-		);
+		return new GetConsentRequest(this);
 	}
 }

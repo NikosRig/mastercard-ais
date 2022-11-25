@@ -6,8 +6,8 @@ import com.nrigas.mastercard.request.requestInfo.RequestInfo;
 
 public class DeleteConsentRequestBuilder {
 
-	protected RequestInfo requestInfo;
-	private String consentId;
+	public RequestInfo requestInfo;
+	public String consentId;
 
 	public DeleteConsentRequestBuilder() {
 		this.requestInfo = new RequestInfo();
@@ -34,6 +34,6 @@ public class DeleteConsentRequestBuilder {
 	}
 
 	public DeleteConsentRequest build() {
-		return new DeleteConsentRequest(this.requestInfo, this.consentId);
+		return new DeleteConsentRequest(this);
 	}
 }

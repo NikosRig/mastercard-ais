@@ -6,7 +6,7 @@ import com.nrigas.mastercard.request.requestInfo.Merchant;
 
 public class GetRawConsentRequestBuilder {
 
-	private GetRawConsentRequestInfo requestInfo;
+	public GetRawConsentRequestInfo requestInfo;
 
 	public GetRawConsentRequestBuilder() {
 		this.requestInfo = new GetRawConsentRequestInfo();
@@ -43,6 +43,6 @@ public class GetRawConsentRequestBuilder {
 	};
 
 	public GetRawConsentRequest build() {
-		return new GetRawConsentRequest(this.requestInfo);
+		return new GetRawConsentRequest(this);
 	}
 }

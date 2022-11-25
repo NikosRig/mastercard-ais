@@ -54,6 +54,6 @@ public class GetAccountRequestBuilder {
 	};
 
 	public GetAccountRequest build() {
-		return new GetAccountRequest(requestInfo, this.accountId);
+		return new GetAccountRequest(this);
 	}
 }

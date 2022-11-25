@@ -6,8 +6,8 @@ import com.nrigas.mastercard.request.requestInfo.RequestInfo;
 
 public class AuthConsentRequestBuilder {
 
-	protected RequestInfo requestInfo;
-	private String authorization;
+	public RequestInfo requestInfo;
+	public String authorization;
 
 	public AuthConsentRequestBuilder() {
 		this.requestInfo = new RequestInfo();
@@ -44,9 +44,6 @@ public class AuthConsentRequestBuilder {
 	};
 
 	public AuthConsentRequest build() {
-		return new AuthConsentRequest(
-				this.requestInfo,
-				this.authorization
-		);
+		return new AuthConsentRequest(this);
 	}
 }
