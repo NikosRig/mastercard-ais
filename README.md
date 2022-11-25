@@ -200,3 +200,26 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 			.build();
 	RawConsent rawConsent = mastercardAis.consents().getRaw(request);
 ```
+<br/>
+
+#### Delete Account Information Consent
+
+
+|  Request Options	                   	 		| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
+| `withMerchant(String MerchantId, String MerchantName)`     	| Merchant id and name                  				   		|
+| `withConsentId(String)`     					| Consent identification			   					|                
+| `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
+
+#### Example
+
+```bash
+	DeleteConsentRequest request = new DeleteConsentRequestBuilder()
+			.withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+			.withMerchant("MerchantId", "MerchantName")
+			.withConsentId("GFiTpF3:EBy5xGqQMatk")
+			.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+			.build();
+	mastercardAis.consents().delete(request);
+```
