@@ -32,6 +32,7 @@
     * [Get Account Information Consent](#get-account-information-consent)
     * [Exchange the PSU Authorization for Access Consent](#exchange-the-psu-authorization-for-access-consent)
     * [Get Raw Account Information Consent](#get-raw-account-information-consent)
+    * [Delete Account Information Consent](#delete-account-information-consent)
 
 <br/>
 
@@ -39,7 +40,6 @@
 ### :rocket: Features
 
 - Get List of Available ASPSPs
-- Delete Account Information Consent
 - Get List of Accounts
 - Get Account Details
 - Get Account Balances
