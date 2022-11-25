@@ -2,8 +2,11 @@ package com.nrigas.mastercard;
 
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.model.Transaction;
+import com.nrigas.mastercard.model.TransactionList;
 import com.nrigas.mastercard.request.GetTransactionRequest;
+import com.nrigas.mastercard.request.ListTransactionsRequest;
 import com.nrigas.mastercard.requestBuilders.GetTransactionRequestBuilder;
+import com.nrigas.mastercard.requestBuilders.ListTransactionsRequestBuilder;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
@@ -105,6 +108,26 @@ public class TransactionsTest extends TestCase {
 		Assert.assertNotNull(transaction.senderBankAddress);
 	}
 
+	@Test
+	public void testListShouldParseResponse() throws Exception {
+		this.mockListResponse();
+
+		ListTransactionsRequest request = new ListTransactionsRequestBuilder()
+				.withAccountId("aa:q648383844dhhfHhTV")
+				.withConsentId("GFiTpF3:EBy5xGqQMatk")
+				.withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+				.withIsLivePsuRequest(true)
+				.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+				.withPsuIPAddress("127.0.0.1")
+				.withPsuAgent("PostmanRuntime/7.20.1")
+				.withMerchant("MerchantId", "MerchantName")
+				.build();
+		TransactionList transactionList = this.transactions.list(request);
+
+		Assert.assertNotNull(transactionList.offset);
+		Assert.assertNotNull(transactionList.transactions);
+	}
+
 	private void assertRequestInfoHas(String key) throws Exception {
 		Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
 			JSONObject requestInfo = new JSONObject(jsonBody).getJSONObject("requestInfo");
@@ -117,6 +140,12 @@ public class TransactionsTest extends TestCase {
 			JSONObject requestInfo = new JSONObject(jsonBody).getJSONObject("requestInfo");
 			return !requestInfo.has(key);
 		}));
+	}
+
+	private void mockListResponse() throws Exception {
+		String responseBody = "{\"originalRequestInfo\":{\"xRequestId\":\"444e4567-e55b-12d3-a456-426655448888\"},\"offset\":\"ofset4prev$earch12345\",\"transactions\":[{\"transactionId\":\"transactionreference\",\"bookingDateTime\":\"2021-05-21T08:30:00Z\",\"tradeDate\":\"2021-05-21T08:30:00Z\",\"transactionAmount\":{\"currency\":\"USD\",\"amount\":100.23},\"remittanceInformationUnstructured\":\"Payment for fruits\",\"status\":\"ACSC\",\"creditDebitIndicator\":\"CREDIT\",\"initiatorNameAddress\":[\"Street Street\"],\"senderNameAddress\":[\"Street Street\"],\"senderAccountNumber\":\"ACCNUMBR1234567\",\"recipientNameAddress\":[\"Street Street\"],\"recipientAccountNumber\":\"ACCNUMBR1234567\",\"recipientAccountMassPayment\":\"RecipientMass1\",\"recipientBankBicOrSwift\":\"SBICCOD1\",\"recipientBankName\":\"Recipient Bank Name 1\",\"recipientBankCode\":\"88457329\",\"recipientBankCountryCode\":\"PL\",\"recipientBankAddress\":[\"Street Street\"],\"senderName\":\"John Doe\",\"recipientName\":\"John Doe\",\"senderAccountNumberScheme\":\"IBAN\",\"recipientAccountNumberScheme\":\"IBAN\",\"senderAccountMassPayment\":\"SenderMass1\",\"senderBankBicOrSwift\":\"SBICCOD1\",\"senderBankName\":\"Sender Bank Name 1\",\"senderBankCode\":\"10901014\",\"senderBankCountryCode\":\"PL\",\"senderBankAddress\":[\"Street Street\"],\"transactionType\":\"Transaction Type 1\",\"auxData\":\"{\\\"additionalProp1\\\": \\\"somePropertyValue1\\\"}\",\"postTransactionBalance\":100.23,\"mcc\":\"MCC1\",\"rejectionReason\":\"Rejection Reason 1\",\"rejectionDate\":\"2021-05-21T08:30:00Z\",\"holdExpirationDate\":\"2021-05-21T08:30:00Z\"}],\"messages\":[{\"code\":\"IGNORED_DATE_FILTERS\",\"description\":\"Date filters may be ignored for ASPSPs using current API Profile. Please refer to the API specification for details.\"}]}";
+		HttpResponse response = this.mockHttpResponse(responseBody, 200);
+		Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(response);
 	}
 
 	private void mockGetResponse() throws Exception {

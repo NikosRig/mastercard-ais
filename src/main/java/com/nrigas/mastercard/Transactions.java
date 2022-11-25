@@ -6,7 +6,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.model.Transaction;
+import com.nrigas.mastercard.model.TransactionList;
 import com.nrigas.mastercard.request.GetTransactionRequest;
+import com.nrigas.mastercard.request.ListTransactionsRequest;
 
 import java.net.http.HttpResponse;
 
@@ -32,5 +34,16 @@ public class Transactions {
 		);
 
 		return this.gson.fromJson(response.body(), Transaction.class);
+	}
+
+	public TransactionList list(ListTransactionsRequest request) throws Exception {
+
+		HttpResponse<String> response = this.client.postJson(
+				"/openbanking/connect/api/accounts/account/transactions",
+				this.gson.toJson(request)
+		);
+
+		return new GsonBuilder().create()
+				.fromJson(response.body(), TransactionList.class);
 	}
 }
