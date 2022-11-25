@@ -40,6 +40,7 @@
     * [Get Account Standing Orders](#get-account-standing-orders)
   * [Transactions](#transactions)
     * [Get Account Transaction Details](#get-account-transaction-details)
+    * [Get Account Transactions](#get-account-transactions)
 
 	
 <br/>
@@ -48,7 +49,6 @@
 ### :rocket: Features
 
 - Get List of Available ASPSPs
-- Get Account Transactions
 
 
 <br/>
@@ -420,7 +420,7 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 
 
 
-|  StandingOrderPayment                  	 		| Description                           				   	|
+|  StandingOrderPayment                  	 		| Description                           				   		|
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
 | `identification`             					| Account identification								|
 | `schemeName`             					| Account schema									|
@@ -524,8 +524,54 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 			.withTransactionId("7ccs6s5:r55a:4MctP")
 			.build();
 	Transaction transaction = mastercardAis.transactions().get(request);
-```
 
+```
 <br/>
 
-|
+### Get Account Transactions
+
+
+
+|  Request Options	                   	 		| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
+| `withAccountId(String)`         				| Account reference                     		   				|
+| `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		| 
+| `withConsentId(String)`         				| Consent identification								|
+| `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
+| `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
+| `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
+| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
+| `withLimit(Integer)`     					| (Optional) Number of transactions to be returned               			|
+| `withOffset(String)`     					| (Optional) Offset value obtained from previous calls to get transactions              |
+| `withBookingDateFrom(String)`     				| (Optional) Inclusive lower bound of the transaction booking date             		|
+| `withbookingDateTo(String)`     				| (Optional) Inclusive upper bound of the transaction booking date              	|
+
+
+|  Transactions List	                   	 		| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `offset`             						| Offset value obtained from previous calls to get transactions				|
+| `transactions`             					| List of transaction models								|
+
+
+
+#### Example
+
+```bash
+	ListTransactionsRequest request = new ListTransactionsRequestBuilder()
+		.withAccountId("aa:q648383844dhhfHhTV")
+		.withConsentId("GFiTpF3:EBy5xGqQMatk")
+		.withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+		.withIsLivePsuRequest(true)
+		.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+		.withPsuIPAddress("127.0.0.1")
+		.withPsuAgent("PostmanRuntime/7.20.1")
+		.withMerchant("MerchantId", "MerchantName")
+		.withLimit(20)
+		.withBookingDateFrom("2018-09-23")
+		.withBookingTo("2018-11-21")
+		.build();
+	TransactionList transactionList = mastercardAis.transactions().list(request);
+
+```
+<br/>
