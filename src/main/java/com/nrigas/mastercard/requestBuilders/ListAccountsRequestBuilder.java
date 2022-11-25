@@ -3,10 +3,11 @@ package com.nrigas.mastercard.requestBuilders;
 import com.nrigas.mastercard.request.ListAccountsRequest;
 import com.nrigas.mastercard.request.requestInfo.GetRawConsentRequestInfo;
 import com.nrigas.mastercard.request.requestInfo.Merchant;
+import com.nrigas.mastercard.request.requestInfo.RequestInfo;
 
 public class ListAccountsRequestBuilder {
 
-	private GetRawConsentRequestInfo requestInfo;
+	public RequestInfo requestInfo;
 
 	public ListAccountsRequestBuilder() {
 		this.requestInfo = new GetRawConsentRequestInfo();
@@ -48,6 +49,6 @@ public class ListAccountsRequestBuilder {
 	}
 
 	public ListAccountsRequest build() {
-		return new ListAccountsRequest(this.requestInfo);
+		return new ListAccountsRequest(this);
 	}
 }

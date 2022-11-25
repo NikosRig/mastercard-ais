@@ -2,8 +2,9 @@ package com.nrigas.mastercard.model;
 
 public class AccountNumber {
 
-	private final String identification;
-	private final String schemeName;
+	public final String identification;
+	public final String schemeName;
+	public String name;
 
 	public AccountNumber(String identification, String schemeName) {
 		this.identification = identification;

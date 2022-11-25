@@ -34,4 +34,8 @@ public class MastercardAis {
     public Transactions transactions() {
         return new Transactions(this.mastercardClient);
     }
+
+    public StandingOrders standingOrders() {
+        return new StandingOrders(this.mastercardClient);
+    }
 }
