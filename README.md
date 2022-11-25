@@ -33,15 +33,17 @@
     * [Exchange the PSU Authorization for Access Consent](#exchange-the-psu-authorization-for-access-consent)
     * [Get Raw Account Information Consent](#get-raw-account-information-consent)
     * [Delete Account Information Consent](#delete-account-information-consent)
-
+  * [Accounts](#accounts)
+    * [Get List of Accounts](#get-list-of-accounts)
+    * [Get Account Details](#get-account-details)
+	
+	
 <br/>
 
 <!-- Features -->
 ### :rocket: Features
 
 - Get List of Available ASPSPs
-- Get List of Accounts
-- Get Account Details
 - Get Account Balances
 - Get Account Transactions
 - Get Account Transaction Details
@@ -92,7 +94,6 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 |  Request Options	                   	 		| Description                           				   		|
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
 | `withAspspId(String)`             				| Identification of ASPSP                   			           		|
-| `withMerchant(String MerchantId, String MerchantName)`     	| Merchant id and name                  				   		|
 | `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		|                
 | `withTppRedirectURI(String)`         				| Call back uri                     				           		|
 | `addConsentPermission(ConsentPermission)`         		| allPSD2, accounts, balances, transactions, standingorders                		|
@@ -102,6 +103,7 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 | `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
 | `withValidUntilDateTime(LocalDateTime)`         		| (Optional) Consent valid until date time. Сan only represent future date value      	|           
 | `withCredentials(String iban)`         			| (Optional) Elements used to define the credentials provided by PSU      		|
+| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
 
 
 |  Consent Model	                   	 			| Description                           				   	|
@@ -135,16 +137,17 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 |  Request Options	                   	 		| Description                           				   		|
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
 | `withAspspId(String)`             				| Identification of ASPSP                   			           		|
-| `withMerchant(String MerchantId, String MerchantName)`     	| Merchant id and name                  				   		|
 | `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		| 
-| `withAuthorization(String)`         				| The authorization query received after PSU has authorized the consent (e.g code=xx)	| 
+| `withAuthorization(String)`         				| The authorization query received after PSU has authorized the consent (e.g code=xx)	|
 | `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
 | `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
+| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
+
 
 
 |  Authorized Consent Model	                   	 	| Description                           				   		|
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `consentId`             					| ID of the consent request. 								|
+| `consentId`             					| Consent Id 										|
 | `consentRequestId`     					| ID of the consent request             						|
 | `originalRequestInfo`     					| Original xRequestId given by the client on request             			|
 | `signatureStatus`     					| Status of validation of ASPSP's signature             				|
@@ -173,12 +176,11 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 |  Request Options	                   	 		| Description                           				   		|
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
 | `withAspspId(String)`             				| Identification of ASPSP                   			           		|
-| `withMerchant(String MerchantId, String MerchantName)`     	| Merchant id and name                  				   		|
 | `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		|                
 | `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
 | `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
 | `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
-
+| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
 
 
 |  Raw Consent Model	                   	 		| Description                           				   		|
@@ -208,9 +210,10 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 |  Request Options	                   	 		| Description                           				   		|
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
 | `withAspspId(String)`             				| Identification of ASPSP                   			           		|
-| `withMerchant(String MerchantId, String MerchantName)`     	| Merchant id and name                  				   		|
 | `withConsentId(String)`     					| Consent identification			   					|                
 | `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
+| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
+
 
 #### Example
 
@@ -223,3 +226,57 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 			.build();
 	mastercardAis.consents().delete(request);
 ```
+
+### Accounts
+
+#### Get List of Accounts
+
+|  Request Options	                   	 		| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
+| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
+| `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		| 
+| `withConsentId(String)`         				| Consent identification								| 
+| `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
+| `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
+| `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
+
+
+|  AccountList Model	                   	 		| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `accounts`             					| List of Account Models								|
+
+
+
+#### Example
+
+```bash
+	ListAccountsRequest request = new ListAccountsRequestBuilder()
+			.withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+			.withMerchant("MerchantId", "MerchantName")
+			.withConsentId("GFiTpF3:EBy5xGqQMatk")
+			.withIsLivePsuRequest(true)
+			.withPsuAgent("PostmanRuntime/7.20.1")
+			.withPsuIPAddress("127.0.0.1")
+			.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+			.build();
+	AccountList accountList = mastercardAis.accounts().list(request);
+```
+
+<br/>
+
+#### Get Account Details
+
+|  Request Options	                   	 		| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
+| `withAccountId(String)`         				| Account reference                     		   				|
+| `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		| 
+| `withConsentId(String)`         				| Consent identification								|
+| `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
+| `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
+| `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
+| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
+
+
+
