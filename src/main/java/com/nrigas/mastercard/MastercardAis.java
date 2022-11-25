@@ -67,6 +67,9 @@ public class MastercardAis {
         }
 
         public MastercardAis build() throws Exception {
+
+            this.validateParams();
+
             MastercardAisAuthUtil authUtil = new MastercardAisAuthUtil(
                     this.pkcs12FilePath,
                     this.signingKeyAlias,
@@ -80,6 +83,25 @@ public class MastercardAis {
             );
 
             return new MastercardAis(client);
+        }
+
+        private void validateParams() throws Exception {
+
+            if (this.consumerKey == null) {
+                throw new Exception("consumerKey is required");
+            }
+
+            if (this.isSandboxMode == null) {
+                throw new Exception("isSandboxMode is required");
+            }
+
+            if (this.signingKeyAlias == null) {
+                throw new Exception("signingKeyAlias is required");
+            }
+
+            if (this.signingKeyPassword == null) {
+                throw new Exception("signingKeyPassword is required");
+            }
         }
     }
 }
