@@ -38,6 +38,8 @@
     * [Get Account Details](#get-account-details)
     * [Get Account Balances](#get-account-balances)
     * [Get Account Standing Orders](#get-account-standing-orders)
+  * [Transactions](#transactions)
+    * [Get Account Transaction Details](#get-account-transaction-details)
 
 	
 <br/>
@@ -47,7 +49,6 @@
 
 - Get List of Available ASPSPs
 - Get Account Transactions
-- Get Account Transaction Details
 
 
 <br/>
@@ -453,3 +454,78 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 ```
 
 <br/>
+
+### Transactions
+
+
+#### Get Account Transaction Details
+
+
+|  Request Options	                   	 		| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
+| `withAccountId(String)`         				| Account reference                     		   				|
+| `withTransactionId(String)`         				| Transaction reference                    		   				|
+| `withConsentId(String)`         				| Consent identification								|
+| `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		| 
+| `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
+| `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
+| `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
+| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
+
+
+
+|  Transaction	                   	 			| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `transactionId`             					| Transaction identification								|
+| `bookingDateTime`             				| Date and time when a transaction entry is posted to an account.			|
+| `remittanceInformationUnstructured`             		| Description of the payment								|
+| `status`             						| Status of the transaction.								|
+| `creditDebitIndicator`             				| Indicated the type of the resourc							|
+| `tradeDate`             					| Transaction trade date time.								|
+| `senderAccountNumber`             				| Sender account number									|
+| `recipientAccountNumber`             				| Recepient account number								|
+| `recipientAccountMassPayment`             			| Recipient mass payment account number							|
+| `recipientBankBicOrSwift`             			| Recipient bank BIC/SWIFT code								|
+| `recipientBankName`             				| Recipient bank name									|
+| `recipientBankCode`             				| Recipient bank code									|
+| `recipientBankCountryCode`             			| Recipient bank country code								|
+| `senderAccountMassPayment`             			| Sender mass payment account number.							|
+| `senderBankBicOrSwift`             				| Sender bank BIC/SWIFT code								|
+| `senderBankName`             					| Sender bank name									|
+| `senderBankCode`             					| Sender bank code									|
+| `senderBankCountryCode`             				| Sender bank country code								|
+| `transactionType`             				| Transaction type									|
+| `postTransactionBalance`             				| Post transaction balance								|
+| `mcc`             						| Merchant Category Code of the Card Acceptor 						|
+| `rejectionReason`             				| Rejection reason									|
+| `rejectionDate`             					| Rejection date									|
+| `holdExpirationDate`             				| Hold expiration date									|
+| `senderName`             					| Name of the debtor in current transaction						|
+| `recipientName`             					| Name of the creditor in current transaction (recipient's name)			|
+| `senderAccountNumberScheme`             			| Scheme name of the account number that belongs to the sender/debtor			|
+| `senderNameAddress`             				| Balance Model										|
+| `recipientAccountNumberScheme`             			| Scheme name of the account number that belongs to the recipient/creditor		|
+| `transactionAmount`             				| TransactionAmount Model								|
+
+
+#### Example
+
+```bash
+	GetTransactionRequest request = new GetTransactionRequestBuilder()
+			.withConsentId("MatkBJbqtZ8sPNznYtfV:5g")
+			.withAspspId("b806ae68-a45b-49d6-b25a-69fdb81dede6")
+			.withIsLivePsuRequest(false)
+			.withMerchant("MerchantId", "MerchantName")
+			.withPsuAgent("PostmanRuntime/7.20.1")
+			.withPsuIPAddress("192.168.0.1")
+			.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+			.withAccountId("qqCfw:XwAa:665hs5:r55dM")
+			.withTransactionId("7ccs6s5:r55a:4MctP")
+			.build();
+	Transaction transaction = mastercardAis.transactions().get(request);
+```
+
+<br/>
+
+|
