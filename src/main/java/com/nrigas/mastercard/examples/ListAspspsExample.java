@@ -20,8 +20,9 @@ public class ListAspspsExample {
 		);
 		MastercardAis mastercardAis = new MastercardAis(config);
 		ListAspspsRequest request = new ListAspspsRequestBuilder()
-				.withId("123e4567-e89b-12d3-a456-426655440000")
-				.withName("Wood bank")
+				.withId("018d02c8-9be6-4363-9f3a-9009b2c89768")
+				.withName("Apollo Bank")
+				.withCountry("GB")
 				.withLimit(20)
 				.addAdditionalData(AdditionalData.capabilities)
 				.addAdditionalData(AdditionalData.credentials)

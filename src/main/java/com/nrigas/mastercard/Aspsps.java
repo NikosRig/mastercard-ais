@@ -21,7 +21,7 @@ public class Aspsps {
 	public AspspList list(ListAspspsRequest request) throws Exception {
 
 		HttpResponse<String> response = this.client.postJson(
-				"/openbanking/connect/api/accounts",
+				"/openbanking/connect/api/accounts/aspsps",
 				this.gson.toJson(request)
 		);
 
