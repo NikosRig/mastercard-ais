@@ -25,7 +25,7 @@
 <!-- Table of Contents -->
 ## :notebook_with_decorative_cover: Table of Contents
 
-- [Getting Started](#loudspeaker-getting-started)
+- [Getting Started](#rocket-getting-started)
   * [Prerequisites](#round_pushpin-prerequisites)
   * [Building the MastercardAis](#building-the-mastercardais)
   * [Consents](#consents)
@@ -53,7 +53,7 @@
 <br/>
 
 <!-- Getting Started -->
-## :loudspeaker: Getting Started
+## :rocket: Getting Started
 
 <!-- Prerequisites -->
 ### :round_pushpin: Prerequisites
