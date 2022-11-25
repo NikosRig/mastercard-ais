@@ -35,6 +35,10 @@ public class MastercardAis {
         return new Transactions(this.mastercardClient);
     }
 
+    public Aspsps aspsps() {
+        return new Aspsps(this.mastercardClient);
+    }
+
     public StandingOrders standingOrders() {
         return new StandingOrders(this.mastercardClient);
     }
