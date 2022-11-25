@@ -6,8 +6,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.model.Account;
+import com.nrigas.mastercard.model.AccountList;
 import com.nrigas.mastercard.request.GetAccountRequest;
 import com.nrigas.mastercard.request.GetBalanceRequest;
+import com.nrigas.mastercard.request.ListAccountsRequest;
 import org.json.JSONObject;
 
 import java.net.http.HttpResponse;
@@ -54,5 +56,16 @@ public class Accounts {
 
 		return new GsonBuilder().create()
 				.fromJson(account, Account.class);
+	}
+
+	public AccountList list(ListAccountsRequest request) throws Exception {
+
+		HttpResponse<String> response = this.client.postJson(
+				"/openbanking/connect/api/accounts",
+				this.gson.toJson(request)
+		);
+
+		return new GsonBuilder().create()
+				.fromJson(response.body(), AccountList.class);
 	}
 }
