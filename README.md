@@ -30,8 +30,8 @@
   * [Building the MastercardAis](#building-the-mastercardais)
   * [Consents](#consents)
     * [Get Account Information Consent](#get-account-information-consent)
+    * [Exchange the PSU Authorization for Access Consent](#exchange-the-psu-authorization-for-access-consent)
     * [Get Raw Account Information Consent](#get-raw-account-information-consent)
-
 
 <br/>
 
@@ -40,8 +40,6 @@
 
 - Get List of Available ASPSPs
 - Delete Account Information Consent
-- Get Raw Account Information Consent
-- Exchange the PSU Authorization for Access Consent
 - Get List of Accounts
 - Get Account Details
 - Get Account Balances
@@ -88,8 +86,6 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 
 ### Consents
 
-</br>
-
 #### Get Account Information Consent
 
 
@@ -110,7 +106,7 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 
 |  Consent Model	                   	 			| Description                           				   	|
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `consentRequestId`             				| ID of the consent request. 								|
+| `consentRequestId`             				| ID of the consent request 								|
 | `scaRedirectUri`     						| Redirect URL for SCA              				   			|
 
 
@@ -132,7 +128,47 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 	Consent consent = mastercardAis.consents().get(request);
 ```
 
-#### Get Raw Information Consent
+<br/>
+
+#### Exchange the PSU Authorization for Access Consent
+
+|  Request Options	                   	 		| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
+| `withMerchant(String MerchantId, String MerchantName)`     	| Merchant id and name                  				   		|
+| `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		| 
+| `withAuthorization(String)`         				| The authorization query received after PSU has authorized the consent (e.g code=xx)	| 
+| `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
+| `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
+
+
+|  Authorized Consent Model	                   	 	| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `consentId`             					| ID of the consent request. 								|
+| `consentRequestId`     					| ID of the consent request             						|
+| `originalRequestInfo`     					| Original xRequestId given by the client on request             			|
+| `signatureStatus`     					| Status of validation of ASPSP's signature             				|
+
+
+
+#### Example
+
+```bash
+	AuthConsentRequest request = new AuthConsentRequestBuilder()
+			.withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+			.withMerchant("MerchantId", "MerchantName")
+			.withIsLivePsuRequest(true)
+			.withPsuAgent("PostmanRuntime/7.20.1")
+			.withPsuIPAddress("127.0.0.1")
+			.withAuthorization("code=UKaccountEsbGdTB2a9MbSdt53serRsv0aUK001&state=38948933-38ae-45af-953e-25a69fefa39e")
+			.build();
+	AuthorizedConsent consent = mastercardAis.consents().authorize(request);
+```
+
+<br/>
+
+#### Get Raw Account Information Consent
+
 
 |  Request Options	                   	 		| Description                           				   		|
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
@@ -143,10 +179,13 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 | `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
 | `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
 
+
+
 |  Raw Consent Model	                   	 		| Description                           				   		|
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
 | `rawConsent`             					| Raw consent data received from ASPSP and encoded Base64				|
 | `originalRequestInfo`     					| Original xRequestId given by the client on request             			|
+
 
 #### Example
 
