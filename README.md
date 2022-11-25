@@ -37,6 +37,7 @@
     * [Get List of Accounts](#get-list-of-accounts)
     * [Get Account Details](#get-account-details)
     * [Get Account Balances](#get-account-balances)
+    * [Get Account Standing Orders](#get-account-standing-orders)
 
 	
 <br/>
@@ -47,7 +48,7 @@
 - Get List of Available ASPSPs
 - Get Account Transactions
 - Get Account Transaction Details
-- Get Account Standing Orders
+
 
 <br/>
 
@@ -365,6 +366,90 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 			.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
 			.build();
 	Account account = mastercardAis.accounts().balance(request);
+```
+
+<br/>
+
+
+#### Get Account Standing Orders
+
+
+
+|  Request Options	                   	 		| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
+| `withAccountId(String)`         				| Account reference                     		   				|
+| `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		| 
+| `withConsentId(String)`         				| Consent identification								|
+| `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
+| `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
+| `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
+| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
+| `withLimit(Integer)`     					| (Optional) Number of transactions to be returned               			|
+| `withOffset(String)`     					| (Optional) Offset value obtained from previous calls to get transactions              |
+
+
+|  Standing Orders List	                   	 		| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `offset`             						| Offset value obtained from previous calls to get transactions				|
+| `dateTime`             					| Datetime										|
+| `standingOrders`             					| List of standing order models								|
+
+
+
+|  Standing Order	                   	 		| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `standingOrderId`             				| Standing order identification								|
+| `firstPayment`             					| Datetime										|
+| `nextPayment`             					| StandingOrderPayment model								|
+| `finalPayment`             					| StandingOrderPayment model								|
+| `schedule`             					| StandingOrderSchedule model								|
+| `recipientAccount`             				| AccountNumber model									|
+| `reference`             					| Reference										|
+| `status`             						| Status										|
+
+
+
+|  AccountNumber                  	 			| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `date`             						| Payment date										|
+| `currency`             					| Currency code										|
+| `amount`             						| Amount value										|
+
+
+
+
+|  StandingOrderPayment                  	 		| Description                           				   	|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `identification`             					| Account identification								|
+| `schemeName`             					| Account schema									|
+| `name`     
+
+
+
+
+|  StandingOrderSchedule                  	 		| Description                           				   		|
+| --------------------------------------------------------------| --------------------------------------------------------------------------------------|
+| `frequency`             					| Scheduling frequency									|
+
+
+
+#### Example
+
+```bash
+	ListStandingOrdersRequest request = new ListStandingOrdersRequestBuilder()
+			.withAspspId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+			.withMerchant("MerchantId", "MerchantName")
+			.withConsentId("GFiTpF3:EBy5xGqQMatk")
+			.withIsLivePsuRequest(true)
+			.withPsuAgent("PostmanRuntime/7.20.1")
+			.withPsuIPAddress("127.0.0.1")
+			.withPsuTppCustomerId("420e5cff-0e2a-4156-991a-f6eeef0478cf")
+			.withLimit(20)
+			.withAccountId("aa:q648383844dhhfHhTV")
+			.withOffset("ofset4prev$earch12345")
+			.build();
+	StandingOrdersList standingOrdersList = mastercardAis.standingOrders().list(request);
 ```
 
 <br/>
