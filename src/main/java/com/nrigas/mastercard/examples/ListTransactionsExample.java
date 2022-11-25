@@ -35,5 +35,4 @@ public class ListTransactionsExample {
 
 			TransactionList transactionList = mastercardAis.transactions().list(request);
 		}
-	}
 }
