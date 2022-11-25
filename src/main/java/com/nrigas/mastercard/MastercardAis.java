@@ -9,18 +9,8 @@ public class MastercardAis {
 
     private final MastercardAisClient mastercardClient;
 
-    public MastercardAis(MastercardAisConfig config) throws Exception {
-        MastercardAisAuthUtil authUtil = new MastercardAisAuthUtil(
-                config.pkcs12FilePath,
-                config.signingKeyAlias,
-                config.signingKeyPassword,
-                config.consumerKey
-        );
-        this.mastercardClient = new MastercardAisClient(
-                HttpClient.newHttpClient(),
-                authUtil,
-                config.sandboxMode
-        );
+    public MastercardAis(MastercardAisClient mastercardClient) throws Exception {
+        this.mastercardClient = mastercardClient;
     }
 
     public Consents consents() {
@@ -41,5 +31,55 @@ public class MastercardAis {
 
     public StandingOrders standingOrders() {
         return new StandingOrders(this.mastercardClient);
+    }
+
+    public static class Builder {
+
+        private String pkcs12FilePath;
+        private String signingKeyAlias;
+        private String signingKeyPassword;
+        private String consumerKey;
+        private Boolean isSandboxMode;
+
+        public Builder withPkcs12FilePath(String pkcs12FilePath) {
+            this.pkcs12FilePath = pkcs12FilePath;
+            return this;
+        }
+
+        public Builder withSigningKeyAlias(String signingKeyAlias) {
+            this.signingKeyAlias = signingKeyAlias;
+            return this;
+        }
+
+        public Builder withSigningKeyPassword(String signingKeyPassword) {
+            this.signingKeyPassword = signingKeyPassword;
+            return this;
+        }
+
+        public Builder withConsumerKey(String consumerKey) {
+            this.consumerKey = consumerKey;
+            return this;
+        }
+
+        public Builder isSandboxMode(Boolean isSandboxMode) {
+            this.isSandboxMode = isSandboxMode;
+            return this;
+        }
+
+        public MastercardAis build() throws Exception {
+            MastercardAisAuthUtil authUtil = new MastercardAisAuthUtil(
+                    this.pkcs12FilePath,
+                    this.signingKeyAlias,
+                    this.signingKeyPassword,
+                    this.consumerKey
+            );
+            MastercardAisClient client = new MastercardAisClient(
+                    HttpClient.newHttpClient(),
+                    authUtil,
+                    this.isSandboxMode
+            );
+
+            return new MastercardAis(client);
+        }
     }
 }
