@@ -1,5 +1,6 @@
 package com.nrigas.mastercard;
 
+import com.nrigas.mastercard.model.AuthorizedConsent;
 import com.nrigas.mastercard.model.Consent;
 import com.nrigas.mastercard.model.RawConsent;
 import com.nrigas.mastercard.request.AuthConsentRequest;
@@ -186,6 +187,21 @@ public class ConsentsTest extends TestCase {
     }
 
     @Test
+    public void testAuthConsentShouldParseResponse() throws Exception {
+        HttpResponse authConsentResponse = this.mockAuthConsentResponse();
+        Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(authConsentResponse);
+
+        AuthConsentRequest request = new AuthConsentRequestBuilder()
+                .withAuthorization("authorization")
+                .build();
+        AuthorizedConsent authorizedConsent = this.consents.authorize(request);
+
+        Assert.assertNotNull(authorizedConsent.consentRequestId);
+        Assert.assertNotNull(authorizedConsent.consentId);
+        Assert.assertNotNull(authorizedConsent.signatureStatus);
+    }
+
+    @Test
     public void testGetRawConsentRequestParams() throws Exception {
         this.mockRawConsentResponse();
 
@@ -259,7 +275,7 @@ public class ConsentsTest extends TestCase {
     }
 
     private HttpResponse mockAuthConsentResponse() {
-        String responseBody = "{\"originalRequestInfo\":{\"xRequestId\":\"6fae488b-c8ac-44ec-a531-1dbb32e6b6f1\"},\"consentId\":\"GFiTpF3:EBy5xGqQMatk\",\"consentRequestId\":\"12345\"}";
+        String responseBody = "{\"originalRequestInfo\":{\"xRequestId\":\"444e4567-e55b-12d3-a456-426655448888\"},\"consentRequestId\":\"rq:7JKvT4jY3oc4xxAdSqdYawemSQP:5zKtXEAq\",\"consentId\":\"GFiTpF3:EBy5xGqQMatk\",\"signatureStatus\":\"VALID\"}";
         return this.mockHttpResponse(responseBody, 200);
     }
 
