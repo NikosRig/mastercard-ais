@@ -6,7 +6,6 @@ import com.nrigas.mastercard.request.GetTransactionRequest;
 import com.nrigas.mastercard.request.ListTransactionsRequest;
 import com.nrigas.mastercard.requestBuilders.GetTransactionRequestBuilder;
 import com.nrigas.mastercard.requestBuilders.ListTransactionsRequestBuilder;
-import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +14,6 @@ import org.mockito.Mockito;
 import java.net.http.HttpResponse;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.argThat;
 
 public class TransactionsTest extends TestCase {
 
@@ -159,13 +157,6 @@ public class TransactionsTest extends TestCase {
 		this.assertRequestHas("offset");
 		this.assertRequestHas("bookingDateFrom");
 		this.assertRequestHas("bookingDateTo");
-	}
-
-	private void assertRequestInfoNotHas(String key) throws Exception {
-		Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
-			JSONObject requestInfo = new JSONObject(jsonBody).getJSONObject("requestInfo");
-			return !requestInfo.has(key);
-		}));
 	}
 
 	private void mockListResponse() throws Exception {

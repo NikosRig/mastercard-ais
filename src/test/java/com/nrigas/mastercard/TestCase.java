@@ -28,6 +28,13 @@ public class TestCase {
         }));
     }
 
+    public void assertRequestInfoNotHas(String key) throws Exception {
+        Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
+            JSONObject requestInfo = new JSONObject(jsonBody).getJSONObject("requestInfo");
+            return !requestInfo.has(key);
+        }));
+    }
+
     public void assertRequestHas(String key) throws Exception {
         Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
             return new JSONObject(jsonBody).has(key);

@@ -180,13 +180,6 @@ public class ConsentsTest extends TestCase {
         this.assertRequestInfoNotHas("psuIPAddress");
     }
 
-    private void assertRequestInfoNotHas(String key) throws Exception {
-        Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
-            JSONObject requestInfo = new JSONObject(jsonBody).getJSONObject("requestInfo");
-            return !requestInfo.has(key);
-        }));
-    }
-
     private HttpResponse mockFormatErrorResponse() {
         String responseBody = "{\"Errors\":{\"Error\":[{\"Source\":\"OBC\",\"ReasonCode\":\"FORMAT_ERROR\",\"Description\":\"[Path '/requestInfo/merchant'] Object instance has properties which are not allowed by the schema: [\\\"merchantName\\\"]\",\"Details\":\"path[0]=/requestInfo/merchant\"},{\"Source\":\"OBC\",\"ReasonCode\":\"FORMAT_ERROR\",\"Description\":\"[Path '/requestInfo/merchant'] Object has missing required properties ([\\\"name\\\"])\",\"Details\":\"path[0]=/requestInfo/merchant\"}]}}";
         return this.mockHttpResponse(responseBody, 400);
