@@ -635,9 +635,9 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 
 ```
 
+<br/>
 
-
-#### :handshake: Contact
+### :handshake: Contact
 
 Nikos Rigas - nikosrigas95@gmail.com
 
