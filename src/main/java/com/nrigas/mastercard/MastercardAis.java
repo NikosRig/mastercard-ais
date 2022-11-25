@@ -61,7 +61,7 @@ public class MastercardAis {
             return this;
         }
 
-        public Builder isSandboxMode(Boolean isSandboxMode) {
+        public Builder enableSandboxMode(Boolean isSandboxMode) {
             this.isSandboxMode = isSandboxMode;
             return this;
         }

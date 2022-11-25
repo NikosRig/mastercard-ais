@@ -18,7 +18,7 @@ public class MastercardAisTest {
 
 		MastercardAis.Builder builder = new MastercardAis
 				.Builder()
-				.isSandboxMode(true)
+				.enableSandboxMode(true)
 				.withPkcs12FilePath("wrong file")
 				.withConsumerKey("consumerKey")
 				.withSigningKeyAlias("signingKey")
@@ -32,7 +32,7 @@ public class MastercardAisTest {
 
 		MastercardAis.Builder builder = new MastercardAis
 				.Builder()
-				.isSandboxMode(true)
+				.enableSandboxMode(true)
 				.withSigningKeyAlias("signingKey")
 				.withSigningKeyPassword("password")
 				.withPkcs12FilePath("file");
@@ -45,7 +45,7 @@ public class MastercardAisTest {
 
 		MastercardAis.Builder builder = new MastercardAis
 				.Builder()
-				.isSandboxMode(true)
+				.enableSandboxMode(true)
 				.withConsumerKey("consumerKey")
 				.withSigningKeyPassword("password");
 
@@ -57,7 +57,7 @@ public class MastercardAisTest {
 
 		MastercardAis.Builder builder = new MastercardAis
 				.Builder()
-				.isSandboxMode(true)
+				.enableSandboxMode(true)
 				.withConsumerKey("consumerKey");
 
 		Assert.assertThrows(Exception.class, builder::build);

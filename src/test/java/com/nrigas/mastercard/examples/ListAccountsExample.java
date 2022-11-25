@@ -10,7 +10,7 @@ public class ListAccountsExample {
 	public static void main(String[] args) throws Exception {
 
 		MastercardAis mastercardAis = new MastercardAis.Builder()
-				.isSandboxMode(true)
+				.enableSandboxMode(true)
 				.withPkcs12FilePath("./var/key.p12")
 				.withSigningKeyAlias("keyalias")
 				.withSigningKeyPassword("keystorepassword")
