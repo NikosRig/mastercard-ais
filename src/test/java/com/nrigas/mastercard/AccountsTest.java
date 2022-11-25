@@ -3,7 +3,9 @@ package com.nrigas.mastercard;
 import com.nrigas.mastercard.http.MastercardAisClient;
 import com.nrigas.mastercard.model.Account;
 import com.nrigas.mastercard.request.GetAccountRequest;
+import com.nrigas.mastercard.request.GetBalanceRequest;
 import com.nrigas.mastercard.requestBuilders.GetAccountRequestBuilder;
+import com.nrigas.mastercard.requestBuilders.GetBalanceRequestBuilder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +27,7 @@ public class AccountsTest extends TestCase {
 	}
 
 	@Test
-	public void getAccountShouldParseResponse() throws Exception {
+	public void testGetAccountShouldParseResponse() throws Exception {
 		HttpResponse getAccountMockResponse = this.mockGetAccountResponse();
 		Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(getAccountMockResponse);
 
@@ -54,6 +56,26 @@ public class AccountsTest extends TestCase {
 		Assert.assertNotNull(account.holderNameAddress);
 		Assert.assertNotNull(account.accountPsuRelations);
 		Assert.assertNotNull(account.holderAddress);
+	}
+
+	@Test
+	public void testBalanceShouldParseResponse() throws Exception {
+		this.mockBalanceResponse();
+
+		GetBalanceRequest request = new GetBalanceRequestBuilder()
+				.withAccountId("aa:q648383844dhhfHhTV")
+				.build();
+		Account account = this.accounts.balance(request);
+
+		Assert.assertNotNull(account.balances);
+		Assert.assertNotNull(account.name);
+		Assert.assertNotNull(account.resourceId);
+	}
+
+	private void mockBalanceResponse() throws Exception {
+		String responseBody = "{\"originalRequestInfo\":{\"xRequestId\":\"444e4567-e55b-12d3-a456-426655448888\"},\"account\":{\"resourceId\":\"AccountReference1\",\"name\":\"My savings account\",\"balances\":[{\"balanceAmount\":{\"currency\":\"USD\",\"amount\":100.23},\"balanceType\":\"Current\",\"creditDebitIndicator\":\"CREDIT\",\"dateTime\":\"2021-05-21T08:30:00Z\"}]}}";
+		HttpResponse response = this.mockHttpResponse(responseBody, 200);
+		Mockito.when(this.mastercardAisClient.postJson(any(), any())).thenReturn(response);
 	}
 
 	private HttpResponse mockGetAccountResponse() {

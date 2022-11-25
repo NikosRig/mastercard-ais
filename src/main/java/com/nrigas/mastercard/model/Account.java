@@ -1,5 +1,7 @@
 package com.nrigas.mastercard.model;
 
+import java.util.ArrayList;
+
 public class Account {
 
 	public String resourceId;
@@ -15,4 +17,5 @@ public class Account {
 	public String[] holderNameAddress;
 	public Object[] accountPsuRelations;
 	public HolderAddress holderAddress;
+	public ArrayList<Balance> balances;
 }

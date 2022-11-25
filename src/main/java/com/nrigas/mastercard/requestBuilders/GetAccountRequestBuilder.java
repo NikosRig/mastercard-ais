@@ -4,8 +4,6 @@ import com.nrigas.mastercard.request.GetAccountRequest;
 import com.nrigas.mastercard.request.requestInfo.GetAccountRequestInfo;
 import com.nrigas.mastercard.request.requestInfo.Merchant;
 
-import java.util.UUID;
-
 public class GetAccountRequestBuilder {
 
 	public final GetAccountRequestInfo requestInfo;
@@ -56,7 +54,6 @@ public class GetAccountRequestBuilder {
 	};
 
 	public GetAccountRequest build() {
-		this.requestInfo.setxRequestId(UUID.randomUUID().toString());
 		return new GetAccountRequest(requestInfo, this.accountId);
 	}
 }
