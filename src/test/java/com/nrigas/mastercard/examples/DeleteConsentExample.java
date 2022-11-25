@@ -9,7 +9,7 @@ public class DeleteConsentExample {
 	public static void main(String[] args) throws Exception {
 
 		MastercardAis mastercardAis = new MastercardAis.Builder()
-				.enableSandboxMode(true)
+				.enableSandboxMode()
 				.withPkcs12FilePath("./var/key.p12")
 				.withSigningKeyAlias("keyalias")
 				.withSigningKeyPassword("keystorepassword")
