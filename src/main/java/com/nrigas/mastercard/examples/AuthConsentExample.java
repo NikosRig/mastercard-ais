@@ -2,9 +2,9 @@ package com.nrigas.mastercard.examples;
 
 import com.nrigas.mastercard.MastercardAis;
 import com.nrigas.mastercard.MastercardAisConfig;
+import com.nrigas.mastercard.model.AuthorizedConsent;
 import com.nrigas.mastercard.request.AuthConsentRequest;
 import com.nrigas.mastercard.requestBuilders.AuthConsentRequestBuilder;
-import com.nrigas.mastercard.response.AuthorizeConsentResponse;
 
 public class AuthConsentExample {
 
@@ -26,6 +26,6 @@ public class AuthConsentExample {
 				.withPsuIPAddress("127.0.0.1")
 				.withAuthorization("code=UKaccountEsbGdTB2a9MbSdt53serRsv0aUK001&state=38948933-38ae-45af-953e-25a69fefa39e")
 				.build();
-		AuthorizeConsentResponse response = mastercardAis.consents().authorize(request);
+		AuthorizedConsent consent = mastercardAis.consents().authorize(request);
 	}
 }

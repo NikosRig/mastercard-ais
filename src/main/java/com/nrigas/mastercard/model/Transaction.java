@@ -23,7 +23,6 @@ public class Transaction {
 	public String senderBankCode;
 	public String senderBankCountryCode;
 	public String transactionType;
-	public String auxData;
 	public Float postTransactionBalance;
 	public String mcc;
 	public String rejectionReason;

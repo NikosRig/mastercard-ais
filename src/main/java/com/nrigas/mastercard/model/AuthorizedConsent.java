@@ -1,14 +1,12 @@
-package com.nrigas.mastercard.response;
+package com.nrigas.mastercard.model;
 
-import com.nrigas.mastercard.model.OriginalRequestInfo;
-
-public class AuthorizeConsentResponse {
+public class AuthorizedConsent {
 
 	public final String consentId;
 	public final String consentRequestId;
 	public final OriginalRequestInfo originalRequestInfo;
 
-	public AuthorizeConsentResponse(
+	public AuthorizedConsent(
 			String consentId,
 			String consentRequestId,
 			OriginalRequestInfo originalRequestInfo

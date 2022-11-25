@@ -5,13 +5,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.nrigas.mastercard.http.MastercardAisClient;
+import com.nrigas.mastercard.model.AuthorizedConsent;
 import com.nrigas.mastercard.model.Consent;
 import com.nrigas.mastercard.model.RawConsent;
 import com.nrigas.mastercard.request.AuthConsentRequest;
 import com.nrigas.mastercard.request.DeleteConsentRequest;
 import com.nrigas.mastercard.request.GetConsentRequest;
 import com.nrigas.mastercard.request.GetRawConsentRequest;
-import com.nrigas.mastercard.response.AuthorizeConsentResponse;
 import org.json.JSONObject;
 
 import java.net.http.HttpResponse;
@@ -27,7 +27,7 @@ public class Consents {
         this.gson = new GsonBuilder().create();
     }
 
-    public AuthorizeConsentResponse authorize(AuthConsentRequest request) throws Exception {
+    public AuthorizedConsent authorize(AuthConsentRequest request) throws Exception {
 
         JsonObject payload = new JsonObject();
         payload.add("requestInfo", this.gson.toJsonTree(request.requestInfo));
@@ -38,7 +38,7 @@ public class Consents {
                 payload.toString()
         );
 
-        return this.gson.fromJson(response.body(), AuthorizeConsentResponse.class);
+        return this.gson.fromJson(response.body(), AuthorizedConsent.class);
     }
 
     public Consent get(GetConsentRequest request) throws Exception {
