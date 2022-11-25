@@ -294,7 +294,7 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 | `schemeName`             					| List of Account Models								|
 | `auxData`             					| List of Account Models								|
 | `accountPsuRelations`             				| Description of relations between PSU and an Account					|
-| `balances`             					| Balances Model									|
+| `balances`             					| Balance Model										|
 | `holderAddress`             					| 											|
 | `holderNameAddress`             				| 											|
 
@@ -348,7 +348,7 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 | `balanceType`             					| Type of balance									|
 | `dateTime`             					| Datetime										|
 | `creditDebitIndicator`             				| Indicated the type of the resource							|
-| `balanceAmount`             					| Balances Model									|
+| `balanceAmount`             					| Balance Model										|
 
 
 #### Example
