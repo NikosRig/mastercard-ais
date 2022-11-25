@@ -113,6 +113,23 @@ public class ConsentsTest extends TestCase {
     }
 
     @Test
+    public void testVerifyGetConsentMerchantWillHasCredentials() throws Exception {
+        this.mockGetConsentResponse();
+
+        GetConsentRequest request = new GetConsentRequestBuilder()
+                .withMerchant("MerchantId", "MerchantName")
+                .withCredentials("iban")
+                .build();
+        this.consents.get(request);
+
+        Mockito.verify(this.mastercardAisClient).postJson(any(), argThat(jsonBody -> {
+            JSONObject credentials = new JSONObject(jsonBody).getJSONObject("requestInfo")
+                    .getJSONObject("credentials");
+           return credentials.has("iban");
+        }));
+    }
+
+    @Test
     public void testVerifyGetConsentMerchantIsOptional() throws Exception {
         this.mockGetConsentResponse();
 
