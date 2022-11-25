@@ -51,4 +51,15 @@ public class MastercardAisTest {
 
 		Assert.assertThrows(Exception.class, builder::build);
 	}
+
+	@Test
+	public void testExpectExceptionWhenSigningPasswordMissing() {
+
+		MastercardAis.Builder builder = new MastercardAis
+				.Builder()
+				.isSandboxMode(true)
+				.withConsumerKey("consumerKey");
+
+		Assert.assertThrows(Exception.class, builder::build);
+	}
 }

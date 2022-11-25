@@ -79,7 +79,7 @@ public class MastercardAis {
             MastercardAisClient client = new MastercardAisClient(
                     HttpClient.newHttpClient(),
                     authUtil,
-                    this.isSandboxMode
+                    this.isSandboxMode != null ? this.isSandboxMode : false
             );
 
             return new MastercardAis(client);
@@ -89,10 +89,6 @@ public class MastercardAis {
 
             if (this.consumerKey == null) {
                 throw new Exception("consumerKey is required");
-            }
-
-            if (this.isSandboxMode == null) {
-                throw new Exception("isSandboxMode is required");
             }
 
             if (this.signingKeyAlias == null) {
