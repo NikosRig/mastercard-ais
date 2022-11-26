@@ -399,7 +399,7 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 |  Standing Order	                   	 		| Description                           				   		|
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
 | `standingOrderId`             				| Standing order identification								|
-| `firstPayment`             					| Datetime										|
+| `firstPayment`             					| StandingOrderPayment model								|
 | `nextPayment`             					| StandingOrderPayment model								|
 | `finalPayment`             					| StandingOrderPayment model								|
 | `schedule`             					| StandingOrderSchedule model								|

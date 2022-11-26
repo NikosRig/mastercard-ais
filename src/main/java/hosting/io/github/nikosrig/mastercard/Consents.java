@@ -49,7 +49,7 @@ public class Consents {
         payload.add("accounts", this.gson.toJsonTree(request.accounts));
 
         if (request.validUntilDateTime != null) {
-            String validUntilDateTime = request.validUntilDateTime.format(DateTimeFormatter.ISO_DATE_TIME);
+            String validUntilDateTime = request.validUntilDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
             payload.add("validUntilDateTime", new JsonPrimitive(validUntilDateTime));
         }
 

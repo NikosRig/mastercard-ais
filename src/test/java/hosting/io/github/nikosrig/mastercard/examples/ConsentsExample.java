@@ -33,6 +33,10 @@ public class ConsentsExample {
 				.withValidUntilDateTime(LocalDateTime.now())
 				.withCredentials("DE357543513")
 				.build();
-		Consent consent = mastercardAis.consents().get(request);
+		try{
+			Consent consent = mastercardAis.consents().get(request);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }
