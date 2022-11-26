@@ -18,7 +18,7 @@
   </p>
   
    <h4 align="center">
-     <a href="https://developer.mastercard.com/open-banking-connect/documentation/aisfeatures/overview/">Documentation</a>
+     <a href="https://developer.mastercard.com/open-banking-connect/documentation/aisfeatures/overview/">Mastercard Documentation</a>
    </h4>
 <br />
 
@@ -641,7 +641,7 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 
 Nikos Rigas - nikosrigas95@gmail.com
 
-#### Licence
+### Licence
 
 Distributed under the MIT License
 
