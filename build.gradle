@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-group 'hosting.io.github.nikosrig'
+group 'io.github.nikosrig'
 version '1.0-SNAPSHOT'
 
 repositories {
