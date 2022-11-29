@@ -6,7 +6,7 @@
 
     <groupId>io.github.nikosrig</groupId>
     <artifactId>mastercard-ais</artifactId>
-    <version>1.2.3</version>
+    <version>1.1.0</version>
     <name>Mastercard Ais</name>
     <description>Library for integration with Mastercard Account Information APIs</description>
     <url>https://github.com/NikosRig/mastercard-ais</url>
