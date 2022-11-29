@@ -26,6 +26,7 @@
 ## :notebook_with_decorative_cover: Table of Contents
 
 - [Getting Started](#rocket-getting-started)
+  * [Installation](#installation)
   * [Prerequisites](#round_pushpin-prerequisites)
   * [Building the MastercardAis](#building-the-mastercardais)
   * [Consents](#consents)
@@ -53,6 +54,15 @@
 
 <!-- Getting Started -->
 ## :rocket: Getting Started
+
+### Installation
+```bash
+<dependency>
+  <groupId>io.github.nikosrig</groupId>
+  <artifactId>mastercard-ais</artifactId>
+  <version>1.0-SNAPSHOT</version>
+</dependency>
+```
 
 <!-- Prerequisites -->
 ### :round_pushpin: Prerequisites
