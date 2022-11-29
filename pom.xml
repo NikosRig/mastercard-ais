@@ -3,7 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    <scm>
+        <url>https://github.com/NikosRig/mastercard-ais</url>
+        <connection>scm:git:git://github.com/NikosRig/mastercard-ais.git</connection>
+        <developerConnection>scm:git:git@github.com:NikosRig/mastercard-ais.git</developerConnection>
+    </scm>
     <groupId>io.github.nikosrig</groupId>
     <artifactId>mastercard-ais</artifactId>
     <version>1.1.0</version>
@@ -134,6 +138,13 @@
                     <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.thoughtworks.xstream</groupId>
+                        <artifactId>xstream</artifactId>
+                        <version>1.4.15</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
