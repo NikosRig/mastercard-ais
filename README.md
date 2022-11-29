@@ -1,7 +1,7 @@
 <div align="center">
 
-  <h1>Mastercard Account Infomation Services</h1>
-  
+  <h1>Mastercard Account Information Services</h1>
+
 <!-- Badges -->
 <p>
   <a href="https://www.linkedin.com/in/nick-rigas/">
@@ -16,58 +16,60 @@
   <p align="center">
     <span>Integrate with Mastercard Account Information APIs easily and fluently</span>
   </p>
-  
+
    <h4 align="center">
      <a href="https://developer.mastercard.com/open-banking-connect/documentation/aisfeatures/overview/">Mastercard Documentation</a>
    </h4>
 <br />
 
 <!-- Table of Contents -->
+
 ## :notebook_with_decorative_cover: Table of Contents
 
 - [Getting Started](#rocket-getting-started)
-  * [Installation](#installation)
-  * [Prerequisites](#round_pushpin-prerequisites)
-  * [Building the MastercardAis](#building-the-mastercardais)
-  * [Consents](#consents)
-    * [Get Account Information Consent](#get-account-information-consent)
-    * [Exchange the PSU Authorization for Access Consent](#exchange-the-psu-authorization-for-access-consent)
-    * [Get Raw Account Information Consent](#get-raw-account-information-consent)
-    * [Delete Account Information Consent](#delete-account-information-consent)
-  * [Accounts](#accounts)
-    * [Get List of Accounts](#get-list-of-accounts)
-    * [Get Account Details](#get-account-details)
-    * [Get Account Balances](#get-account-balances)
-    * [Get Account Standing Orders](#get-account-standing-orders)
-  * [Transactions](#transactions)
-    * [Get Account Transaction Details](#get-account-transaction-details)
-    * [Get Account Transactions](#get-account-transactions)
-  * [ASPSPs](#aspsps)
-    * [Get List of Available ASPSPs](#get-list-of-available-aspsps)
+    * [Prerequisites](#round_pushpin-prerequisites)
+    * [Installation](#installation)
+    * [Building the MastercardAis](#building-the-mastercardais)
+    * [Consents](#consents)
+        * [Get Account Information Consent](#get-account-information-consent)
+        * [Exchange the PSU Authorization for Access Consent](#exchange-the-psu-authorization-for-access-consent)
+        * [Get Raw Account Information Consent](#get-raw-account-information-consent)
+        * [Delete Account Information Consent](#delete-account-information-consent)
+    * [Accounts](#accounts)
+        * [Get List of Accounts](#get-list-of-accounts)
+        * [Get Account Details](#get-account-details)
+        * [Get Account Balances](#get-account-balances)
+        * [Get Account Standing Orders](#get-account-standing-orders)
+    * [Transactions](#transactions)
+        * [Get Account Transaction Details](#get-account-transaction-details)
+        * [Get Account Transactions](#get-account-transactions)
+    * [ASPSPs](#aspsps)
+        * [Get List of Available ASPSPs](#get-list-of-available-aspsps)
 
-	
 <br/>
-
-
-
 <br/>
 
 <!-- Getting Started -->
+
 ## :rocket: Getting Started
 
+<!-- Prerequisites -->
+
+### :round_pushpin: Prerequisites
+
+To access the AIS features you need setup
+an [Open Banking Connect Account Information Service project](https://developer.mastercard.com/open-banking-connect/documentation/aisfeatures/overview/)
+and provide to the library the `consumer key`, `keystore password`, `key alias` and the `certificate`.
+
 ### Installation
+
 ```bash
 <dependency>
   <groupId>io.github.nikosrig</groupId>
   <artifactId>mastercard-ais</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.1.0</version>
 </dependency>
 ```
-
-<!-- Prerequisites -->
-### :round_pushpin: Prerequisites
-
-To access the AIS features you need setup an [Open Banking Connect Account Information Service project](https://developer.mastercard.com/open-banking-connect/documentation/aisfeatures/overview/) and provide to the library the `consumer key`, `keystore password`, `key alias` and the `certificate`.
 
 </br>
 
@@ -80,7 +82,6 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 | `withSigningKeyAlias(String)`     | Set signing key alias                 |
 | `withSigningKeyPassword(String)`  | Set signing key password              |
 | `withConsumerKey(String)`         | Set consumer key                      |
-
 
 #### Example
 
@@ -100,27 +101,24 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 
 #### Get Account Information Consent
 
-
-|  Request Options	                   	 		| Description                           				   		|
+|  Request Options                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
-| `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		|                
-| `withTppRedirectURI(String)`         				| Call back uri                     				           		|
-| `addConsentPermission(ConsentPermission)`         		| allPSD2, accounts, balances, transactions, standingorders                		|
-| `addAccount(String iban, String currency, String schemeName)` | (Optional) Adds account                      				   		|
-| `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
-| `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
-| `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
-| `withValidUntilDateTime(LocalDateTime)`         		| (Optional) Consent valid until date time. Сan only represent future date value      	|           
-| `withCredentials(String iban)`         			| (Optional) Elements used to define the credentials provided by PSU      		|
-| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
+| `withAspspId(String)`                            | Identification of ASPSP                                            |
+| `withIsLivePsuRequest(Boolean)`                    | Flag indicating if request is initiated by PSU                    |                
+| `withTppRedirectURI(String)`                        | Call back uri                                                    |
+| `addConsentPermission(ConsentPermission)`                | allPSD2, accounts, balances, transactions, standingorders                        |
+| `addAccount(String iban, String currency, String schemeName)` | (Optional) Adds account                                            |
+| `withPsuAgent(String)`                    | (Optional) PSU's browser agent details                            |
+| `withPsuTppCustomerId(String)`                    | (Optional) Identifier of the PSU in TPP system                                |
+| `withPsuIPAddress(String)`                        | (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true    | 
+| `withValidUntilDateTime(LocalDateTime)`                | (Optional) Consent valid until date time. Сan only represent future date value        |           
+| `withCredentials(String iban)`                    | (Optional) Elements used to define the credentials provided by PSU            |
+| `withMerchant(String MerchantId, String MerchantName)`        | (Optional) Merchant id and name                                    |
 
-
-|  Consent 	                   	 			| Description                           				   		|
+|  Consent                                    | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `consentRequestId`             				| ID of the consent request 								|
-| `scaRedirectUri`     						| Redirect URL for SCA              				   			|
-
+| `consentRequestId`                            | ID of the consent request                                |
+| `scaRedirectUri`                            | Redirect URL for SCA                                        |
 
 #### Example
 
@@ -144,25 +142,21 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 
 #### Exchange the PSU Authorization for Access Consent
 
-|  Request Options	                   	 		| Description                           				   		|
+|  Request Options                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
-| `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		| 
-| `withAuthorization(String)`         				| The authorization query received after PSU has authorized the consent (e.g code=xx)	|
-| `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
-| `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
-| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
+| `withAspspId(String)`                            | Identification of ASPSP                                            |
+| `withIsLivePsuRequest(Boolean)`                    | Flag indicating if request is initiated by PSU                    | 
+| `withAuthorization(String)`                        | The authorization query received after PSU has authorized the consent (e.g code=xx)    |
+| `withPsuAgent(String)`                    | (Optional) PSU's browser agent details                            |
+| `withPsuIPAddress(String)`                        | (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true    | 
+| `withMerchant(String MerchantId, String MerchantName)`        | (Optional) Merchant id and name                                    |
 
-
-
-|  Authorized Consent 	                   	 		| Description                           				   		|
+|  Authorized Consent                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `consentId`             					| Consent Id 										|
-| `consentRequestId`     					| ID of the consent request             						|
-| `originalRequestInfo`     					| Original xRequestId given by the client on request             			|
-| `signatureStatus`     					| Status of validation of ASPSP's signature             				|
-
-
+| `consentId`                                | Consent Id                                        |
+| `consentRequestId`                        | ID of the consent request                                    |
+| `originalRequestInfo`                        | Original xRequestId given by the client on request                        |
+| `signatureStatus`                        | Status of validation of ASPSP's signature                            |
 
 #### Example
 
@@ -182,23 +176,19 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 
 #### Get Raw Account Information Consent
 
-
-|  Request Options	                   	 		| Description                           				   		|
+|  Request Options                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
-| `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		|                
-| `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
-| `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
-| `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
-| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
+| `withAspspId(String)`                            | Identification of ASPSP                                            |
+| `withIsLivePsuRequest(Boolean)`                    | Flag indicating if request is initiated by PSU                    |                
+| `withPsuAgent(String)`                    | (Optional) PSU's browser agent details                            |
+| `withPsuTppCustomerId(String)`                    | (Optional) Identifier of the PSU in TPP system                                |
+| `withPsuIPAddress(String)`                        | (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true    | 
+| `withMerchant(String MerchantId, String MerchantName)`        | (Optional) Merchant id and name                                    |
 
-
-
-|  Raw Consent 	                   	 			| Description                           				   		|
+|  Raw Consent                                    | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `rawConsent`             					| Raw consent data received from ASPSP and encoded Base64				|
-| `originalRequestInfo`     					| Original xRequestId given by the client on request             			|
-
+| `rawConsent`                                | Raw consent data received from ASPSP and encoded Base64                |
+| `originalRequestInfo`                        | Original xRequestId given by the client on request                        |
 
 #### Example
 
@@ -213,18 +203,17 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 			.build();
 	RawConsent rawConsent = mastercardAis.consents().getRaw(request);
 ```
+
 <br/>
 
 #### Delete Account Information Consent
 
-
-|  Request Options	                   	 		| Description                           				   		|
+|  Request Options                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
-| `withConsentId(String)`     					| Consent identification			   					|                
-| `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
-| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
-
+| `withAspspId(String)`                            | Identification of ASPSP                                            |
+| `withConsentId(String)`                        | Consent identification                                |                
+| `withPsuTppCustomerId(String)`                    | (Optional) Identifier of the PSU in TPP system                                |
+| `withMerchant(String MerchantId, String MerchantName)`        | (Optional) Merchant id and name                                    |
 
 #### Example
 
@@ -242,22 +231,19 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 
 #### Get List of Accounts
 
-|  Request Options	                   	 		| Description                           				   		|
+|  Request Options                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
-| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
-| `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		| 
-| `withConsentId(String)`         				| Consent identification								| 
-| `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
-| `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
-| `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
+| `withAspspId(String)`                            | Identification of ASPSP                                            |
+| `withMerchant(String MerchantId, String MerchantName)`        | (Optional) Merchant id and name                                    |
+| `withIsLivePsuRequest(Boolean)`                    | Flag indicating if request is initiated by PSU                    | 
+| `withConsentId(String)`                        | Consent identification                                | 
+| `withPsuAgent(String)`                    | (Optional) PSU's browser agent details                            |
+| `withPsuIPAddress(String)`                        | (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true    | 
+| `withPsuTppCustomerId(String)`                    | (Optional) Identifier of the PSU in TPP system                                |
 
-
-|  AccountList 	                   	 			| Description                           				   		|
+|  AccountList                                    | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `accounts`             					| List of Account Models								|
-
-
+| `accounts`                                | List of Account Models                                |
 
 #### Example
 
@@ -278,36 +264,33 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 
 #### Get Account Details
 
-|  Request Options	                   	 		| Description                           				   		|
+|  Request Options                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
-| `withAccountId(String)`         				| Account reference                     		   				|
-| `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		| 
-| `withConsentId(String)`         				| Consent identification								|
-| `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
-| `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
-| `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
-| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
+| `withAspspId(String)`                            | Identification of ASPSP                                            |
+| `withAccountId(String)`                        | Account reference                                            |
+| `withIsLivePsuRequest(Boolean)`                    | Flag indicating if request is initiated by PSU                    | 
+| `withConsentId(String)`                        | Consent identification                                |
+| `withPsuAgent(String)`                    | (Optional) PSU's browser agent details                            |
+| `withPsuIPAddress(String)`                        | (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true    | 
+| `withPsuTppCustomerId(String)`                    | (Optional) Identifier of the PSU in TPP system                                |
+| `withMerchant(String MerchantId, String MerchantName)`        | (Optional) Merchant id and name                                    |
 
-
-
-|  Account	                   	 			| Description                           				   		|
+|  Account                                    | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `resourceId`             					| Account reference identification							|
-| `currency`             					| Currency code										|
-| `accountHolderType`             				| Specifies the type of account								|
-| `accountType`             					| Specifies the sub type of account							|
-| `nameClient`             					| Accounts name client									|
-| `name`             						| Account name										|
-| `holderName`             					| Holder name										|
-| `accountNumber`             					| Account number									|
-| `schemeName`             					| List of Account Models								|
-| `auxData`             					| List of Account Models								|
-| `accountPsuRelations`             				| Description of relations between PSU and an Account					|
-| `balances`             					| Balance Model										|
-| `holderAddress`             					| 											|
-| `holderNameAddress`             				| 											|
-
+| `resourceId`                                | Account reference identification                            |
+| `currency`                                | Currency code                                        |
+| `accountHolderType`                            | Specifies the type of account                                |
+| `accountType`                                | Specifies the sub type of account                            |
+| `nameClient`                                | Accounts name client                                    |
+| `name`                                    | Account name                                        |
+| `holderName`                                | Holder name                                        |
+| `accountNumber`                                | Account number                                    |
+| `schemeName`                                | List of Account Models                                |
+| `auxData`                                | List of Account Models                                |
+| `accountPsuRelations`                            | Description of relations between PSU and an Account                    |
+| `balances`                                | Balance Model                                        |
+| `holderAddress`                                | 											|
+| `holderNameAddress`                            | 											|
 
 #### Example
 
@@ -327,39 +310,31 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 
 <br/>
 
-
 #### Get Account Balances
 
-
-|  Request Options	                   	 		| Description                           				   		|
+|  Request Options                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
-| `withAccountId(String)`         				| Account reference                     		   				|
-| `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		| 
-| `withConsentId(String)`         				| Consent identification								|
-| `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
-| `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
-| `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
-| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
+| `withAspspId(String)`                            | Identification of ASPSP                                            |
+| `withAccountId(String)`                        | Account reference                                            |
+| `withIsLivePsuRequest(Boolean)`                    | Flag indicating if request is initiated by PSU                    | 
+| `withConsentId(String)`                        | Consent identification                                |
+| `withPsuAgent(String)`                    | (Optional) PSU's browser agent details                            |
+| `withPsuIPAddress(String)`                        | (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true    | 
+| `withPsuTppCustomerId(String)`                    | (Optional) Identifier of the PSU in TPP system                                |
+| `withMerchant(String MerchantId, String MerchantName)`        | (Optional) Merchant id and name                                    |
 
-
-
-|  Account	                   	 			| Description                           				   		|
+|  Account                                    | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `resourceId`             					| Account reference identification							|
-| `name`             						| Account name										|
-| `balances`             					| Balance Model										|
+| `resourceId`                                | Account reference identification                            |
+| `name`                                    | Account name                                        |
+| `balances`                                | Balance Model                                        |
 
-
-
-
-|  Balance	                   	 			| Description                           				   		|
+|  Balance                                    | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `balanceType`             					| Type of balance									|
-| `dateTime`             					| Datetime										|
-| `creditDebitIndicator`             				| Indicated the type of the resource							|
-| `balanceAmount`             					| Balance Model										|
-
+| `balanceType`                                | Type of balance                                    |
+| `dateTime`                                | Datetime                                        |
+| `creditDebitIndicator`                            | Indicated the type of the resource                            |
+| `balanceAmount`                                | Balance Model                                        |
 
 #### Example
 
@@ -379,69 +354,53 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 
 <br/>
 
-
 #### Get Account Standing Orders
 
-
-
-|  Request Options	                   	 		| Description                           				   		|
+|  Request Options                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
-| `withAccountId(String)`         				| Account reference                     		   				|
-| `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		| 
-| `withConsentId(String)`         				| Consent identification								|
-| `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
-| `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
-| `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
-| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
-| `withLimit(Integer)`     					| (Optional) Number of transactions to be returned               			|
-| `withOffset(String)`     					| (Optional) Offset value obtained from previous calls to get transactions              |
+| `withAspspId(String)`                            | Identification of ASPSP                                            |
+| `withAccountId(String)`                        | Account reference                                            |
+| `withIsLivePsuRequest(Boolean)`                    | Flag indicating if request is initiated by PSU                    | 
+| `withConsentId(String)`                        | Consent identification                                |
+| `withPsuAgent(String)`                    | (Optional) PSU's browser agent details                            |
+| `withPsuIPAddress(String)`                        | (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true    | 
+| `withPsuTppCustomerId(String)`                    | (Optional) Identifier of the PSU in TPP system                                |
+| `withMerchant(String MerchantId, String MerchantName)`        | (Optional) Merchant id and name                                    |
+| `withLimit(Integer)`                        | (Optional) Number of transactions to be returned                        |
+| `withOffset(String)`                        | (Optional) Offset value obtained from previous calls to get transactions              |
 
-
-|  Standing Orders List	                   	 		| Description                           				   		|
+|  Standing Orders List                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `offset`             						| Offset value obtained from previous calls to get transactions				|
-| `dateTime`             					| Datetime										|
-| `standingOrders`             					| List of standing order models								|
+| `offset`                                    | Offset value obtained from previous calls to get transactions                |
+| `dateTime`                                | Datetime                                        |
+| `standingOrders`                                | List of standing order models                                |
 
-
-
-|  Standing Order	                   	 		| Description                           				   		|
+|  Standing Order                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `standingOrderId`             				| Standing order identification								|
-| `firstPayment`             					| StandingOrderPayment model								|
-| `nextPayment`             					| StandingOrderPayment model								|
-| `finalPayment`             					| StandingOrderPayment model								|
-| `schedule`             					| StandingOrderSchedule model								|
-| `recipientAccount`             				| AccountNumber model									|
-| `reference`             					| Reference										|
-| `status`             						| Status										|
+| `standingOrderId`                            | Standing order identification                                |
+| `firstPayment`                                | StandingOrderPayment model                                |
+| `nextPayment`                                | StandingOrderPayment model                                |
+| `finalPayment`                                | StandingOrderPayment model                                |
+| `schedule`                                | StandingOrderSchedule model                                |
+| `recipientAccount`                            | AccountNumber model                                    |
+| `reference`                                | Reference                                        |
+| `status`                                    | Status                                        |
 
-
-
-|  AccountNumber                  	 			| Description                           				   		|
+|  AccountNumber                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `date`             						| Payment date										|
-| `currency`             					| Currency code										|
-| `amount`             						| Amount value										|
+| `date`                                    | Payment date                                        |
+| `currency`                                | Currency code                                        |
+| `amount`                                    | Amount value                                        |
 
-
-
-
-|  StandingOrderPayment                  	 		| Description                           				   		|
+|  StandingOrderPayment                            | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `identification`             					| Account identification								|
-| `schemeName`             					| Account schema									|
-| `name`     
+| `identification`                                | Account identification                                |
+| `schemeName`                                | Account schema                                    |
+| `name`
 
-
-
-
-|  StandingOrderSchedule                  	 		| Description                           				   		|
+|  StandingOrderSchedule                            | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `frequency`             					| Scheduling frequency									|
-
-
+| `frequency`                                | Scheduling frequency                                    |
 
 #### Example
 
@@ -465,57 +424,52 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 
 ### Transactions
 
-
 #### Get Account Transaction Details
 
-
-|  Request Options	                   	 		| Description                           				   		|
+|  Request Options                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
-| `withAccountId(String)`         				| Account reference                     		   				|
-| `withTransactionId(String)`         				| Transaction reference                    		   				|
-| `withConsentId(String)`         				| Consent identification								|
-| `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		| 
-| `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
-| `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
-| `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
-| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
+| `withAspspId(String)`                            | Identification of ASPSP                                            |
+| `withAccountId(String)`                        | Account reference                                            |
+| `withTransactionId(String)`                        | Transaction reference                                            |
+| `withConsentId(String)`                        | Consent identification                                |
+| `withIsLivePsuRequest(Boolean)`                    | Flag indicating if request is initiated by PSU                    | 
+| `withPsuAgent(String)`                    | (Optional) PSU's browser agent details                            |
+| `withPsuIPAddress(String)`                        | (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true    | 
+| `withPsuTppCustomerId(String)`                    | (Optional) Identifier of the PSU in TPP system                                |
+| `withMerchant(String MerchantId, String MerchantName)`        | (Optional) Merchant id and name                                    |
 
-
-
-|  Transaction	                   	 			| Description                           				   		|
+|  Transaction                                    | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `transactionId`             					| Transaction identification								|
-| `bookingDateTime`             				| Date and time when a transaction entry is posted to an account.			|
-| `remittanceInformationUnstructured`             		| Description of the payment								|
-| `status`             						| Status of the transaction.								|
-| `creditDebitIndicator`             				| Indicated the type of the resourc							|
-| `tradeDate`             					| Transaction trade date time.								|
-| `senderAccountNumber`             				| Sender account number									|
-| `recipientAccountNumber`             				| Recepient account number								|
-| `recipientAccountMassPayment`             			| Recipient mass payment account number							|
-| `recipientBankBicOrSwift`             			| Recipient bank BIC/SWIFT code								|
-| `recipientBankName`             				| Recipient bank name									|
-| `recipientBankCode`             				| Recipient bank code									|
-| `recipientBankCountryCode`             			| Recipient bank country code								|
-| `senderAccountMassPayment`             			| Sender mass payment account number.							|
-| `senderBankBicOrSwift`             				| Sender bank BIC/SWIFT code								|
-| `senderBankName`             					| Sender bank name									|
-| `senderBankCode`             					| Sender bank code									|
-| `senderBankCountryCode`             				| Sender bank country code								|
-| `transactionType`             				| Transaction type									|
-| `postTransactionBalance`             				| Post transaction balance								|
-| `mcc`             						| Merchant Category Code of the Card Acceptor 						|
-| `rejectionReason`             				| Rejection reason									|
-| `rejectionDate`             					| Rejection date									|
-| `holdExpirationDate`             				| Hold expiration date									|
-| `senderName`             					| Name of the debtor in current transaction						|
-| `recipientName`             					| Name of the creditor in current transaction (recipient's name)			|
-| `senderAccountNumberScheme`             			| Scheme name of the account number that belongs to the sender/debtor			|
-| `senderNameAddress`             				| Balance Model										|
-| `recipientAccountNumberScheme`             			| Scheme name of the account number that belongs to the recipient/creditor		|
-| `transactionAmount`             				| TransactionAmount Model								|
-
+| `transactionId`                                | Transaction identification                                |
+| `bookingDateTime`                            | Date and time when a transaction entry is posted to an account.            |
+| `remittanceInformationUnstructured`                    | Description of the payment                                |
+| `status`                                    | Status of the transaction.                                |
+| `creditDebitIndicator`                            | Indicated the type of the resourc                            |
+| `tradeDate`                                | Transaction trade date time.                                |
+| `senderAccountNumber`                            | Sender account number                                    |
+| `recipientAccountNumber`                            | Recepient account number                                |
+| `recipientAccountMassPayment`                        | Recipient mass payment account number                            |
+| `recipientBankBicOrSwift`                        | Recipient bank BIC/SWIFT code                                |
+| `recipientBankName`                            | Recipient bank name                                    |
+| `recipientBankCode`                            | Recipient bank code                                    |
+| `recipientBankCountryCode`                        | Recipient bank country code                                |
+| `senderAccountMassPayment`                        | Sender mass payment account number.                            |
+| `senderBankBicOrSwift`                            | Sender bank BIC/SWIFT code                                |
+| `senderBankName`                                | Sender bank name                                    |
+| `senderBankCode`                                | Sender bank code                                    |
+| `senderBankCountryCode`                            | Sender bank country code                                |
+| `transactionType`                            | Transaction type                                    |
+| `postTransactionBalance`                            | Post transaction balance                                |
+| `mcc`                                    | Merchant Category Code of the Card Acceptor                        |
+| `rejectionReason`                            | Rejection reason                                    |
+| `rejectionDate`                                | Rejection date                                    |
+| `holdExpirationDate`                            | Hold expiration date                                    |
+| `senderName`                                | Name of the debtor in current transaction                        |
+| `recipientName`                                | Name of the creditor in current transaction (recipient's name)            |
+| `senderAccountNumberScheme`                        | Scheme name of the account number that belongs to the sender/debtor            |
+| `senderNameAddress`                            | Balance Model                                        |
+| `recipientAccountNumberScheme`                        | Scheme name of the account number that belongs to the recipient/creditor        |
+| `transactionAmount`                            | TransactionAmount Model                                |
 
 #### Example
 
@@ -534,34 +488,30 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 	Transaction transaction = mastercardAis.transactions().get(request);
 
 ```
+
 <br/>
 
 ### Get Account Transactions
 
-
-
-|  Request Options	                   	 		| Description                           				   		|
+|  Request Options                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `withAspspId(String)`             				| Identification of ASPSP                   			           		|
-| `withAccountId(String)`         				| Account reference                     		   				|
-| `withIsLivePsuRequest(Boolean)`     				| Flag indicating if request is initiated by PSU   			   		| 
-| `withConsentId(String)`         				| Consent identification								|
-| `withPsuAgent(String)`  					| (Optional) PSU's browser agent details        					|
-| `withPsuIPAddress(String)`         				| (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true 	| 
-| `withPsuTppCustomerId(String)`         			| (Optional) Identifier of the PSU in TPP system                      		   	|
-| `withMerchant(String MerchantId, String MerchantName)`     	| (Optional) Merchant id and name                  				   	|
-| `withLimit(Integer)`     					| (Optional) Number of transactions to be returned               			|
-| `withOffset(String)`     					| (Optional) Offset value obtained from previous calls to get transactions              |
-| `withBookingDateFrom(String)`     				| (Optional) Inclusive lower bound of the transaction booking date             		|
-| `withbookingDateTo(String)`     				| (Optional) Inclusive upper bound of the transaction booking date              	|
+| `withAspspId(String)`                            | Identification of ASPSP                                            |
+| `withAccountId(String)`                        | Account reference                                            |
+| `withIsLivePsuRequest(Boolean)`                    | Flag indicating if request is initiated by PSU                    | 
+| `withConsentId(String)`                        | Consent identification                                |
+| `withPsuAgent(String)`                    | (Optional) PSU's browser agent details                            |
+| `withPsuIPAddress(String)`                        | (Optional) IP address of PSU's terminal device. Required when isLivePsuRequest=true    | 
+| `withPsuTppCustomerId(String)`                    | (Optional) Identifier of the PSU in TPP system                                |
+| `withMerchant(String MerchantId, String MerchantName)`        | (Optional) Merchant id and name                                    |
+| `withLimit(Integer)`                        | (Optional) Number of transactions to be returned                        |
+| `withOffset(String)`                        | (Optional) Offset value obtained from previous calls to get transactions              |
+| `withBookingDateFrom(String)`                    | (Optional) Inclusive lower bound of the transaction booking date                    |
+| `withbookingDateTo(String)`                    | (Optional) Inclusive upper bound of the transaction booking date                |
 
-
-|  Transactions List	                   	 		| Description                           				   		|
+|  Transactions List                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `offset`             						| Offset value obtained from previous calls to get transactions				|
-| `transactions`             					| List of transaction models								|
-
-
+| `offset`                                    | Offset value obtained from previous calls to get transactions                |
+| `transactions`                                | List of transaction models                                |
 
 #### Example
 
@@ -582,51 +532,45 @@ To access the AIS features you need setup an [Open Banking Connect Account Infor
 	TransactionList transactionList = mastercardAis.transactions().list(request);
 
 ```
-<br/>
 
+<br/>
 
 ### ASPSPs
 
 #### Get List of Available ASPSPs
 
-
-
-|  Request Options	                   	 		| Description                           				   		|
+|  Request Options                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `withId(String)`             				| (Optional) Filter by internal id of ASPSP                  			           	|
-| `withName(String)`         				| (Optional) Filter by name of ASPSP                  		   				|
-| `withCountry(Boolean)`     				| (Optional) Filter by country code		   						| 
-| `withLimit(String)`         				| (Optional) Number of rows per page								|
-| `addAdditionalData(String)`  				| (Optional) AdditionalData Model        							|
-| `withOffset(String)`         				| (Optional) Pagination offset, the value returned from the previous request 			| 
+| `withId(String)`                            | (Optional) Filter by internal id of ASPSP                                        |
+| `withName(String)`                        | (Optional) Filter by name of ASPSP                                        |
+| `withCountry(Boolean)`                    | (Optional) Filter by country code                                | 
+| `withLimit(String)`                        | (Optional) Number of rows per page                                |
+| `addAdditionalData(String)`                | (Optional) AdditionalData Model                                    |
+| `withOffset(String)`                        | (Optional) Pagination offset, the value returned from the previous request            | 
 
-|  AdditionalData                   	 			| Description                           				   		|
+|  AdditionalData                                | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `capabilities`             					| 											|
-| `logo`             						| 											|
-| `health`             						| 											|
-| `credentials`             					| 											|
+| `capabilities`                                | 											|
+| `logo`                                    | 											|
+| `health`                                    | 											|
+| `credentials`                                | 											|
 
-
-|  AspspList                   	 				| Description                           				   		|
+|  AspspList                                    | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `offset`             						| Pagination offset									|
-| `aspsps`             						| Aspsp Model										|
+| `offset`                                    | Pagination offset                                    |
+| `aspsps`                                    | Aspsp Model                                        |
 
-
-|  AspspList                   	 				| Description                           				   		|
+|  AspspList                                    | Description                                                |
 | --------------------------------------------------------------| --------------------------------------------------------------------------------------|
-| `id`             						| Pagination offset									|
-| `name`             						| Name of the ASPSP									|
-| `profile`             					| ASPSP profile										|
-| `country`             					| Country code										|
-| `capabilities`             					| AspspCapabilities Model								|
-| `logo`             						| AspspLogo Model									|
-| `health`             						| AspspHealth Model									|
-| `credentialFields`             				| List of AspspCredentialField Models							|
-| `offset`             						| Offset used in the next request to get next page					|
-
-
+| `id`                                    | Pagination offset                                    |
+| `name`                                    | Name of the ASPSP                                    |
+| `profile`                                | ASPSP profile                                        |
+| `country`                                | Country code                                        |
+| `capabilities`                                | AspspCapabilities Model                                |
+| `logo`                                    | AspspLogo Model                                    |
+| `health`                                    | AspspHealth Model                                    |
+| `credentialFields`                            | List of AspspCredentialField Models                            |
+| `offset`                                    | Offset used in the next request to get next page                    |
 
 #### Example
 
